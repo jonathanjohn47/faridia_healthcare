@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "389097463414",
+    "project_id": "faridiahealthcare-7b487",
+    "storage_bucket": "faridiahealthcare-7b487.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389097463414:android:18815ee1e9a3a871598957",
+        "android_client_info": {
+          "package_name": "com.app.faridia_healthcare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389097463414-tpslni87tjt9o86899toa71pvb1jn85p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY4JyRDwq-xFKTzSu59TuWJcjj3Pw1NBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "389097463414-tpslni87tjt9o86899toa71pvb1jn85p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
