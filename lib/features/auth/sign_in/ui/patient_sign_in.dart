@@ -1,4 +1,5 @@
 import 'package:faridia_healthcare/features/auth/sign_in/get_controller/patient_sign_in_get_controller.dart';
+import 'package:faridia_healthcare/features/home/ui/patient_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -80,7 +81,9 @@ class PatientSignInPage extends StatelessWidget {
               children: [
                 FloatingActionButton.extended(
                   heroTag: null,
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.offAll(() => PatientHomePage());
+                  },
                   label: Padding(
                     padding: EdgeInsets.all(16.0.sp),
                     child: Text(

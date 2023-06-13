@@ -39,10 +39,6 @@ class DoctorSignInPage extends StatelessWidget {
             SizedBox(
               height: 8.sp,
             ),
-            /*TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-  RxBool showPassword = false.obs;*/
             TextFormField(
               controller: getController.emailController,
               decoration: InputDecoration(
