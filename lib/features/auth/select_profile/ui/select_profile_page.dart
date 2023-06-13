@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../sign_in/ui/doctor_sign_in.dart';
+import '../../sign_in/ui/patient_sign_in.dart';
 
 class SelectProfilePage extends StatelessWidget {
   const SelectProfilePage({super.key});
@@ -76,7 +77,9 @@ class SelectProfilePage extends StatelessWidget {
                         color: AppColors.secondary),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Get.off(() => PatientSignInPage());
+                },
               ),
             ),
           ],
