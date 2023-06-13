@@ -93,7 +93,7 @@ class DoctorSignInPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            /*SizedBox(
               height: 8.sp,
             ),
             Row(
@@ -116,7 +116,7 @@ class DoctorSignInPage extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
+            ),*/
           ],
         ),
       ),
