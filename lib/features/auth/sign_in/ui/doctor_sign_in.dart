@@ -92,6 +92,28 @@ class DoctorSignInPage extends StatelessWidget {
                 ),
               ],
             ),
+            SizedBox(
+              height: 8.sp,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Don\'t have an account?',
+                  style: TextStyle(fontSize: 12.sp),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Sign Up',
+                    style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
