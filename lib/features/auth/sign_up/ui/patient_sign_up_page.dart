@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/app_colors.dart';
-import '../../sign_in/ui/doctor_sign_in.dart';
 
 class PatientSignUpPage extends StatelessWidget {
   PatientSignUpPage({super.key});
@@ -17,7 +16,7 @@ class PatientSignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(0),
+        preferredSize: const Size.fromHeight(0),
         child: Container(
           color: AppColors.primary,
         ),
@@ -30,8 +29,7 @@ class PatientSignUpPage extends StatelessWidget {
               height: 8.sp,
             ),
             SizedBox(
-                height: 30.h,
-                child: Image.asset('assets/images/3727036.png')),
+                height: 30.h, child: Image.asset('assets/images/3727036.png')),
             Text('Sign Up as Patient',
                 style: TextStyle(
                   fontSize: 20.sp,
@@ -50,7 +48,7 @@ class PatientSignUpPage extends StatelessWidget {
   RxBool showPassword = false.obs;*/
             TextFormField(
               controller: getController.nameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Name',
                 border: OutlineInputBorder(),
               ),
@@ -60,7 +58,7 @@ class PatientSignUpPage extends StatelessWidget {
             ),
             TextFormField(
               controller: getController.emailController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
               ),
@@ -74,7 +72,7 @@ class PatientSignUpPage extends StatelessWidget {
                 obscureText: !getController.showPassword.value,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   suffixIcon: IconButton(
                     icon: Icon(
                       getController.showPassword.value
@@ -97,7 +95,7 @@ class PatientSignUpPage extends StatelessWidget {
                 obscureText: !getController.showPassword.value,
                 decoration: InputDecoration(
                   labelText: 'Confirm Password',
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   suffixIcon: IconButton(
                     icon: Icon(
                       getController.showPassword.value

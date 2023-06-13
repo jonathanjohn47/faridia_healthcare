@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '389097463414',
     projectId: 'faridiahealthcare-7b487',
     storageBucket: 'faridiahealthcare-7b487.appspot.com',
-    iosClientId: '389097463414-g0rspcedevo9qi60jd03qbi87isvq3b0.apps.googleusercontent.com',
+    iosClientId:
+        '389097463414-g0rspcedevo9qi60jd03qbi87isvq3b0.apps.googleusercontent.com',
     iosBundleId: 'com.app.faridiaHealthcare',
   );
 }

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/app_colors.dart';
-import '../../sign_up/ui/doctor_sign_up_page.dart';
 import '../get_controller/doctor_sign_in_get_controller.dart';
 
 class DoctorSignInPage extends StatelessWidget {
@@ -16,7 +15,7 @@ class DoctorSignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(0),
+        preferredSize: const Size.fromHeight(0),
         child: Container(
           color: AppColors.primary,
         ),
@@ -41,7 +40,7 @@ class DoctorSignInPage extends StatelessWidget {
             ),
             TextFormField(
               controller: getController.emailController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
               ),
@@ -55,7 +54,7 @@ class DoctorSignInPage extends StatelessWidget {
                 obscureText: !getController.showPassword.value,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   suffixIcon: IconButton(
                     icon: Icon(
                       getController.showPassword.value

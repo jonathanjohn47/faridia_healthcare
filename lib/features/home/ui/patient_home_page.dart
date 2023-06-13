@@ -16,7 +16,7 @@ class PatientHomePage extends StatelessWidget {
             bottom: Radius.circular(8.sp),
           ),
         ),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.person))],
+        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.person))],
       ),
       body: ListView(
         children: [
@@ -68,7 +68,7 @@ class PatientHomePage extends StatelessWidget {
                                 SizedBox(
                                   width: 8.sp,
                                 ),
-                                Expanded(
+                                const Expanded(
                                   child: Text(
                                     '(Dentist)',
                                     textAlign: TextAlign.end,
@@ -84,12 +84,12 @@ class PatientHomePage extends StatelessWidget {
                               color: AppColors.secondary,
                             ),
                             Table(
-                              columnWidths: {
+                              columnWidths: const {
                                 0: FlexColumnWidth(1),
                                 1: FlexColumnWidth(0.1),
                                 2: FlexColumnWidth(2),
                               },
-                              children: [
+                              children: const [
                                 TableRow(children: [
                                   Text('Date'),
                                   Text(':'),
@@ -154,7 +154,7 @@ class PatientHomePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       GestureDetector(
                         onTap: () {},
                         child: Padding(
@@ -198,7 +198,7 @@ class PatientHomePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       GestureDetector(
                         onTap: () {},
                         child: Padding(
@@ -274,7 +274,7 @@ class PatientHomePage extends StatelessWidget {
                           children: [
                             CircleAvatar(
                               radius: 30.sp,
-                              backgroundImage: NetworkImage(
+                              backgroundImage: const NetworkImage(
                                   'https://g.foolcdn.com/image/?url=https%3A//g.foolcdn.com/editorial/images/64791/gettyimages-852090066_8cTQuWD.jpg&w=2000&op=resize'),
                             ),
                             SizedBox(
@@ -292,21 +292,21 @@ class PatientHomePage extends StatelessWidget {
                                 SizedBox(
                                   height: 1.sp,
                                 ),
-                                Text(
+                                const Text(
                                   'Dentist',
                                   style: TextStyle(fontWeight: FontWeight.w500),
                                 ),
                                 SizedBox(
                                   height: 1.sp,
                                 ),
-                                Text(
+                                const Text(
                                   'MBBS, BDS, MDS',
                                   style: TextStyle(fontWeight: FontWeight.w500),
                                 ),
                                 SizedBox(
                                   height: 1.sp,
                                 ),
-                                Text(
+                                const Text(
                                   '10 years of experience',
                                   style: TextStyle(fontWeight: FontWeight.w500),
                                 ),
@@ -330,7 +330,7 @@ class PatientHomePage extends StatelessWidget {
           )
         ],
       ),
-      drawer: Drawer(),
+      drawer: const Drawer(),
     );
   }
 }

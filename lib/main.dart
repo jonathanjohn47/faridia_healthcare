@@ -47,9 +47,8 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           primarySwatch: AppColors.primary,
           secondaryHeaderColor: AppColors.secondary,
-
         ),
-        home: SelectProfilePage(),
+        home: const SelectProfilePage(),
       );
     });
   }
