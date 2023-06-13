@@ -273,7 +273,7 @@ class PatientHomePage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             CircleAvatar(
-                              radius: 40.sp,
+                              radius: 30.sp,
                               backgroundImage: NetworkImage(
                                   'https://g.foolcdn.com/image/?url=https%3A//g.foolcdn.com/editorial/images/64791/gettyimages-852090066_8cTQuWD.jpg&w=2000&op=resize'),
                             ),
