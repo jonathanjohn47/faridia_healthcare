@@ -3,14 +3,14 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/app_colors.dart';
-import '../../sign_up/ui/doctor_sign_up_page.dart';
-import '../get_controller/doctor_sign_in_get_controller.dart';
+import '../../sign_in/ui/doctor_sign_in.dart';
+import '../get_controllers/doctor_sign_up_get_controller.dart';
 
-class DoctorSignInPage extends StatelessWidget {
-  DoctorSignInPage({super.key});
+class DoctorSignUpPage extends StatelessWidget {
+  DoctorSignUpPage({super.key});
 
-  DoctorSignInGetController getController =
-      Get.put(DoctorSignInGetController());
+  DoctorSignUpGetController getController =
+      Get.put(DoctorSignUpGetController());
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class DoctorSignInPage extends StatelessWidget {
             SizedBox(
                 height: 30.h,
                 child: Image.asset('assets/images/img_491471.png')),
-            Text('Login as Doctor',
+            Text('Sign Up as Doctor',
                 style: TextStyle(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
@@ -39,10 +39,24 @@ class DoctorSignInPage extends StatelessWidget {
             SizedBox(
               height: 8.sp,
             ),
-            /*TextEditingController emailController = TextEditingController();
+            /*TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+
+
 
   RxBool showPassword = false.obs;*/
+            TextFormField(
+              controller: getController.nameController,
+              decoration: InputDecoration(
+                labelText: 'Name',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(
+              height: 8.sp,
+            ),
             TextFormField(
               controller: getController.emailController,
               decoration: InputDecoration(
@@ -76,6 +90,29 @@ class DoctorSignInPage extends StatelessWidget {
             SizedBox(
               height: 8.sp,
             ),
+            Obx(() {
+              return TextFormField(
+                controller: getController.confirmPasswordController,
+                obscureText: !getController.showPassword.value,
+                decoration: InputDecoration(
+                  labelText: 'Confirm Password',
+                  border: OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      getController.showPassword.value
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      getController.showPassword.toggle();
+                    },
+                  ),
+                ),
+              );
+            }),
+            SizedBox(
+              height: 8.sp,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -85,7 +122,7 @@ class DoctorSignInPage extends StatelessWidget {
                   label: Padding(
                     padding: EdgeInsets.all(16.0.sp),
                     child: Text(
-                      'Login',
+                      'Sign Up',
                       style: TextStyle(
                           fontSize: 14.sp, fontWeight: FontWeight.w600),
                     ),
@@ -100,15 +137,15 @@ class DoctorSignInPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Don\'t have an account?',
+                  'Already have an account?',
                   style: TextStyle(fontSize: 12.sp),
                 ),
                 TextButton(
                   onPressed: () {
-                    Get.off(()=>DoctorSignUpPage());
+                    Get.off(() => DoctorSignInPage());
                   },
                   child: Text(
-                    'Sign Up',
+                    'Sign In',
                     style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.bold,
