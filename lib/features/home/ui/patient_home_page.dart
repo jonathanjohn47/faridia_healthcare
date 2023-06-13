@@ -267,7 +267,7 @@ class PatientHomePage extends StatelessWidget {
                           horizontal: 8.sp, vertical: 4.sp),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                            vertical: 16.0.sp, horizontal: 8.sp),
+                            vertical: 4.0.sp, horizontal: 8.sp),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
