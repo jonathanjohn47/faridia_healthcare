@@ -329,7 +329,7 @@ class PatientHomePage extends StatelessWidget {
                     ),
                     Divider(
                       thickness: 0.5.sp,
-                      color: AppColors.secondary,
+                      color: AppColors.primary,
                       indent: 16.sp,
                       endIndent: 16.sp,
                     ),
