@@ -14,7 +14,7 @@ class PatientSelfProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(0),
+          preferredSize: const Size.fromHeight(0),
           child: Container(
             color: AppColors.primary,
           ),
@@ -31,7 +31,7 @@ class PatientSelfProfilePage extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 50.sp,
-                      backgroundImage: AssetImage(
+                      backgroundImage: const AssetImage(
                         'assets/images/3727036.png',
                       ),
                     ),
@@ -48,7 +48,7 @@ class PatientSelfProfilePage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(50.sp),
                             ),
                             onPressed: () {},
-                            child: Icon(
+                            child: const Icon(
                               Icons.edit,
                               color: Colors.white,
                             ),
@@ -132,14 +132,14 @@ class PatientSelfProfilePage extends StatelessWidget {
                   : Padding(
                       padding: EdgeInsets.symmetric(horizontal: 32.sp),
                       child: Table(
-                        columnWidths: {
+                        columnWidths: const {
                           0: FlexColumnWidth(1),
                           1: FlexColumnWidth(2),
                         },
                         children: [
                           //name, phone number, email, address
                           TableRow(children: [
-                            Text('Name'),
+                            const Text('Name'),
                             Text(
                               'John Doe',
                               textAlign: TextAlign.end,
@@ -148,7 +148,7 @@ class PatientSelfProfilePage extends StatelessWidget {
                             )
                           ]),
                           TableRow(children: [
-                            Text('Phone Number'),
+                            const Text('Phone Number'),
                             Text(
                               '+880 1234567890',
                               textAlign: TextAlign.end,
@@ -157,7 +157,7 @@ class PatientSelfProfilePage extends StatelessWidget {
                             )
                           ]),
                           TableRow(children: [
-                            Text('Email'),
+                            const Text('Email'),
                             Text(
                               'johndoe@gmail.com',
                               textAlign: TextAlign.end,
@@ -166,7 +166,7 @@ class PatientSelfProfilePage extends StatelessWidget {
                             )
                           ]),
                           TableRow(children: [
-                            Text('Address'),
+                            const Text('Address'),
                             Text(
                               'Dhaka, Bangladesh',
                               textAlign: TextAlign.end,

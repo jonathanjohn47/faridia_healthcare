@@ -23,7 +23,7 @@ class SearchForDoctorsPage extends StatelessWidget {
               bottomRight: Radius.circular(10.0.sp),
             ),
           ),
-          title: Text(
+          title: const Text(
             'Search for Doctors',
             style: TextStyle(fontWeight: FontWeight.w500),
           ),
@@ -45,7 +45,7 @@ class SearchForDoctorsPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         labelText: 'Name, Specialization, etc...',
-                        prefixIcon: Icon(Icons.search),
+                        prefixIcon: const Icon(Icons.search),
                         // other properties...
                       ),
                     ),
@@ -54,10 +54,11 @@ class SearchForDoctorsPage extends StatelessWidget {
                     width: 4.sp,
                   ),
                   FloatingActionButton(
+                    heroTag: null,
                     backgroundColor: AppColors.secondary,
-                    shape: CircleBorder(),
+                    shape: const CircleBorder(),
                     onPressed: () {},
-                    child: Icon(
+                    child: const Icon(
                       Icons.search,
                       color: Colors.white,
                     ),
@@ -78,7 +79,7 @@ class SearchForDoctorsPage extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          Get.to(() => DoctorProfilePage());
+                          Get.to(() => const DoctorProfilePage());
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(
@@ -109,24 +110,24 @@ class SearchForDoctorsPage extends StatelessWidget {
                                   ),
                                   const Text(
                                     'Dentist',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500),
                                   ),
                                   SizedBox(
                                     height: 1.sp,
                                   ),
                                   const Text(
                                     'MBBS, BDS, MDS',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500),
                                   ),
                                   SizedBox(
                                     height: 1.sp,
                                   ),
                                   const Text(
                                     '10 years of experience',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500),
                                   ),
                                 ],
                               )

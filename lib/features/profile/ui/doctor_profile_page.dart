@@ -93,11 +93,11 @@ class DoctorProfilePage extends StatelessWidget {
             ),
             SizedBox(
               height: 25.h,
-              child: Scrollbar(
+              child: const Scrollbar(
                 thumbVisibility: true,
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0),
                     child: Text(
                         """Hi, I am a doctor, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim sit. Sit amet risus nullam eget. Enim nunc faucibus a pellentesque sit amet. Cras tincidunt lobortis feugiat vivamus at. Amet mauris commodo quis imperdiet massa tincidunt. Tristique et egestas quis ipsum suspendisse ultrices gravida dictum. Turpis nunc eget lorem dolor sed viverra ipsum nunc aliquet. Ac tortor dignissim convallis aenean et tortor at. Cursus metus aliquam eleifend mi in nulla posuere sollicitudin. Vitae aliquet nec ullamcorper sit amet risus nullam eget. Pretium quam vulputate dignissim suspendisse. Nascetur ridiculus mus mauris vitae. Tristique senectus et netus et malesuada fames ac turpis.
 
@@ -220,19 +220,29 @@ Ut diam quam nulla porttitor massa id. Lectus quam id leo in. Vitae tortor condi
               thickness: 1.5.sp,
               color: AppColors.primary,
             ),
-
             SizedBox(
               height: 8.sp,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              FloatingActionButton.extended(onPressed: (){}, label: Row(children: [
-                Icon(Icons.bookmark),
-                SizedBox(width: 5.sp,),
-                Text('Save this Doctor',style: TextStyle(fontSize: 12.sp),)
-              ],),)
-            ],),
+                FloatingActionButton.extended(
+                  onPressed: () {},
+                  label: Row(
+                    children: [
+                      const Icon(Icons.bookmark),
+                      SizedBox(
+                        width: 5.sp,
+                      ),
+                      Text(
+                        'Save this Doctor',
+                        style: TextStyle(fontSize: 12.sp),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
             SizedBox(
               height: 8.sp,
             ),

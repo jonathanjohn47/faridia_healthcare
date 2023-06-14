@@ -361,7 +361,7 @@ class PatientHomePage extends StatelessWidget {
                   child: ListView(
                 children: [
                   ListTile(
-                    title: Text('My Profile'),
+                    title: const Text('My Profile'),
                     onTap: () {
                       Get.to(() => PatientSelfProfilePage());
                     },
@@ -373,7 +373,7 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: Text('Search For Doctors'),
+                    title: const Text('Search For Doctors'),
                     onTap: () {
                       Get.to(() => SearchForDoctorsPage());
                     },
@@ -384,7 +384,7 @@ class PatientHomePage extends StatelessWidget {
                     indent: 10.sp,
                     endIndent: 10.sp,
                   ),
-                  ListTile(
+                  const ListTile(
                     title: Text('Appointments'),
                   ),
                   Divider(
@@ -394,11 +394,11 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: Text("Messages"),
+                    title: const Text("Messages"),
                     trailing: CircleAvatar(
                       radius: 10.sp,
                       backgroundColor: Colors.red,
-                      child: Text(
+                      child: const Text(
                         '9+',
                         style: TextStyle(color: Colors.white),
                       ),
@@ -411,11 +411,11 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: Text("Saved Doctors"),
+                    title: const Text("Saved Doctors"),
                     trailing: CircleAvatar(
                       radius: 10.sp,
                       backgroundColor: Colors.blueAccent,
-                      child: Text(
+                      child: const Text(
                         '5',
                         style: TextStyle(color: Colors.white),
                       ),
@@ -436,10 +436,10 @@ class PatientHomePage extends StatelessWidget {
                 endIndent: 8.sp,
               ),
               ListTile(
-                leading: Icon(Icons.logout),
-                title: Text('Logout'),
+                leading: const Icon(Icons.logout),
+                title: const Text('Logout'),
                 onTap: () {
-                  Get.offAll(() => SelectProfilePage());
+                  Get.offAll(() => const SelectProfilePage());
                 },
               ),
             ],
