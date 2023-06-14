@@ -38,6 +38,7 @@ class SelectProfilePage extends StatelessWidget {
             SizedBox(
               height: 22.h,
               child: FloatingActionButton.extended(
+                heroTag: null,
                 icon: SizedBox(
                     height: 20.h,
                     width: 20.h,
@@ -63,6 +64,7 @@ class SelectProfilePage extends StatelessWidget {
             SizedBox(
               height: 22.h,
               child: FloatingActionButton.extended(
+                heroTag: null,
                 icon: SizedBox(
                     height: 20.h,
                     width: 20.h,

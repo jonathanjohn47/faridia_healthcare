@@ -1,3 +1,4 @@
+import 'package:faridia_healthcare/features/profile/ui/patient_self_profile_page.dart';
 import 'package:faridia_healthcare/features/search_for_doctors/ui/search_for_doctors_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,13 @@ class PatientHomePage extends StatelessWidget {
             bottom: Radius.circular(8.sp),
           ),
         ),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.person))],
+        actions: [
+          IconButton(
+              onPressed: () {
+                Get.to(() => PatientSelfProfilePage());
+              },
+              icon: const Icon(Icons.person))
+        ],
       ),
       body: ListView(
         children: [
@@ -49,6 +56,7 @@ class PatientHomePage extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: FloatingActionButton.extended(
+                    heroTag: null,
                     elevation: 2,
                     label: Padding(
                       padding: EdgeInsets.all(8.0.sp),
@@ -333,62 +341,66 @@ class PatientHomePage extends StatelessWidget {
         ],
       ),
       drawer: Drawer(
-        child: Column(
-          children: [
-            Image.asset(
-              "assets/images/Faridia Healthcare-07.png",
-              height: 25.h,
-            ),
-            Divider(
-              thickness: 1.5.sp,
-              color: AppColors.secondary,
-              indent: 8.sp,
-              endIndent: 8.sp,
-            ),
-            Expanded(
-                child: ListView(
-              children: [
-                ListTile(
-                  title: Text('Search For Doctors'),
-                  onTap: (){
-                    Get.to(()=>SearchForDoctorsPage());
-                  },
-                ),
-                Divider(
-                  thickness: 0.5.sp,
-                  color: AppColors.primary,
-                  indent: 10.sp,
-                  endIndent: 10.sp,
-                ),
-                ListTile(
-                  title: Text('Appointments'),
-                ),
-                Divider(
-                  thickness: 0.5.sp,
-                  color: AppColors.primary,
-                  indent: 10.sp,
-                  endIndent: 10.sp,
-                ),
-                ListTile(
-                  title: Text("Messages"),
-                  trailing: CircleAvatar(
-                    radius: 10.sp,
-                    backgroundColor: Colors.red,
-                    child: Text(
-                      '9+',
-                      style: TextStyle(color: Colors.white),
+        child: SafeArea(
+          child: Column(
+            children: [
+              Image.asset(
+                "assets/images/Faridia Healthcare-07.png",
+                width: 60.w,
+                height: 20.h,
+                fit: BoxFit.cover,
+              ),
+              Divider(
+                thickness: 1.5.sp,
+                color: AppColors.secondary,
+                indent: 8.sp,
+                endIndent: 8.sp,
+              ),
+              Expanded(
+                  child: ListView(
+                children: [
+                  ListTile(
+                    title: Text('Search For Doctors'),
+                    onTap: () {
+                      Get.to(() => SearchForDoctorsPage());
+                    },
+                  ),
+                  Divider(
+                    thickness: 0.5.sp,
+                    color: AppColors.primary,
+                    indent: 10.sp,
+                    endIndent: 10.sp,
+                  ),
+                  ListTile(
+                    title: Text('Appointments'),
+                  ),
+                  Divider(
+                    thickness: 0.5.sp,
+                    color: AppColors.primary,
+                    indent: 10.sp,
+                    endIndent: 10.sp,
+                  ),
+                  ListTile(
+                    title: Text("Messages"),
+                    trailing: CircleAvatar(
+                      radius: 10.sp,
+                      backgroundColor: Colors.red,
+                      child: Text(
+                        '9+',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
-                ),
-                Divider(
-                  thickness: 0.5.sp,
-                  color: AppColors.primary,
-                  indent: 10.sp,
-                  endIndent: 10.sp,
-                ),
-              ],
-            ))
-          ],
+                  Divider(
+                    thickness: 0.5.sp,
+                    color: AppColors.primary,
+                    indent: 10.sp,
+                    endIndent: 10.sp,
+                  ),
+                ],
+              ))
+            ],
+          ),
         ),
       ),
     );
