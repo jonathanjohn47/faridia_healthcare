@@ -410,6 +410,23 @@ class PatientHomePage extends StatelessWidget {
                     indent: 10.sp,
                     endIndent: 10.sp,
                   ),
+                  ListTile(
+                    title: Text("Saved Doctors"),
+                    trailing: CircleAvatar(
+                      radius: 10.sp,
+                      backgroundColor: Colors.blueAccent,
+                      child: Text(
+                        '5',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    thickness: 0.5.sp,
+                    color: AppColors.primary,
+                    indent: 10.sp,
+                    endIndent: 10.sp,
+                  ),
                 ],
               )),
               Divider(

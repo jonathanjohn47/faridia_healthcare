@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../core/app_colors.dart';
+import '../../profile/ui/doctor_profile_page.dart';
 
 class SearchForDoctorsPage extends StatelessWidget {
   SearchForDoctorsPage({super.key});
@@ -75,9 +76,10 @@ class SearchForDoctorsPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 4.sp, vertical: 2.sp),
+                      InkWell(
+                        onTap: () {
+                          Get.to(() => DoctorProfilePage());
+                        },
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                               vertical: 4.0.sp, horizontal: 4.sp),
@@ -107,24 +109,24 @@ class SearchForDoctorsPage extends StatelessWidget {
                                   ),
                                   const Text(
                                     'Dentist',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w500),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500),
                                   ),
                                   SizedBox(
                                     height: 1.sp,
                                   ),
                                   const Text(
                                     'MBBS, BDS, MDS',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w500),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500),
                                   ),
                                   SizedBox(
                                     height: 1.sp,
                                   ),
                                   const Text(
                                     '10 years of experience',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w500),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500),
                                   ),
                                 ],
                               )
