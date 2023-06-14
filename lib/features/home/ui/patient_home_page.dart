@@ -1,3 +1,4 @@
+import 'package:faridia_healthcare/features/auth/select_profile/ui/select_profile_page.dart';
 import 'package:faridia_healthcare/features/profile/ui/patient_self_profile_page.dart';
 import 'package:faridia_healthcare/features/search_for_doctors/ui/search_for_doctors_page.dart';
 import 'package:flutter/material.dart';
@@ -360,6 +361,18 @@ class PatientHomePage extends StatelessWidget {
                   child: ListView(
                 children: [
                   ListTile(
+                    title: Text('My Profile'),
+                    onTap: () {
+                      Get.to(() => PatientSelfProfilePage());
+                    },
+                  ),
+                  Divider(
+                    thickness: 0.5.sp,
+                    color: AppColors.primary,
+                    indent: 10.sp,
+                    endIndent: 10.sp,
+                  ),
+                  ListTile(
                     title: Text('Search For Doctors'),
                     onTap: () {
                       Get.to(() => SearchForDoctorsPage());
@@ -398,7 +411,20 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                 ],
-              ))
+              )),
+              Divider(
+                thickness: 1.5.sp,
+                color: AppColors.secondary,
+                indent: 8.sp,
+                endIndent: 8.sp,
+              ),
+              ListTile(
+                leading: Icon(Icons.logout),
+                title: Text('Logout'),
+                onTap: () {
+                  Get.offAll(() => SelectProfilePage());
+                },
+              ),
             ],
           ),
         ),
