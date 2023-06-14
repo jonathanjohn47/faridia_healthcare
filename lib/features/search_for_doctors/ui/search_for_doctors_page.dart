@@ -72,7 +72,7 @@ class SearchForDoctorsPage extends StatelessWidget {
                     children: [
                       Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 8.sp, vertical: 4.sp),
+                            horizontal: 4.sp, vertical: 2.sp),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                               vertical: 4.0.sp, horizontal: 4.sp),
@@ -102,21 +102,24 @@ class SearchForDoctorsPage extends StatelessWidget {
                                   ),
                                   const Text(
                                     'Dentist',
-                                    style: TextStyle(fontWeight: FontWeight.w500),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500),
                                   ),
                                   SizedBox(
                                     height: 1.sp,
                                   ),
                                   const Text(
                                     'MBBS, BDS, MDS',
-                                    style: TextStyle(fontWeight: FontWeight.w500),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500),
                                   ),
                                   SizedBox(
                                     height: 1.sp,
                                   ),
                                   const Text(
                                     '10 years of experience',
-                                    style: TextStyle(fontWeight: FontWeight.w500),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500),
                                   ),
                                 ],
                               )
