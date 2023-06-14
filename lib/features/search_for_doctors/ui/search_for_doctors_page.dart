@@ -53,8 +53,13 @@ class SearchForDoctorsPage extends StatelessWidget {
                     width: 4.sp,
                   ),
                   FloatingActionButton(
+                    backgroundColor: AppColors.secondary,
+                    shape: CircleBorder(),
                     onPressed: () {},
-                    child: Icon(Icons.search),
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
                   )
                 ],
               ),
@@ -129,7 +134,7 @@ class SearchForDoctorsPage extends StatelessWidget {
                       ),
                       Divider(
                         thickness: 0.5.sp,
-                        color: AppColors.secondary,
+                        color: AppColors.primary,
                         indent: 8.sp,
                         endIndent: 8.sp,
                       ),
