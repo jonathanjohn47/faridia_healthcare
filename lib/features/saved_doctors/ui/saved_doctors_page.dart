@@ -94,7 +94,7 @@ class SavedDoctorsPage extends StatelessWidget {
                             ),
                           ),
                           Divider(
-                            thickness: 0.5.sp,
+                            thickness: 0.2.sp,
                             color: AppColors.secondary,
                             indent: 16.sp,
                             endIndent: 16.sp,
