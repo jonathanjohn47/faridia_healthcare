@@ -23,7 +23,7 @@ class SearchForDoctorsPage extends StatelessWidget {
               bottomRight: Radius.circular(10.0.sp),
             ),
           ),
-          title: const Text(
+          title: Text(
             'Search for Doctors',
             style: TextStyle(fontWeight: FontWeight.w500),
           ),
@@ -45,7 +45,7 @@ class SearchForDoctorsPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         labelText: 'Name, Specialization, etc...',
-                        prefixIcon: const Icon(Icons.search),
+                        prefixIcon: Icon(Icons.search),
                         // other properties...
                       ),
                     ),
@@ -56,9 +56,9 @@ class SearchForDoctorsPage extends StatelessWidget {
                   FloatingActionButton(
                     heroTag: null,
                     backgroundColor: AppColors.secondary,
-                    shape: const CircleBorder(),
+                    shape: CircleBorder(),
                     onPressed: () {},
-                    child: const Icon(
+                    child: Icon(
                       Icons.search,
                       color: Colors.white,
                     ),
@@ -79,7 +79,7 @@ class SearchForDoctorsPage extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          Get.to(() => const DoctorProfilePage());
+                          Get.to(() => DoctorProfilePage());
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(
@@ -90,7 +90,7 @@ class SearchForDoctorsPage extends StatelessWidget {
                             children: [
                               CircleAvatar(
                                 radius: 30.sp,
-                                backgroundImage: const NetworkImage(
+                                backgroundImage: NetworkImage(
                                     'https://g.foolcdn.com/image/?url=https%3A//g.foolcdn.com/editorial/images/64791/gettyimages-852090066_8cTQuWD.jpg&w=2000&op=resize'),
                               ),
                               SizedBox(
@@ -108,7 +108,7 @@ class SearchForDoctorsPage extends StatelessWidget {
                                   SizedBox(
                                     height: 1.sp,
                                   ),
-                                  const Text(
+                                  Text(
                                     'Dentist',
                                     style:
                                         TextStyle(fontWeight: FontWeight.w500),
@@ -116,7 +116,7 @@ class SearchForDoctorsPage extends StatelessWidget {
                                   SizedBox(
                                     height: 1.sp,
                                   ),
-                                  const Text(
+                                  Text(
                                     'MBBS, BDS, MDS',
                                     style:
                                         TextStyle(fontWeight: FontWeight.w500),
@@ -124,7 +124,7 @@ class SearchForDoctorsPage extends StatelessWidget {
                                   SizedBox(
                                     height: 1.sp,
                                   ),
-                                  const Text(
+                                  Text(
                                     '10 years of experience',
                                     style:
                                         TextStyle(fontWeight: FontWeight.w500),

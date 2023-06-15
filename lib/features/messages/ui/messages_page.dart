@@ -5,7 +5,7 @@ import 'package:sizer/sizer.dart';
 import '../../../core/app_colors.dart';
 
 class MessagesPage extends StatelessWidget {
-  const MessagesPage({super.key});
+  MessagesPage({super.key});
 
   @override
   Widget build(BuildContext context) {

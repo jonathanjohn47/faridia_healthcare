@@ -4,13 +4,13 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:sizer/sizer.dart';
 
 class DoctorProfilePage extends StatelessWidget {
-  const DoctorProfilePage({super.key});
+  DoctorProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(0),
+        preferredSize: Size.fromHeight(0),
         child: Container(
           color: AppColors.primary,
         ),
@@ -33,7 +33,7 @@ class DoctorProfilePage extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 30.sp,
-                      backgroundImage: const NetworkImage(
+                      backgroundImage: NetworkImage(
                           'https://g.foolcdn.com/image/?url=https%3A//g.foolcdn.com/editorial/images/64791/gettyimages-852090066_8cTQuWD.jpg&w=2000&op=resize'),
                     ),
                     SizedBox(
@@ -50,21 +50,21 @@ class DoctorProfilePage extends StatelessWidget {
                         SizedBox(
                           height: 1.sp,
                         ),
-                        const Text(
+                        Text(
                           'Dentist',
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                         SizedBox(
                           height: 1.sp,
                         ),
-                        const Text(
+                        Text(
                           'MBBS, BDS, MDS',
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                         SizedBox(
                           height: 1.sp,
                         ),
-                        const Text(
+                        Text(
                           '10 years of experience',
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
@@ -94,7 +94,7 @@ class DoctorProfilePage extends StatelessWidget {
             ),
             SizedBox(
               height: 25.h,
-              child: const Scrollbar(
+              child: Scrollbar(
                 thumbVisibility: true,
                 child: SingleChildScrollView(
                   child: Padding(
@@ -130,7 +130,7 @@ Ut diam quam nulla porttitor massa id. Lectus quam id leo in. Vitae tortor condi
                 thumbVisibility: true,
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0),
                     child: Text(
                         'Dental Checkup, Dental Implant Fixing, Dental Fillings, Teeth Whitening, Teeth Cleaning, Dental Crowns, Dental Bridges, Dental X-Ray, Dental Braces Fixing, Dental Examinations, Dental Restoration, Dental Sealant, Dental Implants, Dental Prophylaxis, Dental Ceramics, Dental Surgery, Dental Examinations, Dental Restoration, Dental Sealant, Dental Implants, Dental Prophylaxis, Dental Ceramics, Dental Surgery',
                         style: TextStyle(
@@ -153,7 +153,7 @@ Ut diam quam nulla porttitor massa id. Lectus quam id leo in. Vitae tortor condi
               height: 8.sp,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text(
                   'BDS - Saveetha Dental College and Hospital, Chennai, 2009',
                   style: TextStyle(
@@ -173,7 +173,7 @@ Ut diam quam nulla porttitor massa id. Lectus quam id leo in. Vitae tortor condi
               height: 8.sp,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text(
                   '2010 - 2011  Dental Surgeon at Dr. Srinivasan Dental Clinic',
                   style: TextStyle(
@@ -193,7 +193,7 @@ Ut diam quam nulla porttitor massa id. Lectus quam id leo in. Vitae tortor condi
               height: 8.sp,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text(
                   'Best Dentist Award - 2011, Best Dentist Award - 2012, Best Dentist Award - 2013',
                   style: TextStyle(
@@ -232,7 +232,7 @@ Ut diam quam nulla porttitor massa id. Lectus quam id leo in. Vitae tortor condi
                     onPressed: () {},
                     label: Row(
                       children: [
-                        const Icon(Icons.bookmark),
+                        Icon(Icons.bookmark),
                         SizedBox(
                           width: 5.sp,
                         ),

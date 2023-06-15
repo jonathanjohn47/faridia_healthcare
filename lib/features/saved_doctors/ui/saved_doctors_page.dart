@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class SavedDoctorsPage extends StatelessWidget {
-  const SavedDoctorsPage({super.key});
+  SavedDoctorsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class SavedDoctorsPage extends StatelessWidget {
                               children: [
                                 CircleAvatar(
                                   radius: 30.sp,
-                                  backgroundImage: const NetworkImage(
+                                  backgroundImage: NetworkImage(
                                       'https://g.foolcdn.com/image/?url=https%3A//g.foolcdn.com/editorial/images/64791/gettyimages-852090066_8cTQuWD.jpg&w=2000&op=resize'),
                                 ),
                                 SizedBox(
@@ -60,7 +60,7 @@ class SavedDoctorsPage extends StatelessWidget {
                                     SizedBox(
                                       height: 1.sp,
                                     ),
-                                    const Text(
+                                    Text(
                                       'Dentist',
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500),
@@ -68,7 +68,7 @@ class SavedDoctorsPage extends StatelessWidget {
                                     SizedBox(
                                       height: 1.sp,
                                     ),
-                                    const Text(
+                                    Text(
                                       'MBBS, BDS, MDS',
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500),
@@ -76,7 +76,7 @@ class SavedDoctorsPage extends StatelessWidget {
                                     SizedBox(
                                       height: 1.sp,
                                     ),
-                                    const Text(
+                                    Text(
                                       '10 years of experience',
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500),
@@ -95,7 +95,7 @@ class SavedDoctorsPage extends StatelessWidget {
                           ),
                           Divider(
                             thickness: 0.5.sp,
-                            color: AppColors.primary,
+                            color: AppColors.secondary,
                             indent: 16.sp,
                             endIndent: 16.sp,
                           ),

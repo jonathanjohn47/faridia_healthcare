@@ -7,13 +7,13 @@ import '../../sign_in/ui/doctor_sign_in.dart';
 import '../../sign_in/ui/patient_sign_in.dart';
 
 class SelectProfilePage extends StatelessWidget {
-  const SelectProfilePage({super.key});
+  SelectProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(0),
+        preferredSize: Size.fromHeight(0),
         child: Container(
           color: AppColors.primary,
         ),

@@ -13,7 +13,7 @@ import '../../profile/ui/doctor_profile_page.dart';
 import '../../saved_doctors/ui/saved_doctors_page.dart';
 
 class PatientHomePage extends StatelessWidget {
-  const PatientHomePage({super.key});
+  PatientHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class PatientHomePage extends StatelessWidget {
               onPressed: () {
                 Get.to(() => PatientSelfProfilePage());
               },
-              icon: const Icon(Icons.person))
+              icon: Icon(Icons.person))
         ],
       ),
       body: ListView(
@@ -60,7 +60,7 @@ class PatientHomePage extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: FloatingActionButton.extended(
                     heroTag: null,
                     elevation: 2,
@@ -84,7 +84,7 @@ class PatientHomePage extends StatelessWidget {
                                 SizedBox(
                                   width: 8.sp,
                                 ),
-                                const Expanded(
+                                Expanded(
                                   child: Text(
                                     '(Dentist)',
                                     textAlign: TextAlign.end,
@@ -100,12 +100,12 @@ class PatientHomePage extends StatelessWidget {
                               color: AppColors.secondary,
                             ),
                             Table(
-                              columnWidths: const {
+                              columnWidths: {
                                 0: FlexColumnWidth(1),
                                 1: FlexColumnWidth(0.1),
                                 2: FlexColumnWidth(2),
                               },
-                              children: const [
+                              children: [
                                 TableRow(children: [
                                   Text('Date'),
                                   Text(':'),
@@ -170,7 +170,7 @@ class PatientHomePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const Spacer(),
+                      Spacer(),
                       GestureDetector(
                         onTap: () {
                           Get.to(() => NotificationsPage());
@@ -216,7 +216,7 @@ class PatientHomePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const Spacer(),
+                      Spacer(),
                       GestureDetector(
                         onTap: () {
                           Get.to(() => MessagesPage());
@@ -295,7 +295,7 @@ class PatientHomePage extends StatelessWidget {
                           children: [
                             CircleAvatar(
                               radius: 30.sp,
-                              backgroundImage: const NetworkImage(
+                              backgroundImage: NetworkImage(
                                   'https://g.foolcdn.com/image/?url=https%3A//g.foolcdn.com/editorial/images/64791/gettyimages-852090066_8cTQuWD.jpg&w=2000&op=resize'),
                             ),
                             SizedBox(
@@ -313,21 +313,21 @@ class PatientHomePage extends StatelessWidget {
                                 SizedBox(
                                   height: 1.sp,
                                 ),
-                                const Text(
+                                Text(
                                   'Dentist',
                                   style: TextStyle(fontWeight: FontWeight.w500),
                                 ),
                                 SizedBox(
                                   height: 1.sp,
                                 ),
-                                const Text(
+                                Text(
                                   'MBBS, BDS, MDS',
                                   style: TextStyle(fontWeight: FontWeight.w500),
                                 ),
                                 SizedBox(
                                   height: 1.sp,
                                 ),
-                                const Text(
+                                Text(
                                   '10 years of experience',
                                   style: TextStyle(fontWeight: FontWeight.w500),
                                 ),
@@ -371,7 +371,7 @@ class PatientHomePage extends StatelessWidget {
                   child: ListView(
                 children: [
                   ListTile(
-                    title: const Text('My Profile'),
+                    title: Text('My Profile'),
                     onTap: () {
                       Get.to(() => PatientSelfProfilePage());
                     },
@@ -383,7 +383,7 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: const Text('Search For Doctors'),
+                    title: Text('Search For Doctors'),
                     onTap: () {
                       Get.to(() => SearchForDoctorsPage());
                     },
@@ -407,11 +407,11 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: const Text("Messages"),
+                    title: Text("Messages"),
                     trailing: CircleAvatar(
                       radius: 10.sp,
                       backgroundColor: Colors.red,
-                      child: const Text(
+                      child: Text(
                         '9+',
                         style: TextStyle(color: Colors.white),
                       ),
@@ -427,11 +427,11 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: const Text("Saved Doctors"),
+                    title: Text("Saved Doctors"),
                     trailing: CircleAvatar(
                       radius: 10.sp,
                       backgroundColor: Colors.blueAccent,
-                      child: const Text(
+                      child: Text(
                         '5',
                         style: TextStyle(color: Colors.white),
                       ),
@@ -455,10 +455,10 @@ class PatientHomePage extends StatelessWidget {
                 endIndent: 8.sp,
               ),
               ListTile(
-                leading: const Icon(Icons.logout),
-                title: const Text('Logout'),
+                leading: Icon(Icons.logout),
+                title: Text('Logout'),
                 onTap: () {
-                  Get.offAll(() => const SelectProfilePage());
+                  Get.offAll(() => SelectProfilePage());
                 },
               ),
             ],

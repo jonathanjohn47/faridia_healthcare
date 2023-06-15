@@ -16,7 +16,7 @@ class PatientSignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(0),
+        preferredSize: Size.fromHeight(0),
         child: Container(
           color: AppColors.primary,
         ),
@@ -48,7 +48,7 @@ class PatientSignUpPage extends StatelessWidget {
   RxBool showPassword = false.obs;*/
             TextFormField(
               controller: getController.nameController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Name',
                 border: OutlineInputBorder(),
               ),
@@ -58,7 +58,7 @@ class PatientSignUpPage extends StatelessWidget {
             ),
             TextFormField(
               controller: getController.emailController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
               ),
@@ -72,7 +72,7 @@ class PatientSignUpPage extends StatelessWidget {
                 obscureText: !getController.showPassword.value,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  border: const OutlineInputBorder(),
+                  border: OutlineInputBorder(),
                   suffixIcon: IconButton(
                     icon: Icon(
                       getController.showPassword.value
@@ -95,7 +95,7 @@ class PatientSignUpPage extends StatelessWidget {
                 obscureText: !getController.showPassword.value,
                 decoration: InputDecoration(
                   labelText: 'Confirm Password',
-                  border: const OutlineInputBorder(),
+                  border: OutlineInputBorder(),
                   suffixIcon: IconButton(
                     icon: Icon(
                       getController.showPassword.value

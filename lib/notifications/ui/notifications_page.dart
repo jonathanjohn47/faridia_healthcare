@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class NotificationsPage extends StatelessWidget {
-  const NotificationsPage({super.key});
+  NotificationsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
