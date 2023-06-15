@@ -59,7 +59,8 @@ class MessagesPage extends StatelessWidget {
                                     trailing: Text(
                                       '50 mins ago',
                                       style: TextStyle(
-                                          fontSize: index.isPrime ? 10.sp : 9.sp),
+                                          fontSize:
+                                              index.isPrime ? 10.sp : 9.sp),
                                     )),
                               ),
                             ],

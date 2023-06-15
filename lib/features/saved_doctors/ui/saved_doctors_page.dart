@@ -49,8 +49,7 @@ class SavedDoctorsPage extends StatelessWidget {
                                   width: 8.sp,
                                 ),
                                 Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       'Dr. John Doe',
