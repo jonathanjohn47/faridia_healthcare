@@ -1,5 +1,6 @@
 import 'package:faridia_healthcare/core/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 class DoctorProfilePage extends StatelessWidget {
@@ -226,21 +227,43 @@ Ut diam quam nulla porttitor massa id. Lectus quam id leo in. Vitae tortor condi
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FloatingActionButton.extended(
-                  onPressed: () {},
-                  label: Row(
-                    children: [
-                      const Icon(Icons.bookmark),
-                      SizedBox(
-                        width: 5.sp,
-                      ),
-                      Text(
-                        'Save this Doctor',
-                        style: TextStyle(fontSize: 12.sp),
-                      )
-                    ],
+                Expanded(
+                  child: FloatingActionButton.extended(
+                    onPressed: () {},
+                    label: Row(
+                      children: [
+                        const Icon(Icons.bookmark),
+                        SizedBox(
+                          width: 5.sp,
+                        ),
+                        Text(
+                          'Save',
+                          style: TextStyle(fontSize: 12.sp),
+                        )
+                      ],
+                    ),
                   ),
-                )
+                ),
+                SizedBox(
+                  width: 8.sp,
+                ),
+                Expanded(
+                  child: FloatingActionButton.extended(
+                    onPressed: () {},
+                    label: Row(
+                      children: [
+                        Icon(MdiIcons.chat),
+                        SizedBox(
+                          width: 5.sp,
+                        ),
+                        Text(
+                          'Chat',
+                          style: TextStyle(fontSize: 12.sp),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
             SizedBox(
