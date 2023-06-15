@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../core/app_colors.dart';
+import '../../appointments/ui/appointments_page.dart';
 
 class PatientHomePage extends StatelessWidget {
   const PatientHomePage({super.key});
@@ -384,8 +385,11 @@ class PatientHomePage extends StatelessWidget {
                     indent: 10.sp,
                     endIndent: 10.sp,
                   ),
-                  const ListTile(
+                  ListTile(
                     title: Text('Appointments'),
+                    onTap: () {
+                      Get.to(() => AppointmentsPage());
+                    },
                   ),
                   Divider(
                     thickness: 0.5.sp,
