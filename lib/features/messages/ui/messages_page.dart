@@ -58,7 +58,8 @@ class MessagesPage extends StatelessWidget {
                                     subtitle: Text('hi, How are you?'),
                                     trailing: Text(
                                       '50 mins ago',
-                                      style: TextStyle(fontSize: 10.sp),
+                                      style: TextStyle(
+                                          fontSize: index.isPrime ? 10.sp : 9.sp),
                                     )),
                               ),
                             ],

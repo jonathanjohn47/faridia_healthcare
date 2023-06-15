@@ -1,6 +1,7 @@
 import 'package:faridia_healthcare/features/auth/select_profile/ui/select_profile_page.dart';
 import 'package:faridia_healthcare/features/profile/ui/patient_self_profile_page.dart';
 import 'package:faridia_healthcare/features/search_for_doctors/ui/search_for_doctors_page.dart';
+import 'package:faridia_healthcare/notifications/ui/notifications_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -170,7 +171,9 @@ class PatientHomePage extends StatelessWidget {
                       ),
                       const Spacer(),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(() => NotificationsPage());
+                        },
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.sp),
                           child: Stack(
@@ -214,7 +217,9 @@ class PatientHomePage extends StatelessWidget {
                       ),
                       const Spacer(),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(() => MessagesPage());
+                        },
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.sp),
                           child: Stack(
