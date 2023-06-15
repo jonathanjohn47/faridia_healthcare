@@ -7,6 +7,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../../core/app_colors.dart';
 import '../../appointments/ui/appointments_page.dart';
+import '../../messages/ui/messages_page.dart';
 
 class PatientHomePage extends StatelessWidget {
   const PatientHomePage({super.key});
@@ -407,6 +408,9 @@ class PatientHomePage extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
+                    onTap: () {
+                      Get.to(() => MessagesPage());
+                    },
                   ),
                   Divider(
                     thickness: 0.5.sp,
