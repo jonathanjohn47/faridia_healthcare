@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/app_colors.dart';
+import '../../../home/ui/doctor_home_page.dart';
 import '../get_controller/doctor_sign_in_get_controller.dart';
 
 class DoctorSignInPage extends StatelessWidget {
@@ -76,7 +77,9 @@ class DoctorSignInPage extends StatelessWidget {
               children: [
                 FloatingActionButton.extended(
                   heroTag: null,
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.offAll(() => DoctorHomePage());
+                  },
                   label: Padding(
                     padding: EdgeInsets.all(16.0.sp),
                     child: Text(
