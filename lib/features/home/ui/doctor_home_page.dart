@@ -22,6 +22,7 @@ class DoctorHomePage extends StatelessWidget {
             bottom: Radius.circular(8.sp),
           ),
         ),
+        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.person))],
       ),
       body: ListView(
         children: [
