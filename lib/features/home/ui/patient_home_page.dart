@@ -395,6 +395,16 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
+                    title: Text('Request an Appointment'),
+                    onTap: () {},
+                  ),
+                  Divider(
+                    thickness: 0.5.sp,
+                    color: AppColors.primary,
+                    indent: 10.sp,
+                    endIndent: 10.sp,
+                  ),
+                  ListTile(
                     title: Text('Appointments'),
                     onTap: () {
                       Get.to(() => AppointmentsPage());
