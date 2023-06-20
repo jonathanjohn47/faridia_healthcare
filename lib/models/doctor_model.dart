@@ -1,13 +1,3 @@
-// To parse this JSON data, do
-//
-//     final doctorModel = doctorModelFromJson(jsonString);
-
-import 'dart:convert';
-
-DoctorModel doctorModelFromJson(String str) => DoctorModel.fromJson(json.decode(str));
-
-String doctorModelToJson(DoctorModel data) => json.encode(data.toJson());
-
 class DoctorModel {
   String name;
   String email;

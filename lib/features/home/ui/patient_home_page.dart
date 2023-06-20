@@ -258,21 +258,33 @@ class PatientHomePage extends StatelessWidget {
                           child: Stack(
                             children: [
                               Icon(Icons.chat, size: 24.sp),
-                              Positioned(
-                                top: 0,
-                                right: 0,
-                                child: CircleAvatar(
-                                  radius: 8.sp,
-                                  backgroundColor: Colors.red,
-                                  child: Text(
-                                    '1',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 10.sp,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              StreamBuilder<QuerySnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection(AppConstants.chatChannels)
+                                      .where('patient_email',
+                                          isEqualTo: FirebaseAuth
+                                              .instance.currentUser!.email)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return Positioned(
+                                        top: 0,
+                                        right: 0,
+                                        child: CircleAvatar(
+                                          radius: 8.sp,
+                                          backgroundColor: Colors.red,
+                                          child: Text(
+                                            '1',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.sp,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    return Container();
+                                  }),
                             ],
                           ),
                         ),

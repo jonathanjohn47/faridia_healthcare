@@ -30,14 +30,14 @@ class NotificationModel {
     String? title,
     String? description,
     bool? isRead,
-    int? sentAt,
+    DateTime? sentAt,
   }) =>
       NotificationModel(
         id: id ?? this.id,
         title: title ?? this.title,
         description: description ?? this.description,
         isRead: isRead ?? this.isRead,
-        sentAt: sentAt != null ? DateTime.now() : this.sentAt,
+        sentAt: sentAt ?? this.sentAt,
       );
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) =>

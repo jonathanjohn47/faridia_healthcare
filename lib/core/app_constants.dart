@@ -7,4 +7,6 @@ class AppConstants {
   static String doctors = 'Doctors';
 
   static String notifications = 'Notifications';
+
+  static String chatChannels = 'Chat Channels';
 }
