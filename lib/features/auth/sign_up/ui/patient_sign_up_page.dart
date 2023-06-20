@@ -119,6 +119,47 @@ class PatientSignUpPage extends StatelessWidget {
               SizedBox(
                 height: 8.sp,
               ),
+              TextFormField(
+                controller: getController.phoneNumberController,
+                keyboardType: TextInputType.phone,
+                decoration: InputDecoration(
+                  labelText: 'Phone Number',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter your phone number';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: 8.sp,
+              ),
+              TextFormField(
+                controller: getController.addressController,
+                maxLines: 3,
+                decoration: InputDecoration(
+                  labelText: 'Address',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter your address';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: 8.sp,
+              ),
+              Divider(
+                thickness: 0.5.sp,
+                color: AppColors.primary,
+              ),
+              SizedBox(
+                height: 8.sp,
+              ),
               Obx(() {
                 return TextFormField(
                   controller: getController.passwordController,

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:faridia_healthcare/core/app_colors.dart';
 import 'package:faridia_healthcare/features/profile/get_controllers/patient_self_profile_get_controller.dart';
 import 'package:flutter/material.dart';
@@ -29,12 +32,28 @@ class PatientSelfProfilePage extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    CircleAvatar(
-                      radius: 50.sp,
-                      backgroundImage: AssetImage(
-                        'assets/images/3727036.png',
-                      ),
-                    ),
+                    Obx(() {
+                      return !getController.uploadNewPhoto.value
+                          ? getController.imageLink.value.isNotEmpty
+                              ? CircleAvatar(
+                                  radius: 50.sp,
+                                  backgroundImage: NetworkImage(
+                                    getController.imageLink.value,
+                                  ),
+                                )
+                              : CircleAvatar(
+                                  radius: 50.sp,
+                                  backgroundImage: AssetImage(
+                                    'assets/images/3727036.png',
+                                  ),
+                                )
+                          : CircleAvatar(
+                              radius: 50.sp,
+                              backgroundImage: FileImage(
+                                File(getController.imageLink.value),
+                              ),
+                            );
+                    }),
                     Obx(() {
                       return Visibility(
                         visible: getController.editMode.value,
@@ -47,7 +66,9 @@ class PatientSelfProfilePage extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50.sp),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              getController.getImage();
+                            },
                             child: Icon(
                               Icons.edit,
                               color: Colors.white,
@@ -118,6 +139,7 @@ class PatientSelfProfilePage extends StatelessWidget {
                           ),
                           TextFormField(
                             controller: getController.addressController,
+                            maxLines: 3,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.0),
@@ -141,7 +163,7 @@ class PatientSelfProfilePage extends StatelessWidget {
                           TableRow(children: [
                             Text('Name'),
                             Text(
-                              'John Doe',
+                              getController.name.value,
                               textAlign: TextAlign.end,
                               style: TextStyle(
                                   fontSize: 14.sp, fontWeight: FontWeight.w600),
@@ -150,7 +172,7 @@ class PatientSelfProfilePage extends StatelessWidget {
                           TableRow(children: [
                             Text('Phone Number'),
                             Text(
-                              '+880 1234567890',
+                              getController.phoneNumber.value,
                               textAlign: TextAlign.end,
                               style: TextStyle(
                                   fontSize: 14.sp, fontWeight: FontWeight.w600),
@@ -158,20 +180,18 @@ class PatientSelfProfilePage extends StatelessWidget {
                           ]),
                           TableRow(children: [
                             Text('Email'),
-                            Text(
-                              'johndoe@gmail.com',
+                            AutoSizeText(
+                              getController.email.value,
                               textAlign: TextAlign.end,
-                              style: TextStyle(
-                                  fontSize: 14.sp, fontWeight: FontWeight.w600),
+                              style: TextStyle(fontWeight: FontWeight.w600),
                             )
                           ]),
                           TableRow(children: [
                             Text('Address'),
-                            Text(
-                              'Dhaka, Bangladesh',
+                            AutoSizeText(
+                              getController.address.value,
                               textAlign: TextAlign.end,
-                              style: TextStyle(
-                                  fontSize: 14.sp, fontWeight: FontWeight.w600),
+                              style: TextStyle(fontWeight: FontWeight.w600),
                             )
                           ]),
                         ],
@@ -195,6 +215,9 @@ class PatientSelfProfilePage extends StatelessWidget {
                 FloatingActionButton.extended(
                   heroTag: null,
                   onPressed: () {
+                    if (getController.editMode.value) {
+                      getController.save();
+                    }
                     getController.editMode.toggle();
                   },
                   label: Obx(() {

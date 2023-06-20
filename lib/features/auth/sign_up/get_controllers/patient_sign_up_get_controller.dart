@@ -13,6 +13,8 @@ import 'package:image_picker/image_picker.dart';
 class PatientSignUpGetController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
@@ -70,6 +72,8 @@ class PatientSignUpGetController extends GetxController {
             PatientModel patientModel = PatientModel(
               name: nameController.text,
               email: emailController.text,
+              phone: phoneNumberController.text,
+              address: addressController.text,
               fcmToken: "",
               imageLink: downloadURL,
             );
