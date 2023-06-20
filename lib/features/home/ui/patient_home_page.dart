@@ -1,12 +1,19 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faridia_healthcare/core/app_constants.dart';
 import 'package:faridia_healthcare/features/auth/select_profile/ui/select_profile_page.dart';
 import 'package:faridia_healthcare/features/profile/ui/patient_self_profile_page.dart';
 import 'package:faridia_healthcare/features/search_for_doctors/ui/search_for_doctors_page.dart';
+import 'package:faridia_healthcare/models/doctor_model.dart';
 import 'package:faridia_healthcare/notifications/ui/notifications_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../core/app_colors.dart';
+import '../../../models/notification_model.dart';
 import '../../appointments/ui/appointments_page.dart';
 import '../../messages/ui/messages_page.dart';
 import '../../profile/ui/doctor_profile_page.dart';
@@ -180,21 +187,46 @@ class PatientHomePage extends StatelessWidget {
                           child: Stack(
                             children: [
                               Icon(Icons.notifications, size: 24.sp),
-                              Positioned(
-                                top: 0,
-                                right: 0,
-                                child: CircleAvatar(
-                                  radius: 8.sp,
-                                  backgroundColor: Colors.red,
-                                  child: Text(
-                                    '1',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 10.sp,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              StreamBuilder<QuerySnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection(AppConstants.patients)
+                                      .doc(FirebaseAuth
+                                          .instance.currentUser!.email)
+                                      .collection(AppConstants.notifications)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    List<NotificationModel> allNotifications =
+                                        snapshot.data!.docs
+                                            .map((e) =>
+                                                NotificationModel.fromJson(
+                                                    jsonDecode(
+                                                        jsonEncode(e.data()))))
+                                            .toList();
+                                    allNotifications.removeWhere(
+                                        (element) => element.isRead == true);
+                                    if (snapshot.hasData) {
+                                      if (allNotifications.isNotEmpty) {
+                                        return Positioned(
+                                          top: 0,
+                                          right: 0,
+                                          child: CircleAvatar(
+                                            radius: 8.sp,
+                                            backgroundColor: Colors.red,
+                                            child: Text(
+                                              allNotifications.length
+                                                  .toString(),
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 10.sp,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      return Container();
+                                    }
+                                    return Container();
+                                  }),
                             ],
                           ),
                         ),
@@ -278,76 +310,96 @@ class PatientHomePage extends StatelessWidget {
           ),
           SizedBox(
             height: 40.h,
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Get.to(() => DoctorProfilePage());
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 4.0.sp, horizontal: 8.sp),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
+            child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection(AppConstants.doctors)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  List<DoctorModel> doctors = snapshot.data!.docs
+                      .map((e) => DoctorModel.fromJson(
+                          jsonDecode(jsonEncode(e.data()))))
+                      .toList();
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemBuilder: (context, index) {
+                        DoctorModel doctor = doctors[index];
+                        return Column(
                           children: [
-                            CircleAvatar(
-                              radius: 30.sp,
-                              backgroundImage: NetworkImage(
-                                  'https://g.foolcdn.com/image/?url=https%3A//g.foolcdn.com/editorial/images/64791/gettyimages-852090066_8cTQuWD.jpg&w=2000&op=resize'),
+                            InkWell(
+                              onTap: () {
+                                Get.to(() => DoctorProfilePage());
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 4.0.sp, horizontal: 8.sp),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 30.sp,
+                                      backgroundImage:
+                                          NetworkImage(doctor.imageLink),
+                                    ),
+                                    SizedBox(
+                                      width: 8.sp,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          doctor.name,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 16.sp),
+                                        ),
+                                        SizedBox(
+                                          height: 1.sp,
+                                        ),
+                                        Text(
+                                          doctor.bio,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        SizedBox(
+                                          height: 1.sp,
+                                        ),
+                                        Text(
+                                          doctor.education,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        SizedBox(
+                                          height: 1.sp,
+                                        ),
+                                        Text(
+                                          doctor.experience,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
                             ),
-                            SizedBox(
-                              width: 8.sp,
+                            Divider(
+                              thickness: 0.5.sp,
+                              color: AppColors.primary,
+                              indent: 16.sp,
+                              endIndent: 16.sp,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Dr. John Doe',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16.sp),
-                                ),
-                                SizedBox(
-                                  height: 1.sp,
-                                ),
-                                Text(
-                                  'Dentist',
-                                  style: TextStyle(fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(
-                                  height: 1.sp,
-                                ),
-                                Text(
-                                  'MBBS, BDS, MDS',
-                                  style: TextStyle(fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(
-                                  height: 1.sp,
-                                ),
-                                Text(
-                                  '10 years of experience',
-                                  style: TextStyle(fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            )
                           ],
-                        ),
-                      ),
-                    ),
-                    Divider(
-                      thickness: 0.5.sp,
-                      color: AppColors.primary,
-                      indent: 16.sp,
-                      endIndent: 16.sp,
-                    ),
-                  ],
-                );
-              },
-              itemCount: 10,
-            ),
+                        );
+                      },
+                      itemCount: doctors.length,
+                    );
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }),
           )
         ],
       ),
