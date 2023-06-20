@@ -3,7 +3,7 @@ class MessageModel {
   String text;
   String doctorEmail;
   String patientEmail;
-  int sentAt;
+  DateTime sentAt;
   bool readByDoctor;
   bool readByPatient;
   String imageLink;
@@ -28,7 +28,7 @@ class MessageModel {
     String? text,
     String? doctorEmail,
     String? patientEmail,
-    int? sentAt,
+    DateTime? sentAt,
     bool? readByDoctor,
     bool? readByPatient,
     String? imageLink,
@@ -49,28 +49,28 @@ class MessageModel {
       );
 
   factory MessageModel.fromJson(Map<String, dynamic> json) => MessageModel(
-    id: json["id"],
-    text: json["text"],
-    doctorEmail: json["doctor_email"],
-    patientEmail: json["patient_email"],
-    sentAt: json["sent_at"],
-    readByDoctor: json["read_by_doctor"],
-    readByPatient: json["read_by_patient"],
-    imageLink: json["image_link"],
-    sentByDoctor: json["sent_by_doctor"],
-    sentByPatient: json["sent_by_patient"],
-  );
+        id: json["id"],
+        text: json["text"],
+        doctorEmail: json["doctor_email"],
+        patientEmail: json["patient_email"],
+        sentAt: DateTime.fromMillisecondsSinceEpoch(json["sent_at"]),
+        readByDoctor: json["read_by_doctor"],
+        readByPatient: json["read_by_patient"],
+        imageLink: json["image_link"],
+        sentByDoctor: json["sent_by_doctor"],
+        sentByPatient: json["sent_by_patient"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "text": text,
-    "doctor_email": doctorEmail,
-    "patient_email": patientEmail,
-    "sent_at": sentAt,
-    "read_by_doctor": readByDoctor,
-    "read_by_patient": readByPatient,
-    "image_link": imageLink,
-    "sent_by_doctor": sentByDoctor,
-    "sent_by_patient": sentByPatient,
-  };
+        "id": id,
+        "text": text,
+        "doctor_email": doctorEmail,
+        "patient_email": patientEmail,
+        "sent_at": sentAt.millisecondsSinceEpoch,
+        "read_by_doctor": readByDoctor,
+        "read_by_patient": readByPatient,
+        "image_link": imageLink,
+        "sent_by_doctor": sentByDoctor,
+        "sent_by_patient": sentByPatient,
+      };
 }
