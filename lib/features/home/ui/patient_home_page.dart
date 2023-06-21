@@ -17,6 +17,7 @@ import '../../../models/notification_model.dart';
 import '../../appointments/ui/appointments_page.dart';
 import '../../messages/ui/messages_page.dart';
 import '../../profile/ui/doctor_profile_page.dart';
+import '../../request_appointment/ui/request_appointment_page.dart';
 import '../../saved_doctors/ui/saved_doctors_page.dart';
 
 class PatientHomePage extends StatelessWidget {
@@ -462,7 +463,9 @@ class PatientHomePage extends StatelessWidget {
                   ),
                   ListTile(
                     title: Text('Request an Appointment'),
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(() => RequestAppointmentPage());
+                    },
                   ),
                   Divider(
                     thickness: 0.5.sp,
