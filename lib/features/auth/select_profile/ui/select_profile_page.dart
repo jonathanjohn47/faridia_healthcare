@@ -5,9 +5,13 @@ import 'package:sizer/sizer.dart';
 
 import '../../sign_in/ui/doctor_sign_in.dart';
 import '../../sign_in/ui/patient_sign_in.dart';
+import '../get_controllers/select_profile_get_controller.dart';
 
 class SelectProfilePage extends StatelessWidget {
   SelectProfilePage({super.key});
+
+  SelectProfileGetController getController =
+      Get.put(SelectProfileGetController());
 
   @override
   Widget build(BuildContext context) {
