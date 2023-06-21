@@ -327,11 +327,10 @@ class PatientHomePage extends StatelessWidget {
                     .collection(AppConstants.doctors)
                     .snapshots(),
                 builder: (context, snapshot) {
-
                   if (snapshot.hasData) {
                     List<DoctorModel> doctors = snapshot.data!.docs
                         .map((e) => DoctorModel.fromJson(
-                        jsonDecode(jsonEncode(e.data()))))
+                            jsonDecode(jsonEncode(e.data()))))
                         .toList();
                     return ListView.builder(
                       itemBuilder: (context, index) {
@@ -340,7 +339,9 @@ class PatientHomePage extends StatelessWidget {
                           children: [
                             InkWell(
                               onTap: () {
-                                Get.to(() => DoctorProfilePage());
+                                Get.to(() => DoctorProfilePage(
+                                      doctorModel: doctor,
+                                    ));
                               },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
@@ -503,14 +504,34 @@ class PatientHomePage extends StatelessWidget {
                   ),
                   ListTile(
                     title: Text("Saved Doctors"),
-                    trailing: CircleAvatar(
-                      radius: 10.sp,
-                      backgroundColor: Colors.blueAccent,
-                      child: Text(
-                        '5',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
+                    trailing: StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection(AppConstants.patients)
+                            .doc(FirebaseAuth.instance.currentUser!.email)
+                            .collection(AppConstants.savedDoctors)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            if (snapshot.data!.docs.isNotEmpty) {
+                              return CircleAvatar(
+                                radius: 10.sp,
+                                backgroundColor: Colors.blueAccent,
+                                child: Text(
+                                  snapshot.data!.docs.length.toString(),
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              );
+                            }
+                            return Container(
+                              height: 0,
+                              width: 0,
+                            );
+                          }
+                          return Container(
+                            height: 0,
+                            width: 0,
+                          );
+                        }),
                     onTap: () {
                       Get.to(() => SavedDoctorsPage());
                     },

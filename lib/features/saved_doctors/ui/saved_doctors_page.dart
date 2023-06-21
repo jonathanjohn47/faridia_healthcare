@@ -1,9 +1,16 @@
 import 'package:faridia_healthcare/core/app_colors.dart';
+import 'package:faridia_healthcare/models/doctor_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+
+import '../get_controllers/saved_doctors_get_controller.dart';
 
 class SavedDoctorsPage extends StatelessWidget {
   SavedDoctorsPage({super.key});
+
+  SavedDoctorsGetController savedDoctorsGetController =
+      Get.put(SavedDoctorsGetController());
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +23,8 @@ class SavedDoctorsPage extends StatelessWidget {
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.0.sp),
-          child: ListView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 "Saved Doctors",
@@ -29,9 +37,13 @@ class SavedDoctorsPage extends StatelessWidget {
                 thickness: 1.5.sp,
                 color: AppColors.primary,
               ),
-              ...List.generate(
-                  10,
-                  (index) => Column(
+              Expanded(
+                child: Obx(() {
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      DoctorModel doctorModel =
+                          savedDoctorsGetController.savedDoctors[index];
+                      return Column(
                         children: [
                           Padding(
                             padding: EdgeInsets.symmetric(
@@ -42,8 +54,8 @@ class SavedDoctorsPage extends StatelessWidget {
                               children: [
                                 CircleAvatar(
                                   radius: 30.sp,
-                                  backgroundImage: NetworkImage(
-                                      'https://g.foolcdn.com/image/?url=https%3A//g.foolcdn.com/editorial/images/64791/gettyimages-852090066_8cTQuWD.jpg&w=2000&op=resize'),
+                                  backgroundImage:
+                                      NetworkImage(doctorModel.imageLink),
                                 ),
                                 SizedBox(
                                   width: 8.sp,
@@ -52,7 +64,7 @@ class SavedDoctorsPage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Dr. John Doe',
+                                      doctorModel.name,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 16.sp),
@@ -61,23 +73,7 @@ class SavedDoctorsPage extends StatelessWidget {
                                       height: 1.sp,
                                     ),
                                     Text(
-                                      'Dentist',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    SizedBox(
-                                      height: 1.sp,
-                                    ),
-                                    Text(
-                                      'MBBS, BDS, MDS',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    SizedBox(
-                                      height: 1.sp,
-                                    ),
-                                    Text(
-                                      '10 years of experience',
+                                      doctorModel.bio,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500),
                                     ),
@@ -85,7 +81,11 @@ class SavedDoctorsPage extends StatelessWidget {
                                 ),
                                 Spacer(),
                                 IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      savedDoctorsGetController
+                                          .deleteFromSavedDoctorsList(
+                                              doctorModel);
+                                    },
                                     icon: Icon(
                                       Icons.delete_forever,
                                       color: AppColors.secondary,
@@ -100,7 +100,12 @@ class SavedDoctorsPage extends StatelessWidget {
                             endIndent: 16.sp,
                           ),
                         ],
-                      ))
+                      );
+                    },
+                    itemCount: savedDoctorsGetController.savedDoctors.length,
+                  );
+                }),
+              )
             ],
           ),
         ));

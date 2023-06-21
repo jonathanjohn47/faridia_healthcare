@@ -9,4 +9,8 @@ class AppConstants {
   static String notifications = 'Notifications';
 
   static String chatChannels = 'Chat Channels';
+
+  static String appointments = 'Appointments';
+
+  static String savedDoctors = 'Saved Doctors';
 }

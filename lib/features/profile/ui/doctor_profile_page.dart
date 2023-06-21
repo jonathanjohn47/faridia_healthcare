@@ -1,13 +1,21 @@
 import 'package:faridia_healthcare/core/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../models/doctor_model.dart';
+import '../get_controllers/doctor_profile_get_controller.dart';
+
 class DoctorProfilePage extends StatelessWidget {
-  DoctorProfilePage({super.key});
+  final DoctorModel doctorModel;
+
+  DoctorProfilePage({super.key, required this.doctorModel});
 
   @override
   Widget build(BuildContext context) {
+    DoctorProfileGetController doctorProfileGetController =
+        Get.put(DoctorProfileGetController(doctorModel));
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(0),
@@ -34,7 +42,8 @@ class DoctorProfilePage extends StatelessWidget {
                     CircleAvatar(
                       radius: 30.sp,
                       backgroundImage: NetworkImage(
-                          'https://g.foolcdn.com/image/?url=https%3A//g.foolcdn.com/editorial/images/64791/gettyimages-852090066_8cTQuWD.jpg&w=2000&op=resize'),
+                        doctorModel.imageLink,
+                      ),
                     ),
                     SizedBox(
                       width: 8.sp,
@@ -43,7 +52,7 @@ class DoctorProfilePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Dr. John Doe',
+                          doctorModel.name,
                           style: TextStyle(
                               fontWeight: FontWeight.w600, fontSize: 16.sp),
                         ),
@@ -51,21 +60,7 @@ class DoctorProfilePage extends StatelessWidget {
                           height: 1.sp,
                         ),
                         Text(
-                          'Dentist',
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(
-                          height: 1.sp,
-                        ),
-                        Text(
-                          'MBBS, BDS, MDS',
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(
-                          height: 1.sp,
-                        ),
-                        Text(
-                          '10 years of experience',
+                          doctorModel.bio,
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                       ],
@@ -99,16 +94,7 @@ class DoctorProfilePage extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: Text(
-                        """Hi, I am a doctor, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci nulla pellentesque dignissim enim sit. Sit amet risus nullam eget. Enim nunc faucibus a pellentesque sit amet. Cras tincidunt lobortis feugiat vivamus at. Amet mauris commodo quis imperdiet massa tincidunt. Tristique et egestas quis ipsum suspendisse ultrices gravida dictum. Turpis nunc eget lorem dolor sed viverra ipsum nunc aliquet. Ac tortor dignissim convallis aenean et tortor at. Cursus metus aliquam eleifend mi in nulla posuere sollicitudin. Vitae aliquet nec ullamcorper sit amet risus nullam eget. Pretium quam vulputate dignissim suspendisse. Nascetur ridiculus mus mauris vitae. Tristique senectus et netus et malesuada fames ac turpis.
-
-Pellentesque massa placerat duis ultricies lacus sed turpis tincidunt. At urna condimentum mattis pellentesque id nibh tortor. Vestibulum lectus mauris ultrices eros in. Tristique et egestas quis ipsum suspendisse ultrices gravida dictum fusce. Quisque non tellus orci ac auctor augue mauris augue neque. Mi ipsum faucibus vitae aliquet nec ullamcorper sit amet risus. Ac tortor dignissim convallis aenean et tortor. Volutpat est velit egestas dui id. Quis auctor elit sed vulputate mi sit amet mauris commodo. Dictumst quisque sagittis purus sit amet volutpat consequat mauris. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor. Arcu ac tortor dignissim convallis aenean et tortor. Porta nibh venenatis cras sed. Odio eu feugiat pretium nibh ipsum consequat. Enim eu turpis egestas pretium aenean.
-
-Nunc consequat interdum varius sit amet mattis vulputate enim nulla. Nisl nunc mi ipsum faucibus vitae. Rhoncus dolor purus non enim praesent elementum facilisis. Non nisi est sit amet facilisis magna. Facilisi cras fermentum odio eu feugiat pretium nibh ipsum consequat. Enim eu turpis egestas pretium aenean pharetra magna. Sed velit dignissim sodales ut eu. Luctus venenatis lectus magna fringilla. Egestas quis ipsum suspendisse ultrices gravida. Quam quisque id diam vel quam elementum pulvinar etiam.
-
-Ipsum dolor sit amet consectetur adipiscing. Tristique et egestas quis ipsum suspendisse ultrices gravida. Risus viverra adipiscing at in. Metus aliquam eleifend mi in nulla posuere sollicitudin aliquam ultrices. Vel elit scelerisque mauris pellentesque pulvinar. Adipiscing elit pellentesque habitant morbi tristique senectus et netus et. Non nisi est sit amet facilisis magna. Tellus at urna condimentum mattis. Nisl condimentum id venenatis a condimentum vitae sapien pellentesque. Ac odio tempor orci dapibus ultrices in iaculis. Tempor orci eu lobortis elementum nibh tellus molestie. Sed ullamcorper morbi tincidunt ornare massa eget egestas. Non consectetur a erat nam at lectus urna duis.
-
-Ut diam quam nulla porttitor massa id. Lectus quam id leo in. Vitae tortor condimentum lacinia quis vel. Vitae sapien pellentesque habitant morbi tristique. Consequat semper viverra nam libero justo laoreet sit. Dictumst quisque sagittis purus sit amet volutpat. Commodo viverra maecenas accumsan lacus vel facilisis volutpat est. Vestibulum mattis ullamcorper velit sed ullamcorper. Nec dui nunc mattis enim ut. Vulputate ut pharetra sit amet. Magna fermentum iaculis eu non diam phasellus vestibulum lorem sed. Gravida in fermentum et sollicitudin ac. Nulla pellentesque dignissim enim sit amet venenatis urna cursus eget. Felis imperdiet proin fermentum leo vel orci porta. Nisi porta lorem mollis aliquam. Egestas egestas fringilla phasellus faucibus scelerisque. Velit egestas dui id ornare arcu odio ut. Vitae turpis massa sed elementum tempus. Diam vulputate ut pharetra sit amet aliquam id."""),
+                    child: Text(doctorModel.about),
                   ),
                 ),
               ),
@@ -131,8 +117,7 @@ Ut diam quam nulla porttitor massa id. Lectus quam id leo in. Vitae tortor condi
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: Text(
-                        'Dental Checkup, Dental Implant Fixing, Dental Fillings, Teeth Whitening, Teeth Cleaning, Dental Crowns, Dental Bridges, Dental X-Ray, Dental Braces Fixing, Dental Examinations, Dental Restoration, Dental Sealant, Dental Implants, Dental Prophylaxis, Dental Ceramics, Dental Surgery, Dental Examinations, Dental Restoration, Dental Sealant, Dental Implants, Dental Prophylaxis, Dental Ceramics, Dental Surgery',
+                    child: Text(doctorModel.services,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 12.sp,
@@ -154,8 +139,7 @@ Ut diam quam nulla porttitor massa id. Lectus quam id leo in. Vitae tortor condi
             ),
             Padding(
               padding: EdgeInsets.all(8.0),
-              child: Text(
-                  'BDS - Saveetha Dental College and Hospital, Chennai, 2009',
+              child: Text(doctorModel.education,
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 12.sp,
@@ -174,8 +158,7 @@ Ut diam quam nulla porttitor massa id. Lectus quam id leo in. Vitae tortor condi
             ),
             Padding(
               padding: EdgeInsets.all(8.0),
-              child: Text(
-                  '2010 - 2011  Dental Surgeon at Dr. Srinivasan Dental Clinic',
+              child: Text(doctorModel.experience,
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 12.sp,
@@ -194,8 +177,7 @@ Ut diam quam nulla porttitor massa id. Lectus quam id leo in. Vitae tortor condi
             ),
             Padding(
               padding: EdgeInsets.all(8.0),
-              child: Text(
-                  'Best Dentist Award - 2011, Best Dentist Award - 2012, Best Dentist Award - 2013',
+              child: Text(doctorModel.awardsAndRecognitions,
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 12.sp,
@@ -212,7 +194,7 @@ Ut diam quam nulla porttitor massa id. Lectus quam id leo in. Vitae tortor condi
             SizedBox(
               height: 8.sp,
             ),
-            Text('Dr. Srinivasan Dental Clinic',
+            Text(doctorModel.clinicAddress,
                 style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 12.sp,
@@ -229,7 +211,9 @@ Ut diam quam nulla porttitor massa id. Lectus quam id leo in. Vitae tortor condi
               children: [
                 Expanded(
                   child: FloatingActionButton.extended(
-                    onPressed: () {},
+                    onPressed: () {
+                      doctorProfileGetController.saveDoctor();
+                    },
                     label: Row(
                       children: [
                         Icon(Icons.bookmark),

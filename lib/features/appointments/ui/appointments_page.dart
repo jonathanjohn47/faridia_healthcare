@@ -1,9 +1,22 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faridia_healthcare/core/app_colors.dart';
+import 'package:faridia_healthcare/core/app_constants.dart';
+import 'package:faridia_healthcare/helpers/date_time_helpers.dart';
+import 'package:faridia_healthcare/models/appointment_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+
+import '../get_controllers/appointment_page_get_controller.dart';
 
 class AppointmentsPage extends StatelessWidget {
   AppointmentsPage({super.key});
+
+  AppointmentPageGetController appointmentPageGetController =
+      Get.put(AppointmentPageGetController());
 
   @override
   Widget build(BuildContext context) {
@@ -18,37 +31,48 @@ class AppointmentsPage extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView(
-        children: [
-          ...List.generate(
-              10,
-              (index) => Card(
+      body: FutureBuilder<QuerySnapshot>(
+          future: FirebaseFirestore.instance
+              .collection(AppConstants.appointments)
+              .where('patient_email',
+                  isEqualTo: FirebaseAuth.instance.currentUser!.email)
+              .get(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<AppointmentModel> allAppointments = snapshot.data!.docs
+                  .map((e) => AppointmentModel.fromJson(
+                      jsonDecode(jsonEncode(e.data()))))
+                  .toList();
+              return ListView.builder(
+                itemBuilder: (context, index) {
+                  AppointmentModel appointment = allAppointments[index];
+                  return Card(
                     child: Padding(
                       padding: EdgeInsets.all(4.sp),
                       child: Column(
                         children: [
                           ListTile(
                             title: Text(
-                              'Dr. Ahmed',
+                              'Dr. ${appointment.doctorModel.name}',
                               style: TextStyle(
                                   fontWeight: FontWeight.w700, fontSize: 14.sp),
                             ),
                             subtitle: Text(
-                              'Dentist',
+                              appointment.doctorModel.bio,
                               style: TextStyle(fontSize: 12.sp),
                             ),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  '12/12/2021',
+                                  appointment.appointmentOn.getDateString(),
                                   style: TextStyle(fontSize: 10.sp),
                                 ),
                                 SizedBox(
                                   width: 4.sp,
                                 ),
                                 Text(
-                                  '12:00 PM',
+                                  appointment.appointmentOn.getTimeString(),
                                   style: TextStyle(fontSize: 10.sp),
                                 ),
                               ],
@@ -83,9 +107,15 @@ class AppointmentsPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ))
-        ],
-      ),
+                  );
+                },
+                itemCount: allAppointments.length,
+              );
+            }
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }),
     );
   }
 }

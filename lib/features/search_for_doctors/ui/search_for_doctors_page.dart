@@ -111,8 +111,9 @@ class SearchForDoctorsPage extends StatelessWidget {
                                           children: [
                                             InkWell(
                                               onTap: () {
-                                                Get.to(
-                                                    () => DoctorProfilePage());
+                                                Get.to(() => DoctorProfilePage(
+                                                      doctorModel: doctor,
+                                                    ));
                                               },
                                               child: Padding(
                                                 padding: EdgeInsets.symmetric(
