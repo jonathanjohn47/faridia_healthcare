@@ -327,11 +327,12 @@ class PatientHomePage extends StatelessWidget {
                     .collection(AppConstants.doctors)
                     .snapshots(),
                 builder: (context, snapshot) {
-                  List<DoctorModel> doctors = snapshot.data!.docs
-                      .map((e) => DoctorModel.fromJson(
-                          jsonDecode(jsonEncode(e.data()))))
-                      .toList();
+
                   if (snapshot.hasData) {
+                    List<DoctorModel> doctors = snapshot.data!.docs
+                        .map((e) => DoctorModel.fromJson(
+                        jsonDecode(jsonEncode(e.data()))))
+                        .toList();
                     return ListView.builder(
                       itemBuilder: (context, index) {
                         DoctorModel doctor = doctors[index];
