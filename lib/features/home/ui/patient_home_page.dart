@@ -359,41 +359,27 @@ class PatientHomePage extends StatelessWidget {
                                     SizedBox(
                                       width: 8.sp,
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          doctor.name,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 16.sp),
-                                        ),
-                                        SizedBox(
-                                          height: 1.sp,
-                                        ),
-                                        Text(
-                                          doctor.bio,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        SizedBox(
-                                          height: 1.sp,
-                                        ),
-                                        Text(
-                                          doctor.education,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        SizedBox(
-                                          height: 1.sp,
-                                        ),
-                                        Text(
-                                          doctor.experience,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ],
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            doctor.name,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16.sp),
+                                          ),
+                                          SizedBox(
+                                            height: 1.sp,
+                                          ),
+                                          Text(
+                                            doctor.bio,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ],
+                                      ),
                                     )
                                   ],
                                 ),
@@ -557,7 +543,9 @@ class PatientHomePage extends StatelessWidget {
                 leading: Icon(Icons.logout),
                 title: Text('Logout'),
                 onTap: () {
-                  Get.offAll(() => SelectProfilePage());
+                  FirebaseAuth.instance.signOut().then((value) {
+                    Get.offAll(() => SelectProfilePage());
+                  });
                 },
               ),
             ],

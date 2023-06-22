@@ -48,22 +48,24 @@ class DoctorProfilePage extends StatelessWidget {
                     SizedBox(
                       width: 8.sp,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          doctorModel.name,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 16.sp),
-                        ),
-                        SizedBox(
-                          height: 1.sp,
-                        ),
-                        Text(
-                          doctorModel.bio,
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        ),
-                      ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            doctorModel.name,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 16.sp),
+                          ),
+                          SizedBox(
+                            height: 1.sp,
+                          ),
+                          Text(
+                            doctorModel.bio,
+                            style: TextStyle(fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),

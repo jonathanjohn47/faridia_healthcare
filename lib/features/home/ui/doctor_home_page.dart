@@ -1,4 +1,5 @@
 import 'package:faridia_healthcare/core/app_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -390,7 +391,9 @@ class DoctorHomePage extends StatelessWidget {
                 leading: Icon(Icons.logout),
                 title: Text('Logout'),
                 onTap: () {
-                  Get.offAll(() => SelectProfilePage());
+                  FirebaseAuth.instance.signOut().then((value) {
+                    Get.offAll(() => SelectProfilePage());
+                  });
                 },
               ),
             ],
