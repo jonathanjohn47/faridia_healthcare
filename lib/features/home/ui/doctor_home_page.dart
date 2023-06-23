@@ -1,4 +1,6 @@
 import 'package:faridia_healthcare/core/app_colors.dart';
+import 'package:faridia_healthcare/features/appointments/ui/set_appointment_page.dart';
+import 'package:faridia_healthcare/helpers/date_time_helpers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,9 +11,13 @@ import '../../appointments/ui/doctor_appointments_page.dart';
 import '../../auth/select_profile/ui/select_profile_page.dart';
 import '../../messages/ui/messages_page.dart';
 import '../../profile/ui/doctor_self_profile_page.dart';
+import '../get_controllers/doctor_home_page_get_controller.dart';
 
 class DoctorHomePage extends StatelessWidget {
   DoctorHomePage({super.key});
+
+  DoctorHomePageGetController getController =
+      Get.put(DoctorHomePageGetController());
 
   @override
   Widget build(BuildContext context) {
@@ -107,13 +113,15 @@ class DoctorHomePage extends StatelessWidget {
                 CircleAvatar(
                   radius: 10.sp,
                   backgroundColor: Colors.red,
-                  child: Text(
-                    '5',
-                    style: TextStyle(
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
+                  child: Obx(() {
+                    return Text(
+                      getController.appointmentRequests.length.toString(),
+                      style: TextStyle(
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    );
+                  }),
                 ),
               ],
             ),
@@ -122,86 +130,121 @@ class DoctorHomePage extends StatelessWidget {
             height: 8.sp,
           ),
           SizedBox(
-            height: 80.sp,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                ...List.generate(
-                    5,
-                    (index) => Card(
-                          child: InkWell(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        SizedBox(
-                                          height: 8.sp,
-                                        ),
-                                        ListTile(
-                                          leading: Icon(
-                                            Icons.calendar_today,
-                                            color: Colors.green,
-                                          ),
-                                          title: Text(
-                                            'Set Appointment',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.green),
-                                          ),
-                                        ),
-                                        ListTile(
-                                          leading: Icon(
-                                            Icons.cancel,
-                                            color: Colors.red,
-                                          ),
-                                          title: Text(
-                                            'Reject',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.red),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  });
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.all(8.0.sp),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+            height: 130.sp,
+            child: Obx(() {
+              return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text(
-                                    'Patient Name',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.sp),
-                                  ),
                                   SizedBox(
                                     height: 8.sp,
                                   ),
-                                  Text(
-                                    '02 July 2023',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.grey.shade700),
+                                  ListTile(
+                                    leading: Icon(
+                                      Icons.calendar_today,
+                                      color: Colors.green,
+                                    ),
+                                    title: Text(
+                                      'Set Appointment',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.green),
+                                    ),
+                                    onTap: () {
+                                      Get.to(() => SetAppointmentPage(
+                                            appointmentRequestModel:
+                                                getController
+                                                    .appointmentRequests[index],
+                                          ));
+                                    },
                                   ),
-                                  Text(
-                                    '8:00 AM',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontStyle: FontStyle.italic,
-                                        color: Colors.grey.shade700),
+                                  ListTile(
+                                    leading: Icon(
+                                      Icons.cancel,
+                                      color: Colors.red,
+                                    ),
+                                    title: Text(
+                                      'Reject',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.red),
+                                    ),
                                   ),
                                 ],
+                              );
+                            });
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0.sp),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              getController
+                                  .appointmentRequests[index].patientModel.name,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 14.sp),
+                            ),
+                            SizedBox(
+                              height: 8.sp,
+                            ),
+                            Text(
+                              getController
+                                  .appointmentRequests[index].appointmentFor
+                                  .getDateStringWithMonthName(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.grey.shade700),
+                            ),
+                            Text(
+                              getController
+                                  .appointmentRequests[index].appointmentFor
+                                  .getTimeStringInAmPm(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.grey.shade700),
+                            ),
+                            SizedBox(
+                              height: 4.sp,
+                            ),
+                            SizedBox(
+                              width: 100.sp,
+                              child: Divider(
+                                thickness: 1.sp,
+                                color: AppColors.secondary,
                               ),
                             ),
-                          ),
-                        ))
-              ],
-            ),
+                            SizedBox(
+                              height: 4.sp,
+                            ),
+                            Text('Requested On:'),
+                            Text(
+                              getController
+                                  .appointmentRequests[index].requestedOn
+                                  .getDateStringWithMonthName(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.grey.shade700),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                itemCount: getController.appointmentRequests.length,
+              );
+            }),
           ),
           SizedBox(
             height: 8.sp,

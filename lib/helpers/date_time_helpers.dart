@@ -7,6 +7,24 @@ extension DateTimeHelpers on DateTime {
     return "${"$hour".padLeft(2, '0')}:${"$minute".padLeft(2, '0')}";
   }
 
+  String getTimeStringInAmPm() {
+    int hour = this.hour;
+    int minute = this.minute;
+
+    String period = (hour >= 12) ? 'PM' : 'AM';
+
+    if (hour > 12) {
+      hour -= 12;
+    } else if (hour == 0) {
+      hour = 12;
+    }
+
+    String hourString = (hour < 10) ? '0$hour' : hour.toString();
+    String minuteString = (minute < 10) ? '0$minute' : minute.toString();
+
+    return '$hourString:$minuteString $period';
+  }
+
   String getDateStringWithMonthName() {
     Map<int, String> monthNames = {
       1: "January",

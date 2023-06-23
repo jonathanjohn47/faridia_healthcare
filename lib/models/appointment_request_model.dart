@@ -8,17 +8,19 @@ import 'package:faridia_healthcare/models/patient_model.dart';
 
 import 'doctor_model.dart';
 
-AppointmentRequestModel appointmentRequestModelFromJson(String str) => AppointmentRequestModel.fromJson(json.decode(str));
+AppointmentRequestModel appointmentRequestModelFromJson(String str) =>
+    AppointmentRequestModel.fromJson(json.decode(str));
 
-String appointmentRequestModelToJson(AppointmentRequestModel data) => json.encode(data.toJson());
+String appointmentRequestModelToJson(AppointmentRequestModel data) =>
+    json.encode(data.toJson());
 
 class AppointmentRequestModel {
   String id;
   DoctorModel doctorModel;
   PatientModel patientModel;
   String briefMessage;
-  int requestedOn;
-  int appointmentFor;
+  DateTime requestedOn;
+  DateTime appointmentFor;
 
   AppointmentRequestModel({
     required this.id,
@@ -34,8 +36,8 @@ class AppointmentRequestModel {
     DoctorModel? doctorModel,
     PatientModel? patientModel,
     String? briefMessage,
-    int? requestedOn,
-    int? appointmentFor,
+    DateTime? requestedOn,
+    DateTime? appointmentFor,
   }) =>
       AppointmentRequestModel(
         id: id ?? this.id,
@@ -46,21 +48,23 @@ class AppointmentRequestModel {
         appointmentFor: appointmentFor ?? this.appointmentFor,
       );
 
-  factory AppointmentRequestModel.fromJson(Map<String, dynamic> json) => AppointmentRequestModel(
-    id: json["id"],
-    doctorModel: DoctorModel.fromJson(json["doctor_model"]),
-    patientModel: PatientModel.fromJson(json["patient_model"]),
-    briefMessage: json["brief_message"],
-    requestedOn: json["requested_on"],
-    appointmentFor: json["appointment_for"],
-  );
+  factory AppointmentRequestModel.fromJson(Map<String, dynamic> json) =>
+      AppointmentRequestModel(
+        id: json["id"],
+        doctorModel: DoctorModel.fromJson(json["doctor_model"]),
+        patientModel: PatientModel.fromJson(json["patient_model"]),
+        briefMessage: json["brief_message"],
+        requestedOn: DateTime.fromMillisecondsSinceEpoch(json["requested_on"]),
+        appointmentFor:
+            DateTime.fromMillisecondsSinceEpoch(json["appointment_for"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "doctor_model": doctorModel.toJson(),
-    "patient_model": patientModel.toJson(),
-    "brief_message": briefMessage,
-    "requested_on": requestedOn,
-    "appointment_for": appointmentFor,
-  };
+        "id": id,
+        "doctor_model": doctorModel.toJson(),
+        "patient_model": patientModel.toJson(),
+        "brief_message": briefMessage,
+        "requested_on": requestedOn.millisecondsSinceEpoch,
+        "appointment_for": appointmentFor.millisecondsSinceEpoch,
+      };
 }

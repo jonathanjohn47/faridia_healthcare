@@ -1,19 +1,19 @@
 import 'package:faridia_healthcare/core/app_colors.dart';
 import 'package:faridia_healthcare/helpers/date_time_helpers.dart';
-import 'package:faridia_healthcare/models/doctor_model.dart';
+import 'package:faridia_healthcare/models/appointment_request_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
-import '../get_controllers/create_appointment_get_controller.dart';
+import '../get_controllers/set_appointment_get_controller.dart';
 
-class CreateAppointmentPage extends StatelessWidget {
-  CreateAppointmentPage({super.key, required this.doctorModel});
+class SetAppointmentPage extends StatelessWidget {
+  final AppointmentRequestModel appointmentRequestModel;
 
-  final DoctorModel doctorModel;
+  SetAppointmentPage({super.key, required this.appointmentRequestModel});
 
-  CreateAppointmentGetController getController =
-      Get.put(CreateAppointmentGetController());
+  SetAppointmentGetController getController =
+      Get.put(SetAppointmentGetController());
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +25,18 @@ class CreateAppointmentPage extends StatelessWidget {
           ),
         ),
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.0.sp),
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.sp,
+            vertical: 8.0.sp,
+          ),
           child: ListView(
             children: [
               Text(
-                'Request appointment with',
-                style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+                'Set Appointment for',
+                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14.sp),
               ),
               SizedBox(
-                height: 8.0.sp,
+                height: 8.sp,
               ),
               Container(
                 decoration: BoxDecoration(
@@ -50,7 +53,7 @@ class CreateAppointmentPage extends StatelessWidget {
                       CircleAvatar(
                         radius: 30.sp,
                         backgroundImage: NetworkImage(
-                          doctorModel.imageLink,
+                          appointmentRequestModel.patientModel.imageLink,
                         ),
                       ),
                       SizedBox(
@@ -61,7 +64,7 @@ class CreateAppointmentPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              doctorModel.name,
+                              appointmentRequestModel.patientModel.name,
                               style: TextStyle(
                                   fontWeight: FontWeight.w600, fontSize: 16.sp),
                             ),
@@ -69,7 +72,7 @@ class CreateAppointmentPage extends StatelessWidget {
                               height: 1.sp,
                             ),
                             Text(
-                              doctorModel.bio,
+                              appointmentRequestModel.patientModel.address,
                               style: TextStyle(fontWeight: FontWeight.w500),
                             ),
                           ],
@@ -89,13 +92,19 @@ class CreateAppointmentPage extends StatelessWidget {
               SizedBox(
                 height: 8.0.sp,
               ),
-              TextFormField(
-                controller: getController.briefMessageController,
-                maxLines: 5,
-                decoration: InputDecoration(
-                  hintText: 'Brief message to doctor, e.g. symptoms, etc...',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.sp),
+              Text('Patient\'s Message:',
+                  style: TextStyle(fontWeight: FontWeight.w500)),
+              Container(
+                height: 100.sp,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.sp),
+                  color: AppColors.secondary.withOpacity(0.1),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    appointmentRequestModel.briefMessage,
+                    style: TextStyle(fontStyle: FontStyle.italic),
                   ),
                 ),
               ),
@@ -184,18 +193,23 @@ class CreateAppointmentPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FloatingActionButton.extended(
-                    onPressed: () {
-                      getController.createAppointment(doctorModel);
-                    },
-                    icon: Icon(Icons.check, color: Colors.white),
-                    label: Text('Request',
-                        style: TextStyle(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white)),
-                    backgroundColor: AppColors.secondary,
-                  ),
+                  Obx(() {
+                    return getController.showLoader.value
+                        ? CircularProgressIndicator()
+                        : FloatingActionButton.extended(
+                            onPressed: () {
+                              getController
+                                  .setAppointment(appointmentRequestModel);
+                            },
+                            icon: Icon(Icons.check, color: Colors.white),
+                            label: Text('Set Appointment',
+                                style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white)),
+                            backgroundColor: AppColors.secondary,
+                          );
+                  }),
                 ],
               )
             ],

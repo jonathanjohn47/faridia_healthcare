@@ -21,7 +21,7 @@ class SavedDoctorsGetController extends GetxController {
       savedDoctors.clear();
       for (String email in doctorEmails) {
         FirebaseFirestore.instance
-            .collection(AppConstants.patients)
+            .collection(AppConstants.doctors)
             .doc(email)
             .get()
             .then((value) {

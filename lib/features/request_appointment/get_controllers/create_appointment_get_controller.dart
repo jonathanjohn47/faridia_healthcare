@@ -1,6 +1,14 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faridia_healthcare/core/app_constants.dart';
+import 'package:faridia_healthcare/models/appointment_request_model.dart';
 import 'package:faridia_healthcare/models/doctor_model.dart';
+import 'package:faridia_healthcare/models/patient_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uuid/uuid.dart';
 
 class CreateAppointmentGetController extends GetxController {
   TextEditingController briefMessageController = TextEditingController();
@@ -30,5 +38,40 @@ class CreateAppointmentGetController extends GetxController {
     });
   }
 
-  void createAppointment(DoctorModel doctorModel) {}
+  Future<void> createAppointment(DoctorModel doctorModel) async {
+    Uuid uuid = Uuid();
+    String appointmentRequestId = uuid.v4();
+    await FirebaseFirestore.instance
+        .collection(AppConstants.patients)
+        .doc(FirebaseAuth.instance.currentUser!.email)
+        .get()
+        .then((value) async {
+      PatientModel patientModel =
+          PatientModel.fromJson(jsonDecode(jsonEncode(value.data())));
+      AppointmentRequestModel appointmentRequestModel = AppointmentRequestModel(
+          id: appointmentRequestId,
+          doctorModel: doctorModel,
+          patientModel: patientModel,
+          briefMessage: briefMessageController.text,
+          requestedOn: DateTime.now(),
+          appointmentFor: DateTime(
+              chosenDate.value.year,
+              chosenDate.value.month,
+              chosenDate.value.day,
+              chosenTime.value.hour,
+              chosenTime.value.minute));
+      await FirebaseFirestore.instance
+          .collection(AppConstants.doctors)
+          .doc(doctorModel.email)
+          .collection(AppConstants.appointmentRequests)
+          .doc(appointmentRequestId)
+          .set(appointmentRequestModel.toJson());
+      await FirebaseFirestore.instance
+          .collection(AppConstants.patients)
+          .doc(FirebaseAuth.instance.currentUser!.email)
+          .collection(AppConstants.appointmentRequests)
+          .doc(appointmentRequestId)
+          .set(appointmentRequestModel.toJson());
+    });
+  }
 }
