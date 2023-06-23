@@ -1,6 +1,12 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faridia_healthcare/core/app_colors.dart';
+import 'package:faridia_healthcare/core/app_constants.dart';
 import 'package:faridia_healthcare/features/appointments/ui/set_appointment_page.dart';
 import 'package:faridia_healthcare/helpers/date_time_helpers.dart';
+import 'package:faridia_healthcare/models/appointment_model.dart';
+import 'package:faridia_healthcare/models/notification_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,35 +53,52 @@ class DoctorHomePage extends StatelessWidget {
             height: 8.sp,
           ),
           SizedBox(
-            height: 80.sp,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                ...List.generate(
-                    5,
-                    (index) => Card(
+            height: 83.sp,
+            child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection(AppConstants.appointments)
+                    .where('doctor_email',
+                        isEqualTo: FirebaseAuth.instance.currentUser!.email)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<AppointmentModel> appointments = snapshot.data!.docs
+                        .map((e) => AppointmentModel.fromJson(
+                            jsonDecode(jsonEncode(e.data()))))
+                        .toList();
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        AppointmentModel appointment = appointments[index];
+                        return Card(
                           child: Padding(
                             padding: EdgeInsets.all(8.0.sp),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Patient Name',
+                                  appointment.patientModel.name,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 14.sp),
                                 ),
                                 SizedBox(
-                                  height: 8.sp,
+                                  width: 100.sp,
+                                  child: Divider(
+                                    thickness: 1.5.sp,
+                                    color: AppColors.secondary,
+                                  ),
                                 ),
                                 Text(
-                                  '02 July 2023',
+                                  appointment.appointmentOn
+                                      .getDateStringWithMonthName(),
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       color: Colors.grey.shade700),
                                 ),
                                 Text(
-                                  '8:00 AM',
+                                  appointment.appointmentOn
+                                      .getTimeStringInAmPm(),
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontStyle: FontStyle.italic,
@@ -84,9 +107,13 @@ class DoctorHomePage extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ))
-              ],
-            ),
+                        );
+                      },
+                      itemCount: appointments.length,
+                    );
+                  }
+                  return Container();
+                }),
           ),
           SizedBox(
             height: 8.sp,
@@ -283,21 +310,46 @@ class DoctorHomePage extends StatelessWidget {
                           child: Stack(
                             children: [
                               Icon(Icons.notifications, size: 24.sp),
-                              Positioned(
-                                top: 0,
-                                right: 0,
-                                child: CircleAvatar(
-                                  radius: 8.sp,
-                                  backgroundColor: Colors.red,
-                                  child: Text(
-                                    '1',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 10.sp,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              StreamBuilder<QuerySnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection(AppConstants.doctors)
+                                      .doc(FirebaseAuth
+                                          .instance.currentUser!.email)
+                                      .collection(AppConstants.notifications)
+                                      .where('isRead', isEqualTo: false)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      List<NotificationModel> notifications =
+                                          snapshot.data!.docs
+                                              .map((e) =>
+                                                  NotificationModel.fromJson(e
+                                                          .data()
+                                                      as Map<String, dynamic>))
+                                              .toList();
+                                      notifications.removeWhere(
+                                          (element) => element.isRead == true);
+                                      return Visibility(
+                                        visible: notifications.length > 0,
+                                        child: Positioned(
+                                          top: 0,
+                                          right: 0,
+                                          child: CircleAvatar(
+                                            radius: 8.sp,
+                                            backgroundColor: Colors.red,
+                                            child: Text(
+                                              notifications.length.toString(),
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 10.sp,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    return Container();
+                                  }),
                             ],
                           ),
                         ),

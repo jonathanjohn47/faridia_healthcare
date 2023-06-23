@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faridia_healthcare/core/app_constants.dart';
 import 'package:faridia_healthcare/features/auth/select_profile/ui/select_profile_page.dart';
 import 'package:faridia_healthcare/features/profile/ui/patient_self_profile_page.dart';
 import 'package:faridia_healthcare/features/search_for_doctors/ui/search_for_doctors_page.dart';
+import 'package:faridia_healthcare/models/appointment_model.dart';
 import 'package:faridia_healthcare/models/doctor_model.dart';
 import 'package:faridia_healthcare/notifications/ui/notifications_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -64,95 +66,96 @@ class PatientHomePage extends StatelessWidget {
               minHeight: 20.h,
               maxHeight: 22.h,
             ),
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: FloatingActionButton.extended(
-                    heroTag: null,
-                    elevation: 2,
-                    label: Padding(
-                      padding: EdgeInsets.all(8.0.sp),
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          minWidth: 30.w,
-                          maxWidth: 50.w,
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  'Dr. John Doe',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14.sp),
+            child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection(AppConstants.appointments)
+                    .where('patient_email',
+                        isEqualTo: FirebaseAuth.instance.currentUser!.email)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<AppointmentModel> appointments = snapshot.data!.docs
+                        .map((e) => AppointmentModel.fromJson(
+                            jsonDecode(jsonEncode(e.data()))))
+                        .toList();
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: FloatingActionButton.extended(
+                            heroTag: null,
+                            elevation: 2,
+                            label: Padding(
+                              padding: EdgeInsets.all(8.0.sp),
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  minWidth: 30.w,
+                                  maxWidth: 50.w,
                                 ),
-                                SizedBox(
-                                  width: 8.sp,
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    '(Dentist)',
-                                    textAlign: TextAlign.end,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Dr. ${appointments[index].doctorModel.name}',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14.sp),
                                     ),
-                                  ),
+                                    SizedBox(
+                                      height: 2.sp,
+                                    ),
+                                    Text(
+                                      "(${appointments[index].doctorModel.bio})",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 8.sp),
+                                    ),
+                                    Divider(
+                                      thickness: 1.5.sp,
+                                      color: AppColors.secondary,
+                                    ),
+                                    Table(
+                                      columnWidths: {
+                                        0: FlexColumnWidth(1),
+                                        2: FlexColumnWidth(1),
+                                      },
+                                      children: [
+                                        TableRow(children: [
+                                          AutoSizeText(
+                                            '12/12/2021',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            '12:00 PM',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ]),
+
+                                      ],
+                                    ),
+                                    AutoSizeText(
+                                      '10 Downing Street, London',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
-                            Divider(
-                              thickness: 1.5.sp,
-                              color: AppColors.secondary,
-                            ),
-                            Table(
-                              columnWidths: {
-                                0: FlexColumnWidth(1),
-                                1: FlexColumnWidth(0.1),
-                                2: FlexColumnWidth(2),
-                              },
-                              children: [
-                                TableRow(children: [
-                                  Text('Date'),
-                                  Text(':'),
-                                  Text(
-                                    '12/12/2021',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w600),
-                                  ),
-                                ]),
-                                TableRow(children: [
-                                  Text('Time'),
-                                  Text(':'),
-                                  Text(
-                                    '12:00 PM',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w600),
-                                  ),
-                                ]),
-                                TableRow(children: [
-                                  Text('Address'),
-                                  Text(':'),
-                                  Text(
-                                    '10 Downing Street, London',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w600),
-                                  ),
-                                ]),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    onPressed: () {},
-                  ),
-                );
-              },
-              itemCount: 5,
-            ),
+                            onPressed: () {},
+                          ),
+                        );
+                      },
+                      itemCount: appointments.length,
+                    );
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.sp),
