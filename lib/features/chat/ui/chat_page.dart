@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/app_colors.dart';
+import '../../../models/chat_channel_model.dart';
 
 class ChatPage extends StatelessWidget {
-  ChatPage({super.key});
+  final ChatChannelModel chatChannel;
+
+  ChatPage({super.key, required this.chatChannel});
 
   @override
   Widget build(BuildContext context) {
