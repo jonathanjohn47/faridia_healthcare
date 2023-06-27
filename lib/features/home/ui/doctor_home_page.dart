@@ -66,51 +66,55 @@ class DoctorHomePage extends StatelessWidget {
                         .map((e) => AppointmentModel.fromJson(
                             jsonDecode(jsonEncode(e.data()))))
                         .toList();
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        AppointmentModel appointment = appointments[index];
-                        return Card(
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0.sp),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  appointment.patientModel.name,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.sp),
-                                ),
-                                SizedBox(
-                                  width: 100.sp,
-                                  child: Divider(
-                                    thickness: 1.5.sp,
-                                    color: AppColors.secondary,
+                    return appointments.isNotEmpty
+                        ? ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              AppointmentModel appointment =
+                                  appointments[index];
+                              return Card(
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.0.sp),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        appointment.patientModel.name,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14.sp),
+                                      ),
+                                      SizedBox(
+                                        width: 100.sp,
+                                        child: Divider(
+                                          thickness: 1.5.sp,
+                                          color: AppColors.secondary,
+                                        ),
+                                      ),
+                                      Text(
+                                        appointment.appointmentOn
+                                            .getDateStringWithMonthName(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.grey.shade700),
+                                      ),
+                                      Text(
+                                        appointment.appointmentOn
+                                            .getTimeStringInAmPm(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontStyle: FontStyle.italic,
+                                            color: Colors.grey.shade700),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Text(
-                                  appointment.appointmentOn
-                                      .getDateStringWithMonthName(),
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.grey.shade700),
-                                ),
-                                Text(
-                                  appointment.appointmentOn
-                                      .getTimeStringInAmPm(),
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontStyle: FontStyle.italic,
-                                      color: Colors.grey.shade700),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                      itemCount: appointments.length,
-                    );
+                              );
+                            },
+                            itemCount: appointments.length,
+                          )
+                        : Center(child: Text('No Appointments'));
                   }
                   return Container();
                 }),
@@ -159,118 +163,122 @@ class DoctorHomePage extends StatelessWidget {
           SizedBox(
             height: 130.sp,
             child: Obx(() {
-              return ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Card(
-                    child: InkWell(
-                      onTap: () {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
+              return getController.appointmentRequests.isNotEmpty
+                  ? ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          child: InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(
+                                          height: 8.sp,
+                                        ),
+                                        ListTile(
+                                          leading: Icon(
+                                            Icons.calendar_today,
+                                            color: Colors.green,
+                                          ),
+                                          title: Text(
+                                            'Set Appointment',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.green),
+                                          ),
+                                          onTap: () {
+                                            Get.to(() => SetAppointmentPage(
+                                                  appointmentRequestModel:
+                                                      getController
+                                                              .appointmentRequests[
+                                                          index],
+                                                ));
+                                          },
+                                        ),
+                                        ListTile(
+                                          leading: Icon(
+                                            Icons.cancel,
+                                            color: Colors.red,
+                                          ),
+                                          title: Text(
+                                            'Reject',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.red),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0.sp),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  Text(
+                                    getController.appointmentRequests[index]
+                                        .patientModel.name,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.sp),
+                                  ),
                                   SizedBox(
                                     height: 8.sp,
                                   ),
-                                  ListTile(
-                                    leading: Icon(
-                                      Icons.calendar_today,
-                                      color: Colors.green,
-                                    ),
-                                    title: Text(
-                                      'Set Appointment',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.green),
-                                    ),
-                                    onTap: () {
-                                      Get.to(() => SetAppointmentPage(
-                                            appointmentRequestModel:
-                                                getController
-                                                    .appointmentRequests[index],
-                                          ));
-                                    },
+                                  Text(
+                                    getController.appointmentRequests[index]
+                                        .appointmentFor
+                                        .getDateStringWithMonthName(),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey.shade700),
                                   ),
-                                  ListTile(
-                                    leading: Icon(
-                                      Icons.cancel,
-                                      color: Colors.red,
+                                  Text(
+                                    getController.appointmentRequests[index]
+                                        .appointmentFor
+                                        .getTimeStringInAmPm(),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontStyle: FontStyle.italic,
+                                        color: Colors.grey.shade700),
+                                  ),
+                                  SizedBox(
+                                    height: 4.sp,
+                                  ),
+                                  SizedBox(
+                                    width: 100.sp,
+                                    child: Divider(
+                                      thickness: 1.sp,
+                                      color: AppColors.secondary,
                                     ),
-                                    title: Text(
-                                      'Reject',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.red),
-                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 4.sp,
+                                  ),
+                                  Text('Requested On:'),
+                                  Text(
+                                    getController
+                                        .appointmentRequests[index].requestedOn
+                                        .getDateStringWithMonthName(),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey.shade700),
                                   ),
                                 ],
-                              );
-                            });
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0.sp),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              getController
-                                  .appointmentRequests[index].patientModel.name,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 14.sp),
-                            ),
-                            SizedBox(
-                              height: 8.sp,
-                            ),
-                            Text(
-                              getController
-                                  .appointmentRequests[index].appointmentFor
-                                  .getDateStringWithMonthName(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.grey.shade700),
-                            ),
-                            Text(
-                              getController
-                                  .appointmentRequests[index].appointmentFor
-                                  .getTimeStringInAmPm(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.grey.shade700),
-                            ),
-                            SizedBox(
-                              height: 4.sp,
-                            ),
-                            SizedBox(
-                              width: 100.sp,
-                              child: Divider(
-                                thickness: 1.sp,
-                                color: AppColors.secondary,
                               ),
                             ),
-                            SizedBox(
-                              height: 4.sp,
-                            ),
-                            Text('Requested On:'),
-                            Text(
-                              getController
-                                  .appointmentRequests[index].requestedOn
-                                  .getDateStringWithMonthName(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.grey.shade700),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                itemCount: getController.appointmentRequests.length,
-              );
+                          ),
+                        );
+                      },
+                      itemCount: getController.appointmentRequests.length,
+                    )
+                  : Center(child: Text('No Appointment Requests'));
             }),
           ),
           SizedBox(
