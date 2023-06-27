@@ -21,7 +21,7 @@ class RequestAppointmentPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(0),
+          preferredSize: const Size.fromHeight(0),
           child: Container(
             color: AppColors.primary,
           ),
@@ -49,7 +49,7 @@ class RequestAppointmentPage extends StatelessWidget {
                 controller: getController.searchController,
                 decoration: InputDecoration(
                   hintText: 'Search Doctor, Specialization etc...',
-                  suffixIcon: Icon(Icons.search),
+                  suffixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.sp),
                   ),
@@ -73,7 +73,7 @@ class RequestAppointmentPage extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return StreamBuilder<String>(
                                 stream: Stream.periodic(
-                                    Duration(milliseconds: 500), (_) {
+                                    const Duration(milliseconds: 500), (_) {
                                   return getController.searchController.text;
                                 }),
                                 builder: (context, snapshot) {
@@ -120,7 +120,7 @@ class RequestAppointmentPage extends StatelessWidget {
                           itemCount: allDoctors.length,
                         );
                       }
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }),

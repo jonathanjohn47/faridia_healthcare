@@ -82,7 +82,7 @@ class PatientSignUpGetController extends GetxController {
                 .doc(emailController.text)
                 .set(patientModel.toJson())
                 .then((value) {
-              Get.offAll(() => PatientHomePage());
+              Get.offAll(() => const PatientHomePage());
             });
           });
         });

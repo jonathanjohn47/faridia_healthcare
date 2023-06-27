@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faridia_healthcare/core/app_constants.dart';
 import 'package:faridia_healthcare/helpers/date_time_helpers.dart';
-import 'package:faridia_healthcare/helpers/index_helpers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -12,13 +11,13 @@ import '../../../core/app_colors.dart';
 import '../../../models/chat_channel_model.dart';
 
 class MessagesPagePatient extends StatelessWidget {
-  MessagesPagePatient({super.key});
+  const MessagesPagePatient({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(0),
+          preferredSize: const Size.fromHeight(0),
           child: Container(
             color: AppColors.primary,
           ),
@@ -79,7 +78,7 @@ class MessagesPagePatient extends StatelessWidget {
                                                 ),
                                                 title: Text(
                                                   chatChannel.doctorModel.name,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.w700),
                                                 ),
@@ -105,11 +104,11 @@ class MessagesPagePatient extends StatelessWidget {
                                 },
                                 itemCount: 10,
                               )
-                            : Center(
+                            : const Center(
                                 child: Text('No messages yet'),
                               );
                       }
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }),
