@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faridia_healthcare/core/app_constants.dart';
 import 'package:faridia_healthcare/models/appointment_request_model.dart';
 import 'package:faridia_healthcare/models/doctor_model.dart';
+import 'package:faridia_healthcare/models/notification_model.dart';
 import 'package:faridia_healthcare/models/patient_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +72,23 @@ class CreateAppointmentGetController extends GetxController {
           .doc(FirebaseAuth.instance.currentUser!.email)
           .collection(AppConstants.appointmentRequests)
           .doc(appointmentRequestId)
-          .set(appointmentRequestModel.toJson());
+          .set(appointmentRequestModel.toJson())
+          .then((value) async {
+        String notificationId = uuid.v4();
+        NotificationModel notificationModel = NotificationModel(
+            id: notificationId,
+            title: 'Appointment Request',
+            description: 'You have a new appointment request from ' +
+                appointmentRequestModel.patientModel.name,
+            isRead: false,
+            sentAt: DateTime.now());
+        await FirebaseFirestore.instance
+            .collection(AppConstants.doctors)
+            .doc(doctorModel.email)
+            .collection(AppConstants.notifications)
+            .doc(notificationId)
+            .set(notificationModel.toJson());
+      });
     });
   }
 }
