@@ -6,12 +6,17 @@ import 'package:faridia_healthcare/helpers/date_time_helpers.dart';
 import 'package:faridia_healthcare/models/appointment_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../core/app_colors.dart';
+import '../get_controllers/doctor_appointment_get_controller.dart';
 
 class DoctorAppointmentsPage extends StatelessWidget {
   DoctorAppointmentsPage({super.key});
+
+  DoctorAppointmentGetController getController =
+      Get.put(DoctorAppointmentGetController());
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +126,10 @@ class DoctorAppointmentsPage extends StatelessWidget {
                                       children: [
                                         TableRow(children: [
                                           TextButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                getController.cancelAppointment(
+                                                    appointments[index]);
+                                              },
                                               child: Text('Cancel Appointment'))
                                         ])
                                       ],
