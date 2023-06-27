@@ -49,7 +49,7 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static FirebaseOptions android = FirebaseOptions(
+  static FirebaseOptions android = const FirebaseOptions(
     apiKey: 'AIzaSyAY4JyRDwq-xFKTzSu59TuWJcjj3Pw1NBM',
     appId: '1:389097463414:android:18815ee1e9a3a871598957',
     messagingSenderId: '389097463414',
@@ -57,7 +57,7 @@ class DefaultFirebaseOptions {
     storageBucket: 'faridiahealthcare-7b487.appspot.com',
   );
 
-  static FirebaseOptions ios = FirebaseOptions(
+  static FirebaseOptions ios = const FirebaseOptions(
     apiKey: 'AIzaSyDTDz888KITFYZL6r_Ab2yExFs5pmYbMjo',
     appId: '1:389097463414:ios:cdb7b05e61fc67fe598957',
     messagingSenderId: '389097463414',

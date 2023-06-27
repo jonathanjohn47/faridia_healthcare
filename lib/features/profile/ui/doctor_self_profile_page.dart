@@ -17,7 +17,7 @@ class DoctorSelfProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(0),
+          preferredSize: const Size.fromHeight(0),
           child: Container(
             color: AppColors.primary,
           ),
@@ -46,7 +46,7 @@ class DoctorSelfProfilePage extends StatelessWidget {
                             : getController.imageLink.value.isEmpty
                                 ? CircleAvatar(
                                     radius: 50.sp,
-                                    backgroundImage: AssetImage(
+                                    backgroundImage: const AssetImage(
                                       'assets/images/img_491471.png',
                                     ),
                                   )
@@ -72,7 +72,7 @@ class DoctorSelfProfilePage extends StatelessWidget {
                               onPressed: () {
                                 getController.getPhoto();
                               },
-                              child: Icon(
+                              child: const Icon(
                                 Icons.edit,
                                 color: Colors.white,
                               ),
@@ -88,7 +88,7 @@ class DoctorSelfProfilePage extends StatelessWidget {
                 height: 8.sp,
               ),
               Table(
-                columnWidths: {
+                columnWidths: const {
                   0: FlexColumnWidth(1),
                   1: FlexColumnWidth(3),
                 },
@@ -106,13 +106,13 @@ class DoctorSelfProfilePage extends StatelessWidget {
                       return getController.editMode.value
                           ? TextFormField(
                               controller: getController.nameController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                               ),
                             )
                           : StreamBuilder<String>(
                               stream: Stream.periodic(
-                                  Duration(milliseconds: 100), (_) {
+                                  const Duration(milliseconds: 100), (_) {
                                 return getController.nameController.text;
                               }),
                               builder: (context, snapshot) {
@@ -152,15 +152,15 @@ class DoctorSelfProfilePage extends StatelessWidget {
                     ? TextFormField(
                         controller: getController.bioController,
                         maxLines: 3,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText:
                               'e.g\nGynocologist\nMBBS, MD, PhD\n10 years of experience',
                         ),
                       )
                     : StreamBuilder<String>(
-                        stream:
-                            Stream.periodic(Duration(milliseconds: 100), (_) {
+                        stream: Stream.periodic(
+                            const Duration(milliseconds: 100), (_) {
                           return getController.bioController.text;
                         }),
                         builder: (context, snapshot) {
@@ -182,15 +182,15 @@ class DoctorSelfProfilePage extends StatelessWidget {
                     ? TextFormField(
                         controller: getController.aboutController,
                         maxLines: 3,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText:
                               'Write something about yourself in short...',
                         ),
                       )
                     : StreamBuilder<String>(
-                        stream:
-                            Stream.periodic(Duration(milliseconds: 100), (_) {
+                        stream: Stream.periodic(
+                            const Duration(milliseconds: 100), (_) {
                           return getController.aboutController.text;
                         }),
                         builder: (context, snapshot) {
@@ -212,15 +212,15 @@ class DoctorSelfProfilePage extends StatelessWidget {
                     ? TextFormField(
                         controller: getController.servicesController,
                         maxLines: 3,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText:
                               'What are the services you offer? e.g. Dental Care, Eye Care, etc.',
                         ),
                       )
                     : StreamBuilder<String>(
-                        stream:
-                            Stream.periodic(Duration(milliseconds: 100), (_) {
+                        stream: Stream.periodic(
+                            const Duration(milliseconds: 100), (_) {
                           return getController.servicesController.text;
                         }),
                         builder: (context, snapshot) {
@@ -242,15 +242,15 @@ class DoctorSelfProfilePage extends StatelessWidget {
                     ? TextFormField(
                         controller: getController.experienceController,
                         maxLines: 3,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText:
                               'Write about your best work experience. e.g. 5 years of experience as Gynocologist in AIIMS etc.',
                         ),
                       )
                     : StreamBuilder<String>(
-                        stream:
-                            Stream.periodic(Duration(milliseconds: 100), (_) {
+                        stream: Stream.periodic(
+                            const Duration(milliseconds: 100), (_) {
                           return getController.experienceController.text;
                         }),
                         builder: (context, snapshot) {
@@ -273,15 +273,15 @@ class DoctorSelfProfilePage extends StatelessWidget {
                         controller:
                             getController.awardsAndRecognitionsController,
                         maxLines: 3,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText:
                               'This will make you stand out. You know what to write here...',
                         ),
                       )
                     : StreamBuilder<String>(
-                        stream:
-                            Stream.periodic(Duration(milliseconds: 100), (_) {
+                        stream: Stream.periodic(
+                            const Duration(milliseconds: 100), (_) {
                           return getController
                               .awardsAndRecognitionsController.text;
                         }),
@@ -304,15 +304,15 @@ class DoctorSelfProfilePage extends StatelessWidget {
                     ? TextFormField(
                         controller: getController.clinicAddressController,
                         maxLines: 3,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText:
                               'Where do you see patients? e.g. AIIMS, New Delhi',
                         ),
                       )
                     : StreamBuilder<String>(
-                        stream:
-                            Stream.periodic(Duration(milliseconds: 100), (_) {
+                        stream: Stream.periodic(
+                            const Duration(milliseconds: 100), (_) {
                           return getController.clinicAddressController.text;
                         }),
                         builder: (context, snapshot) {

@@ -3,7 +3,7 @@ extension DateTimeHelpers on DateTime {
     return "${"$day".padLeft(2, '0')}/${"$month".padLeft(2, '0')}/${"$year".padLeft(4, '0')}";
   }
 
-  String getTimeString(){
+  String getTimeString() {
     return "${"$hour".padLeft(2, '0')}:${"$minute".padLeft(2, '0')}";
   }
 

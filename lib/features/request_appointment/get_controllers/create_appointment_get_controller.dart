@@ -22,7 +22,7 @@ class CreateAppointmentGetController extends GetxController {
             context: context,
             initialDate: DateTime.now(),
             firstDate: DateTime.now(),
-            lastDate: DateTime.now().add(Duration(days: 30)))
+            lastDate: DateTime.now().add(const Duration(days: 30)))
         .then((value) {
       if (value != null) {
         chosenDate.value = value;
@@ -40,7 +40,7 @@ class CreateAppointmentGetController extends GetxController {
   }
 
   Future<void> createAppointment(DoctorModel doctorModel) async {
-    Uuid uuid = Uuid();
+    Uuid uuid = const Uuid();
     String appointmentRequestId = uuid.v4();
     await FirebaseFirestore.instance
         .collection(AppConstants.patients)
@@ -78,8 +78,8 @@ class CreateAppointmentGetController extends GetxController {
         NotificationModel notificationModel = NotificationModel(
             id: notificationId,
             title: 'Appointment Request',
-            description: 'You have a new appointment request from ' +
-                appointmentRequestModel.patientModel.name,
+            description:
+                'You have a new appointment request from ${appointmentRequestModel.patientModel.name}',
             isRead: false,
             sentAt: DateTime.now());
         await FirebaseFirestore.instance

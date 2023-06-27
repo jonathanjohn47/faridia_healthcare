@@ -5,13 +5,13 @@ import 'package:sizer/sizer.dart';
 import '../../../core/app_colors.dart';
 
 class MessagesPage extends StatelessWidget {
-  MessagesPage({super.key});
+  const MessagesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(0),
+          preferredSize: const Size.fromHeight(0),
           child: Container(
             color: AppColors.primary,
           ),
@@ -46,16 +46,16 @@ class MessagesPage extends StatelessWidget {
                               ),
                               Expanded(
                                 child: ListTile(
-                                    leading: CircleAvatar(
+                                    leading: const CircleAvatar(
                                       backgroundImage: AssetImage(
                                           'assets/images/img_491471.png'),
                                     ),
-                                    title: Text(
+                                    title: const Text(
                                       "Dr Ahmed",
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700),
                                     ),
-                                    subtitle: Text('hi, How are you?'),
+                                    subtitle: const Text('hi, How are you?'),
                                     trailing: Text(
                                       '50 mins ago',
                                       style: TextStyle(

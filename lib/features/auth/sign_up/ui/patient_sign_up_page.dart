@@ -18,7 +18,7 @@ class PatientSignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(0),
+        preferredSize: const Size.fromHeight(0),
         child: Container(
           color: AppColors.primary,
         ),
@@ -51,7 +51,7 @@ class PatientSignUpPage extends StatelessWidget {
                         return getController.imagePath.value.isEmpty
                             ? CircleAvatar(
                                 radius: 50.sp,
-                                backgroundImage: AssetImage(
+                                backgroundImage: const AssetImage(
                                   'assets/images/3727036.png',
                                 ),
                               )
@@ -70,14 +70,14 @@ class PatientSignUpPage extends StatelessWidget {
                           onPressed: () {
                             getController.chooseImage();
                           },
-                          child: Icon(
-                            Icons.camera_alt,
-                            color: Colors.white,
-                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50.sp),
                           ),
                           backgroundColor: AppColors.secondary,
+                          child: const Icon(
+                            Icons.camera_alt,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],
@@ -89,7 +89,7 @@ class PatientSignUpPage extends StatelessWidget {
               ),
               TextFormField(
                 controller: getController.nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Name',
                   border: OutlineInputBorder(),
                 ),
@@ -105,7 +105,7 @@ class PatientSignUpPage extends StatelessWidget {
               ),
               TextFormField(
                 controller: getController.emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Email',
                   border: OutlineInputBorder(),
                 ),
@@ -122,7 +122,7 @@ class PatientSignUpPage extends StatelessWidget {
               TextFormField(
                 controller: getController.phoneNumberController,
                 keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Phone Number',
                   border: OutlineInputBorder(),
                 ),
@@ -139,7 +139,7 @@ class PatientSignUpPage extends StatelessWidget {
               TextFormField(
                 controller: getController.addressController,
                 maxLines: 3,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Address',
                   border: OutlineInputBorder(),
                 ),
@@ -166,7 +166,7 @@ class PatientSignUpPage extends StatelessWidget {
                   obscureText: !getController.showPassword.value,
                   decoration: InputDecoration(
                     labelText: 'Password',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
                       icon: Icon(
                         getController.showPassword.value
@@ -195,7 +195,7 @@ class PatientSignUpPage extends StatelessWidget {
                   obscureText: !getController.showPassword.value,
                   decoration: InputDecoration(
                     labelText: 'Confirm Password',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
                       icon: Icon(
                         getController.showPassword.value
@@ -223,7 +223,7 @@ class PatientSignUpPage extends StatelessWidget {
                 children: [
                   Obx(() {
                     return getController.showLoader.value
-                        ? CircularProgressIndicator()
+                        ? const CircularProgressIndicator()
                         : FloatingActionButton.extended(
                             heroTag: null,
                             onPressed: () {

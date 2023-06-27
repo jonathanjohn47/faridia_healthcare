@@ -37,7 +37,7 @@ class PatientSignInGetController extends GetxController {
                   email: emailController.text.trim(),
                   password: passwordController.text.trim())
               .then((value) {
-            Get.offAll(() => PatientHomePage());
+            Get.offAll(() => const PatientHomePage());
           });
         }
       }).catchError((error) {

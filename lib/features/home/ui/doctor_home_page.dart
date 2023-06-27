@@ -40,7 +40,7 @@ class DoctorHomePage extends StatelessWidget {
               onPressed: () {
                 Get.to(() => DoctorSelfProfilePage());
               },
-              icon: Icon(Icons.person))
+              icon: const Icon(Icons.person))
         ],
       ),
       body: ListView(
@@ -120,7 +120,7 @@ class DoctorHomePage extends StatelessWidget {
                             },
                             itemCount: appointments.length,
                           )
-                        : Center(child: Text('No Appointments'));
+                        : const Center(child: Text('No Appointments'));
                   }
                   return Container();
                 }),
@@ -146,7 +146,7 @@ class DoctorHomePage extends StatelessWidget {
                   style:
                       TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
                 ),
-                Spacer(),
+                const Spacer(),
                 CircleAvatar(
                   radius: 10.sp,
                   backgroundColor: Colors.red,
@@ -187,11 +187,11 @@ class DoctorHomePage extends StatelessWidget {
                                           height: 8.sp,
                                         ),
                                         ListTile(
-                                          leading: Icon(
+                                          leading: const Icon(
                                             Icons.calendar_today,
                                             color: Colors.green,
                                           ),
-                                          title: Text(
+                                          title: const Text(
                                             'Set Appointment',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
@@ -206,7 +206,7 @@ class DoctorHomePage extends StatelessWidget {
                                                 ));
                                           },
                                         ),
-                                        ListTile(
+                                        const ListTile(
                                           leading: Icon(
                                             Icons.cancel,
                                             color: Colors.red,
@@ -267,7 +267,7 @@ class DoctorHomePage extends StatelessWidget {
                                   SizedBox(
                                     height: 4.sp,
                                   ),
-                                  Text('Requested On:'),
+                                  const Text('Requested On:'),
                                   Text(
                                     getController
                                         .appointmentRequests[index].requestedOn
@@ -284,7 +284,7 @@ class DoctorHomePage extends StatelessWidget {
                       },
                       itemCount: getController.appointmentRequests.length,
                     )
-                  : Center(child: Text('No Appointment Requests'));
+                  : const Center(child: Text('No Appointment Requests'));
             }),
           ),
           SizedBox(
@@ -314,10 +314,10 @@ class DoctorHomePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       GestureDetector(
                         onTap: () {
-                          Get.to(() => NotificationsPage());
+                          Get.to(() => const NotificationsPage());
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.sp),
@@ -344,7 +344,7 @@ class DoctorHomePage extends StatelessWidget {
                                       notifications.removeWhere(
                                           (element) => element.isRead == true);
                                       return Visibility(
-                                        visible: notifications.length > 0,
+                                        visible: notifications.isNotEmpty,
                                         child: Positioned(
                                           top: 0,
                                           right: 0,
@@ -385,10 +385,10 @@ class DoctorHomePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       GestureDetector(
                         onTap: () {
-                          Get.to(() => MessagesPage());
+                          Get.to(() => const MessagesPage());
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.sp),
@@ -445,7 +445,7 @@ class DoctorHomePage extends StatelessWidget {
                   child: ListView(
                 children: [
                   ListTile(
-                    title: Text('My Profile'),
+                    title: const Text('My Profile'),
                     onTap: () {
                       Get.to(() => DoctorSelfProfilePage());
                     },
@@ -457,7 +457,7 @@ class DoctorHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: Text('Appointments'),
+                    title: const Text('Appointments'),
                     onTap: () {
                       Get.to(() => DoctorAppointmentsPage());
                     },
@@ -469,17 +469,17 @@ class DoctorHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: Text("Messages"),
+                    title: const Text("Messages"),
                     trailing: CircleAvatar(
                       radius: 10.sp,
                       backgroundColor: Colors.red,
-                      child: Text(
+                      child: const Text(
                         '9+',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
                     onTap: () {
-                      Get.to(() => MessagesPage());
+                      Get.to(() => const MessagesPage());
                     },
                   ),
                   Divider(
@@ -497,8 +497,8 @@ class DoctorHomePage extends StatelessWidget {
                 endIndent: 8.sp,
               ),
               ListTile(
-                leading: Icon(Icons.logout),
-                title: Text('Logout'),
+                leading: const Icon(Icons.logout),
+                title: const Text('Logout'),
                 onTap: () {
                   FirebaseAuth.instance.signOut().then((value) {
                     Get.offAll(() => SelectProfilePage());
