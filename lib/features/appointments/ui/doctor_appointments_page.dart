@@ -22,7 +22,7 @@ class DoctorAppointmentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(0),
+        preferredSize: Size.fromHeight(0),
         child: Container(
           color: AppColors.primary,
         ),
@@ -130,7 +130,7 @@ class DoctorAppointmentsPage extends StatelessWidget {
                                                 getController.cancelAppointment(
                                                     appointments[index]);
                                               },
-                                              child: const Text(
+                                              child: Text(
                                                   'Cancel Appointment'))
                                         ])
                                       ],

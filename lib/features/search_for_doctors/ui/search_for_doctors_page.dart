@@ -28,7 +28,7 @@ class SearchForDoctorsPage extends StatelessWidget {
               bottomRight: Radius.circular(10.0.sp),
             ),
           ),
-          title: const Text(
+          title: Text(
             'Search for Doctors',
             style: TextStyle(fontWeight: FontWeight.w500),
           ),
@@ -50,7 +50,7 @@ class SearchForDoctorsPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         labelText: 'Name, Specialization, etc...',
-                        prefixIcon: const Icon(Icons.search),
+                        prefixIcon: Icon(Icons.search),
                         // other properties...
                       ),
                     ),
@@ -94,7 +94,7 @@ class SearchForDoctorsPage extends StatelessWidget {
                               DoctorModel doctor = allDoctors[index];
                               return StreamBuilder<String>(
                                   stream: Stream.periodic(
-                                      const Duration(milliseconds: 500), (_) {
+                                      Duration(milliseconds: 500), (_) {
                                     return getController.searchController.text;
                                   }),
                                   builder: (context, snapshot) {
@@ -154,7 +154,7 @@ class SearchForDoctorsPage extends StatelessWidget {
                                                           ),
                                                           Text(
                                                             doctor.bio,
-                                                            style: const TextStyle(
+                                                            style: TextStyle(
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500),
@@ -182,7 +182,7 @@ class SearchForDoctorsPage extends StatelessWidget {
                             itemCount: allDoctors.length,
                           );
                         }
-                        return const Center(
+                        return Center(
                           child: CircularProgressIndicator(),
                         );
                       }))

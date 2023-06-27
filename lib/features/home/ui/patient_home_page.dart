@@ -15,15 +15,16 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../core/app_colors.dart';
+import '../../../models/chat_channel_model.dart';
 import '../../../models/notification_model.dart';
 import '../../appointments/ui/appointments_page.dart';
-import '../../messages/ui/messages_page.dart';
+import '../../messages/ui/messages_page_patient.dart';
 import '../../profile/ui/doctor_profile_page.dart';
 import '../../request_appointment/ui/request_appointment_page.dart';
 import '../../saved_doctors/ui/saved_doctors_page.dart';
 
 class PatientHomePage extends StatelessWidget {
-  const PatientHomePage({super.key});
+  PatientHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class PatientHomePage extends StatelessWidget {
               onPressed: () {
                 Get.to(() => PatientSelfProfilePage());
               },
-              icon: const Icon(Icons.person))
+              icon: Icon(Icons.person))
         ],
       ),
       body: ListView(
@@ -82,7 +83,7 @@ class PatientHomePage extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(8.0),
                           child: FloatingActionButton.extended(
                             heroTag: null,
                             elevation: 2,
@@ -116,11 +117,11 @@ class PatientHomePage extends StatelessWidget {
                                       color: AppColors.secondary,
                                     ),
                                     Table(
-                                      columnWidths: const {
+                                      columnWidths: {
                                         0: FlexColumnWidth(1),
                                         2: FlexColumnWidth(1),
                                       },
-                                      children: const [
+                                      children: [
                                         TableRow(children: [
                                           AutoSizeText(
                                             '12/12/2021',
@@ -135,7 +136,7 @@ class PatientHomePage extends StatelessWidget {
                                         ]),
                                       ],
                                     ),
-                                    const AutoSizeText(
+                                    AutoSizeText(
                                       '10 Downing Street, London',
                                       style: TextStyle(
                                           fontWeight: FontWeight.w600),
@@ -151,7 +152,7 @@ class PatientHomePage extends StatelessWidget {
                       itemCount: appointments.length,
                     );
                   }
-                  return const Center(
+                  return Center(
                     child: CircularProgressIndicator(),
                   );
                 }),
@@ -180,10 +181,10 @@ class PatientHomePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const Spacer(),
+                      Spacer(),
                       GestureDetector(
                         onTap: () {
-                          Get.to(() => const NotificationsPage());
+                          Get.to(() => NotificationsPage());
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.sp),
@@ -251,10 +252,10 @@ class PatientHomePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const Spacer(),
+                      Spacer(),
                       GestureDetector(
                         onTap: () {
-                          Get.to(() => const MessagesPage());
+                          Get.to(() => MessagesPagePatient());
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.sp),
@@ -377,7 +378,7 @@ class PatientHomePage extends StatelessWidget {
                                           ),
                                           Text(
                                             doctor.bio,
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontWeight: FontWeight.w500),
                                           ),
                                         ],
@@ -399,7 +400,7 @@ class PatientHomePage extends StatelessWidget {
                       itemCount: doctors.length,
                     );
                   }
-                  return const Center(
+                  return Center(
                     child: CircularProgressIndicator(),
                   );
                 }),
@@ -426,7 +427,7 @@ class PatientHomePage extends StatelessWidget {
                   child: ListView(
                 children: [
                   ListTile(
-                    title: const Text('My Profile'),
+                    title: Text('My Profile'),
                     onTap: () {
                       Get.to(() => PatientSelfProfilePage());
                     },
@@ -438,7 +439,7 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: const Text('Search For Doctors'),
+                    title: Text('Search For Doctors'),
                     onTap: () {
                       Get.to(() => SearchForDoctorsPage());
                     },
@@ -450,7 +451,7 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: const Text('Request an Appointment'),
+                    title: Text('Request an Appointment'),
                     onTap: () {
                       Get.to(() => RequestAppointmentPage());
                     },
@@ -462,7 +463,7 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: const Text('Appointments'),
+                    title: Text('Appointments'),
                     onTap: () {
                       Get.to(() => AppointmentsPage());
                     },
@@ -474,17 +475,41 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: const Text("Messages"),
-                    trailing: CircleAvatar(
-                      radius: 10.sp,
-                      backgroundColor: Colors.red,
-                      child: const Text(
-                        '9+',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
+                    title: Text("Messages"),
+                    trailing: StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection(AppConstants.chatChannels)
+                            .where('patient_email',
+                                isEqualTo:
+                                    FirebaseAuth.instance.currentUser!.email!)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            List<ChatChannelModel> chatChannels = snapshot
+                                .data!.docs
+                                .map((e) => ChatChannelModel.fromJson(
+                                    jsonDecode(jsonEncode(e.data()))))
+                                .toList();
+                            chatChannels.removeWhere(
+                                (element) => element.lastMessage.readByPatient);
+                            return Visibility(
+                              visible: chatChannels.isNotEmpty,
+                              child: CircleAvatar(
+                                radius: 10.sp,
+                                backgroundColor: Colors.red,
+                                child: Text(
+                                  chatChannels.length <= 9
+                                      ? chatChannels.length.toString()
+                                      : "9+",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            );
+                          }
+                          return Container();
+                        }),
                     onTap: () {
-                      Get.to(() => const MessagesPage());
+                      Get.to(() => MessagesPagePatient());
                     },
                   ),
                   Divider(
@@ -494,7 +519,7 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: const Text("Saved Doctors"),
+                    title: Text("Saved Doctors"),
                     trailing: StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
                             .collection(AppConstants.patients)
@@ -509,16 +534,16 @@ class PatientHomePage extends StatelessWidget {
                                 backgroundColor: Colors.blueAccent,
                                 child: Text(
                                   snapshot.data!.docs.length.toString(),
-                                  style: const TextStyle(color: Colors.white),
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               );
                             }
-                            return const SizedBox(
+                            return SizedBox(
                               height: 0,
                               width: 0,
                             );
                           }
-                          return const SizedBox(
+                          return SizedBox(
                             height: 0,
                             width: 0,
                           );
@@ -542,8 +567,8 @@ class PatientHomePage extends StatelessWidget {
                 endIndent: 8.sp,
               ),
               ListTile(
-                leading: const Icon(Icons.logout),
-                title: const Text('Logout'),
+                leading: Icon(Icons.logout),
+                title: Text('Logout'),
                 onTap: () {
                   FirebaseAuth.instance.signOut().then((value) {
                     Get.offAll(() => SelectProfilePage());

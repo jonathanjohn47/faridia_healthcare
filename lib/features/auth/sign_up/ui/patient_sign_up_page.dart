@@ -18,7 +18,7 @@ class PatientSignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(0),
+        preferredSize: Size.fromHeight(0),
         child: Container(
           color: AppColors.primary,
         ),
@@ -51,7 +51,7 @@ class PatientSignUpPage extends StatelessWidget {
                         return getController.imagePath.value.isEmpty
                             ? CircleAvatar(
                                 radius: 50.sp,
-                                backgroundImage: const AssetImage(
+                                backgroundImage: AssetImage(
                                   'assets/images/3727036.png',
                                 ),
                               )
@@ -74,7 +74,7 @@ class PatientSignUpPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(50.sp),
                           ),
                           backgroundColor: AppColors.secondary,
-                          child: const Icon(
+                          child: Icon(
                             Icons.camera_alt,
                             color: Colors.white,
                           ),
@@ -89,7 +89,7 @@ class PatientSignUpPage extends StatelessWidget {
               ),
               TextFormField(
                 controller: getController.nameController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Name',
                   border: OutlineInputBorder(),
                 ),
@@ -105,7 +105,7 @@ class PatientSignUpPage extends StatelessWidget {
               ),
               TextFormField(
                 controller: getController.emailController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Email',
                   border: OutlineInputBorder(),
                 ),
@@ -122,7 +122,7 @@ class PatientSignUpPage extends StatelessWidget {
               TextFormField(
                 controller: getController.phoneNumberController,
                 keyboardType: TextInputType.phone,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Phone Number',
                   border: OutlineInputBorder(),
                 ),
@@ -139,7 +139,7 @@ class PatientSignUpPage extends StatelessWidget {
               TextFormField(
                 controller: getController.addressController,
                 maxLines: 3,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Address',
                   border: OutlineInputBorder(),
                 ),
@@ -166,7 +166,7 @@ class PatientSignUpPage extends StatelessWidget {
                   obscureText: !getController.showPassword.value,
                   decoration: InputDecoration(
                     labelText: 'Password',
-                    border: const OutlineInputBorder(),
+                    border: OutlineInputBorder(),
                     suffixIcon: IconButton(
                       icon: Icon(
                         getController.showPassword.value
@@ -195,7 +195,7 @@ class PatientSignUpPage extends StatelessWidget {
                   obscureText: !getController.showPassword.value,
                   decoration: InputDecoration(
                     labelText: 'Confirm Password',
-                    border: const OutlineInputBorder(),
+                    border: OutlineInputBorder(),
                     suffixIcon: IconButton(
                       icon: Icon(
                         getController.showPassword.value
@@ -223,7 +223,7 @@ class PatientSignUpPage extends StatelessWidget {
                 children: [
                   Obx(() {
                     return getController.showLoader.value
-                        ? const CircularProgressIndicator()
+                        ? CircularProgressIndicator()
                         : FloatingActionButton.extended(
                             heroTag: null,
                             onPressed: () {

@@ -19,7 +19,7 @@ class CreateAppointmentPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(0),
+          preferredSize: Size.fromHeight(0),
           child: Container(
             color: AppColors.primary,
           ),
@@ -71,7 +71,7 @@ class CreateAppointmentPage extends StatelessWidget {
                             Text(
                               doctorModel.bio,
                               style:
-                                  const TextStyle(fontWeight: FontWeight.w500),
+                                  TextStyle(fontWeight: FontWeight.w500),
                             ),
                           ],
                         ),
@@ -116,11 +116,11 @@ class CreateAppointmentPage extends StatelessWidget {
                     padding: EdgeInsets.all(8.0.sp),
                     child: Row(
                       children: [
-                        const Text(
+                        Text(
                           'Choose Date',
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
-                        const Spacer(),
+                        Spacer(),
                         Obx(() {
                           return Text(
                             getController.chosenDate.value.getDateString(),
@@ -149,11 +149,11 @@ class CreateAppointmentPage extends StatelessWidget {
                     padding: EdgeInsets.all(8.0.sp),
                     child: Row(
                       children: [
-                        const Text(
+                        Text(
                           'Choose Time',
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
-                        const Spacer(),
+                        Spacer(),
                         Obx(() {
                           return Text(
                             DateTime(
@@ -189,7 +189,7 @@ class CreateAppointmentPage extends StatelessWidget {
                     onPressed: () {
                       getController.createAppointment(doctorModel);
                     },
-                    icon: const Icon(Icons.check, color: Colors.white),
+                    icon: Icon(Icons.check, color: Colors.white),
                     label: Text('Request',
                         style: TextStyle(
                             fontSize: 12.sp,

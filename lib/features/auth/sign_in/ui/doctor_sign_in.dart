@@ -15,7 +15,7 @@ class DoctorSignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(0),
+        preferredSize: Size.fromHeight(0),
         child: Container(
           color: AppColors.primary,
         ),
@@ -40,7 +40,7 @@ class DoctorSignInPage extends StatelessWidget {
             ),
             TextFormField(
               controller: getController.emailController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
               ),
@@ -54,7 +54,7 @@ class DoctorSignInPage extends StatelessWidget {
                 obscureText: !getController.showPassword.value,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  border: const OutlineInputBorder(),
+                  border: OutlineInputBorder(),
                   suffixIcon: IconButton(
                     icon: Icon(
                       getController.showPassword.value
@@ -76,7 +76,7 @@ class DoctorSignInPage extends StatelessWidget {
               children: [
                 Obx(() {
                   return getController.showLoader.value
-                      ? const CircularProgressIndicator()
+                      ? CircularProgressIndicator()
                       : FloatingActionButton.extended(
                           heroTag: null,
                           onPressed: () {
