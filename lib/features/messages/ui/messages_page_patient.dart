@@ -1,28 +1,29 @@
-import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:faridia_healthcare/core/app_constants.dart';
-import 'package:faridia_healthcare/helpers/date_time_helpers.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+import 'package:get/get.dart';
+import 'package:zego_zimkit/zego_zimkit.dart';
 
 import '../../../core/app_colors.dart';
-import '../../../models/chat_channel_model.dart';
 
 class MessagesPagePatient extends StatelessWidget {
-  const MessagesPagePatient({super.key});
+  MessagesPagePatient({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(0),
+          preferredSize: Size.fromHeight(0),
           child: Container(
             color: AppColors.primary,
           ),
         ),
-        body: Padding(
+        body: ZIMKitConversationListView(
+          onPressed: (context, conversation, defaultAction) {
+            Get.to(() => ZIMKitMessageListPage(
+                  conversationID: conversation.id,
+                  conversationType: conversation.type,
+                ));
+          },
+        ) /*Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.0.sp),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +79,7 @@ class MessagesPagePatient extends StatelessWidget {
                                                 ),
                                                 title: Text(
                                                   chatChannel.doctorModel.name,
-                                                  style: const TextStyle(
+                                                  style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.w700),
                                                 ),
@@ -104,17 +105,18 @@ class MessagesPagePatient extends StatelessWidget {
                                 },
                                 itemCount: 10,
                               )
-                            : const Center(
+                            : Center(
                                 child: Text('No messages yet'),
                               );
                       }
-                      return const Center(
+                      return Center(
                         child: CircularProgressIndicator(),
                       );
                     }),
               ),
             ],
           ),
-        ));
+        )*/
+        );
   }
 }

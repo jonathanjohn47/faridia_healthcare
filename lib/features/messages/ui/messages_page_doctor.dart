@@ -1,25 +1,29 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:faridia_healthcare/core/app_constants.dart';
-import 'package:faridia_healthcare/helpers/index_helpers.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+import 'package:get/get.dart';
+import 'package:zego_zimkit/zego_zimkit.dart';
 
 import '../../../core/app_colors.dart';
 
 class MessagesPageDoctor extends StatelessWidget {
-  const MessagesPageDoctor({super.key});
+  MessagesPageDoctor({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(0),
-          child: Container(
-            color: AppColors.primary,
-          ),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(0),
+        child: Container(
+          color: AppColors.primary,
         ),
-        body: Padding(
+      ),
+      body: ZIMKitConversationListView(
+        onPressed: (context, conversation, defaultAction) {
+          Get.to(() => ZIMKitMessageListPage(
+                conversationID: conversation.id,
+                conversationType: conversation.type,
+              ));
+        },
+      ), /*Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.0.sp),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,17 +63,17 @@ class MessagesPageDoctor extends StatelessWidget {
                                   ),
                                   Expanded(
                                     child: ListTile(
-                                        leading: const CircleAvatar(
+                                        leading: CircleAvatar(
                                           backgroundImage: AssetImage(
                                               'assets/images/img_491471.png'),
                                         ),
-                                        title: const Text(
+                                        title: Text(
                                           "Dr Ahmed",
                                           style: TextStyle(
                                               fontWeight: FontWeight.w700),
                                         ),
                                         subtitle:
-                                            const Text('hi, How are you?'),
+                                            Text('hi, How are you?'),
                                         trailing: Text(
                                           '50 mins ago',
                                           style: TextStyle(
@@ -92,6 +96,7 @@ class MessagesPageDoctor extends StatelessWidget {
               ),
             ],
           ),
-        ));
+        )*/
+    );
   }
 }

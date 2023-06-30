@@ -3,20 +3,25 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:zego_zimkit/services/services.dart';
 
 import 'core/app_colors.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
+  ZIMKit().init(
+    appID: 2147056725, // your appid
+    appSign: '78663d2c80c989938747754831f44b8b119e04e769e52f7440786ac6725ba2e2', // your appSign
+  );
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   // This widget is the root of your application.
   @override

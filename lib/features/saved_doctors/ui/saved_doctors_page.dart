@@ -16,7 +16,7 @@ class SavedDoctorsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(0),
+          preferredSize: Size.fromHeight(0),
           child: Container(
             color: AppColors.primary,
           ),
@@ -76,7 +76,7 @@ class SavedDoctorsPage extends StatelessWidget {
                                       ),
                                       Text(
                                         doctorModel.bio,
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                             fontWeight: FontWeight.w500),
                                       ),
                                     ],

@@ -10,7 +10,7 @@ import '../get_controllers/doctor_profile_get_controller.dart';
 class DoctorProfilePage extends StatelessWidget {
   final DoctorModel doctorModel;
 
-  const DoctorProfilePage({super.key, required this.doctorModel});
+  DoctorProfilePage({super.key, required this.doctorModel});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class DoctorProfilePage extends StatelessWidget {
         Get.put(DoctorProfileGetController(doctorModel));
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(0),
+        preferredSize: Size.fromHeight(0),
         child: Container(
           color: AppColors.primary,
         ),
@@ -62,7 +62,7 @@ class DoctorProfilePage extends StatelessWidget {
                           ),
                           Text(
                             doctorModel.bio,
-                            style: const TextStyle(fontWeight: FontWeight.w500),
+                            style: TextStyle(fontWeight: FontWeight.w500),
                           ),
                         ],
                       ),
@@ -95,7 +95,7 @@ class DoctorProfilePage extends StatelessWidget {
                 thumbVisibility: true,
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0),
                     child: Text(doctorModel.about),
                   ),
                 ),
@@ -118,7 +118,7 @@ class DoctorProfilePage extends StatelessWidget {
                 thumbVisibility: true,
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0),
                     child: Text(doctorModel.services,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -140,7 +140,7 @@ class DoctorProfilePage extends StatelessWidget {
               height: 8.sp,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text(doctorModel.education,
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
@@ -159,7 +159,7 @@ class DoctorProfilePage extends StatelessWidget {
               height: 8.sp,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text(doctorModel.experience,
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
@@ -178,7 +178,7 @@ class DoctorProfilePage extends StatelessWidget {
               height: 8.sp,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text(doctorModel.awardsAndRecognitions,
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
@@ -218,7 +218,7 @@ class DoctorProfilePage extends StatelessWidget {
                     },
                     label: Row(
                       children: [
-                        const Icon(Icons.bookmark),
+                        Icon(Icons.bookmark),
                         SizedBox(
                           width: 5.sp,
                         ),
@@ -235,7 +235,9 @@ class DoctorProfilePage extends StatelessWidget {
                 ),
                 Expanded(
                   child: FloatingActionButton.extended(
-                    onPressed: () {},
+                    onPressed: () {
+                      doctorProfileGetController.chatWithDoctor();
+                    },
                     label: Row(
                       children: [
                         Icon(MdiIcons.chat),

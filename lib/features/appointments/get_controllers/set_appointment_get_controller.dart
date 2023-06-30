@@ -16,7 +16,7 @@ class SetAppointmentGetController extends GetxController {
             context: context,
             initialDate: DateTime.now(),
             firstDate: DateTime.now(),
-            lastDate: DateTime.now().add(const Duration(days: 30)))
+            lastDate: DateTime.now().add(Duration(days: 30)))
         .then((value) {
       if (value != null) {
         chosenDate.value = value;

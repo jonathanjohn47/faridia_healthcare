@@ -12,13 +12,13 @@ import 'package:sizer/sizer.dart';
 import '../../core/app_constants.dart';
 
 class NotificationsPage extends StatelessWidget {
-  const NotificationsPage({super.key});
+  NotificationsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(0),
+        preferredSize: Size.fromHeight(0),
         child: Container(
           color: AppColors.primary,
         ),
@@ -78,14 +78,14 @@ class NotificationsPage extends StatelessWidget {
                                           ),
                                           subtitle: Text(
                                             allNotifications[index].description,
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 color: Colors.grey),
                                           ),
                                           trailing: Text(
                                             allNotifications[index]
                                                 .sentAt
                                                 .getHowMuchTimeAgo(),
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 color: Colors.grey),
                                           )),
                                     ),
@@ -100,7 +100,7 @@ class NotificationsPage extends StatelessWidget {
                   ],
                 );
               }
-              return const Center(
+              return Center(
                 child: CircularProgressIndicator(),
               );
             }),

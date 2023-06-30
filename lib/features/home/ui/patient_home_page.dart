@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faridia_healthcare/core/app_constants.dart';
 import 'package:faridia_healthcare/features/auth/select_profile/ui/select_profile_page.dart';
+import 'package:faridia_healthcare/features/home/get_controllers/patient_home_page_get_controller.dart';
 import 'package:faridia_healthcare/features/profile/ui/patient_self_profile_page.dart';
 import 'package:faridia_healthcare/features/search_for_doctors/ui/search_for_doctors_page.dart';
 import 'package:faridia_healthcare/models/appointment_model.dart';
@@ -24,7 +25,10 @@ import '../../request_appointment/ui/request_appointment_page.dart';
 import '../../saved_doctors/ui/saved_doctors_page.dart';
 
 class PatientHomePage extends StatelessWidget {
-  const PatientHomePage({super.key});
+  PatientHomePage({super.key});
+
+  PatientHomePageGetController patientHomePageGetController =
+      Get.put(PatientHomePageGetController());
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +45,7 @@ class PatientHomePage extends StatelessWidget {
               onPressed: () {
                 Get.to(() => PatientSelfProfilePage());
               },
-              icon: const Icon(Icons.person))
+              icon: Icon(Icons.person))
         ],
       ),
       body: ListView(
@@ -83,7 +87,7 @@ class PatientHomePage extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(8.0),
                           child: FloatingActionButton.extended(
                             heroTag: null,
                             elevation: 2,
@@ -117,11 +121,11 @@ class PatientHomePage extends StatelessWidget {
                                       color: AppColors.secondary,
                                     ),
                                     Table(
-                                      columnWidths: const {
+                                      columnWidths: {
                                         0: FlexColumnWidth(1),
                                         2: FlexColumnWidth(1),
                                       },
-                                      children: const [
+                                      children: [
                                         TableRow(children: [
                                           AutoSizeText(
                                             '12/12/2021',
@@ -136,7 +140,7 @@ class PatientHomePage extends StatelessWidget {
                                         ]),
                                       ],
                                     ),
-                                    const AutoSizeText(
+                                    AutoSizeText(
                                       '10 Downing Street, London',
                                       style: TextStyle(
                                           fontWeight: FontWeight.w600),
@@ -152,7 +156,7 @@ class PatientHomePage extends StatelessWidget {
                       itemCount: appointments.length,
                     );
                   }
-                  return const Center(
+                  return Center(
                     child: CircularProgressIndicator(),
                   );
                 }),
@@ -181,10 +185,10 @@ class PatientHomePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const Spacer(),
+                      Spacer(),
                       GestureDetector(
                         onTap: () {
-                          Get.to(() => const NotificationsPage());
+                          Get.to(() => NotificationsPage());
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.sp),
@@ -252,10 +256,10 @@ class PatientHomePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const Spacer(),
+                      Spacer(),
                       GestureDetector(
                         onTap: () {
-                          Get.to(() => const MessagesPagePatient());
+                          Get.to(() => MessagesPagePatient());
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.sp),
@@ -378,7 +382,7 @@ class PatientHomePage extends StatelessWidget {
                                           ),
                                           Text(
                                             doctor.bio,
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontWeight: FontWeight.w500),
                                           ),
                                         ],
@@ -400,7 +404,7 @@ class PatientHomePage extends StatelessWidget {
                       itemCount: doctors.length,
                     );
                   }
-                  return const Center(
+                  return Center(
                     child: CircularProgressIndicator(),
                   );
                 }),
@@ -427,7 +431,7 @@ class PatientHomePage extends StatelessWidget {
                   child: ListView(
                 children: [
                   ListTile(
-                    title: const Text('My Profile'),
+                    title: Text('My Profile'),
                     onTap: () {
                       Get.to(() => PatientSelfProfilePage());
                     },
@@ -439,7 +443,7 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: const Text('Search For Doctors'),
+                    title: Text('Search For Doctors'),
                     onTap: () {
                       Get.to(() => SearchForDoctorsPage());
                     },
@@ -451,7 +455,7 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: const Text('Request an Appointment'),
+                    title: Text('Request an Appointment'),
                     onTap: () {
                       Get.to(() => RequestAppointmentPage());
                     },
@@ -463,7 +467,7 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: const Text('Appointments'),
+                    title: Text('Appointments'),
                     onTap: () {
                       Get.to(() => AppointmentsPage());
                     },
@@ -475,7 +479,7 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: const Text("Messages"),
+                    title: Text("Messages"),
                     trailing: StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
                             .collection(AppConstants.chatChannels)
@@ -501,7 +505,7 @@ class PatientHomePage extends StatelessWidget {
                                   chatChannels.length <= 9
                                       ? chatChannels.length.toString()
                                       : "9+",
-                                  style: const TextStyle(color: Colors.white),
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
                             );
@@ -509,7 +513,7 @@ class PatientHomePage extends StatelessWidget {
                           return Container();
                         }),
                     onTap: () {
-                      Get.to(() => const MessagesPagePatient());
+                      Get.to(() => MessagesPagePatient());
                     },
                   ),
                   Divider(
@@ -519,7 +523,7 @@ class PatientHomePage extends StatelessWidget {
                     endIndent: 10.sp,
                   ),
                   ListTile(
-                    title: const Text("Saved Doctors"),
+                    title: Text("Saved Doctors"),
                     trailing: StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
                             .collection(AppConstants.patients)
@@ -534,16 +538,16 @@ class PatientHomePage extends StatelessWidget {
                                 backgroundColor: Colors.blueAccent,
                                 child: Text(
                                   snapshot.data!.docs.length.toString(),
-                                  style: const TextStyle(color: Colors.white),
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               );
                             }
-                            return const SizedBox(
+                            return SizedBox(
                               height: 0,
                               width: 0,
                             );
                           }
-                          return const SizedBox(
+                          return SizedBox(
                             height: 0,
                             width: 0,
                           );
@@ -567,8 +571,8 @@ class PatientHomePage extends StatelessWidget {
                 endIndent: 8.sp,
               ),
               ListTile(
-                leading: const Icon(Icons.logout),
-                title: const Text('Logout'),
+                leading: Icon(Icons.logout),
+                title: Text('Logout'),
                 onTap: () {
                   FirebaseAuth.instance.signOut().then((value) {
                     Get.offAll(() => SelectProfilePage());

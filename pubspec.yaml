@@ -54,6 +54,7 @@ dependencies:
   auto_size_text: ^3.0.0
   uuid: ^3.0.7
   flutter_chat_bubble: ^2.0.2
+  zego_zimkit: ^1.7.0
 
 dev_dependencies:
   flutter_test:

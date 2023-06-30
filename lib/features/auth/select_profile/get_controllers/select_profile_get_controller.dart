@@ -22,7 +22,7 @@ class SelectProfileGetController extends GetxController {
               .get()
               .then((value) {
             if (value.exists) {
-              Get.offAll(() => const PatientHomePage());
+              Get.offAll(() => PatientHomePage());
             }
           });
         }

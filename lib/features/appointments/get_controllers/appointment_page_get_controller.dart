@@ -12,10 +12,10 @@ class AppointmentPageGetController extends GetxController {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Cancel Appointment?'),
+            title: Text('Cancel Appointment?'),
             content: Column(
               children: [
-                const Text('Are you sure you want to cancel this appointment?'),
+                Text('Are you sure you want to cancel this appointment?'),
                 SizedBox(
                   height: 8.sp,
                 ),
@@ -26,7 +26,7 @@ class AppointmentPageGetController extends GetxController {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text('No'),
+                child: Text('No'),
               ),
               TextButton(
                 onPressed: () {
@@ -43,7 +43,7 @@ class AppointmentPageGetController extends GetxController {
                         backgroundColor: Colors.green, colorText: Colors.white);
                   });
                 },
-                child: const Text('Yes'),
+                child: Text('Yes'),
               ),
             ],
           );
