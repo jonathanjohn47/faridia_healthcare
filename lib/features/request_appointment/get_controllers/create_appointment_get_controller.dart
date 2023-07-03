@@ -90,5 +90,8 @@ class CreateAppointmentGetController extends GetxController {
             .set(notificationModel.toJson());
       });
     });
+    Get.back();
+    Get.snackbar('Success', 'Appointment request sent successfully',
+        backgroundColor: Colors.green, colorText: Colors.white);
   }
 }

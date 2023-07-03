@@ -60,82 +60,90 @@ class DoctorAppointmentsPage extends StatelessWidget {
                         return ListView.builder(
                           itemBuilder: (context, index) {
                             return Card(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 16.sp, vertical: 8.0.sp),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      appointments[index].patientModel.name,
-                                      style: TextStyle(
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(
-                                      height: 8.sp,
-                                    ),
-                                    Table(
-                                      children: [
-                                        TableRow(children: [
-                                          Text(
-                                            "Date",
-                                            style: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.grey.shade700),
-                                          ),
-                                          Text(
-                                            "Time",
-                                            style: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.grey.shade700),
-                                          ),
-                                        ]),
-                                        TableRow(children: [
-                                          Text(
-                                            appointments[index]
-                                                .appointmentOn
-                                                .getDateStringWithMonthName(),
-                                            style: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.grey.shade700),
-                                          ),
-                                          Text(
-                                            appointments[index]
-                                                .appointmentOn
-                                                .getTimeStringInAmPm(),
-                                            style: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.grey.shade700),
-                                          ),
-                                        ])
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 8.sp,
-                                    ),
-                                    Divider(
-                                      thickness: 0.5.sp,
-                                      color: AppColors.secondary,
-                                    ),
-                                    Table(
-                                      children: [
-                                        TableRow(children: [
-                                          TextButton(
-                                              onPressed: () {
-                                                getController.cancelAppointment(
-                                                    appointments[index]);
-                                              },
-                                              child: Text(
-                                                  'Cancel Appointment'))
-                                        ])
-                                      ],
-                                    )
-                                  ],
+                              child: InkWell(
+                                onTap: () {
+                                  getController.initiateAppointmentMeeting(
+                                      appointments[index]);
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16.sp, vertical: 8.0.sp),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        appointments[index].patientModel.name,
+                                        style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(
+                                        height: 8.sp,
+                                      ),
+                                      Table(
+                                        children: [
+                                          TableRow(children: [
+                                            Text(
+                                              "Date",
+                                              style: TextStyle(
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.grey.shade700),
+                                            ),
+                                            Text(
+                                              "Time",
+                                              style: TextStyle(
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.grey.shade700),
+                                            ),
+                                          ]),
+                                          TableRow(children: [
+                                            Text(
+                                              appointments[index]
+                                                  .appointmentOn
+                                                  .getDateStringWithMonthName(),
+                                              style: TextStyle(
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.grey.shade700),
+                                            ),
+                                            Text(
+                                              appointments[index]
+                                                  .appointmentOn
+                                                  .getTimeStringInAmPm(),
+                                              style: TextStyle(
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.grey.shade700),
+                                            ),
+                                          ])
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 8.sp,
+                                      ),
+                                      Divider(
+                                        thickness: 0.5.sp,
+                                        color: AppColors.secondary,
+                                      ),
+                                      Table(
+                                        children: [
+                                          TableRow(children: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  getController
+                                                      .cancelAppointment(
+                                                          appointments[index]);
+                                                },
+                                                child:
+                                                    Text('Cancel Appointment'))
+                                          ])
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             );

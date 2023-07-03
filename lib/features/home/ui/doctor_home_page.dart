@@ -79,41 +79,46 @@ class DoctorHomePage extends StatelessWidget {
                               AppointmentModel appointment =
                                   appointments[index];
                               return Card(
-                                child: Padding(
-                                  padding: EdgeInsets.all(8.0.sp),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        appointment.patientModel.name,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14.sp),
-                                      ),
-                                      SizedBox(
-                                        width: 100.sp,
-                                        child: Divider(
-                                          thickness: 1.5.sp,
-                                          color: AppColors.secondary,
+                                child: InkWell(
+                                  onTap: (){
+                                    getController.initiateAppointmentMeeting(appointment);
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0.sp),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          appointment.patientModel.name,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 14.sp),
                                         ),
-                                      ),
-                                      Text(
-                                        appointment.appointmentOn
-                                            .getDateStringWithMonthName(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.grey.shade700),
-                                      ),
-                                      Text(
-                                        appointment.appointmentOn
-                                            .getTimeStringInAmPm(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontStyle: FontStyle.italic,
-                                            color: Colors.grey.shade700),
-                                      ),
-                                    ],
+                                        SizedBox(
+                                          width: 100.sp,
+                                          child: Divider(
+                                            thickness: 1.5.sp,
+                                            color: AppColors.secondary,
+                                          ),
+                                        ),
+                                        Text(
+                                          appointment.appointmentOn
+                                              .getDateStringWithMonthName(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.grey.shade700),
+                                        ),
+                                        Text(
+                                          appointment.appointmentOn
+                                              .getTimeStringInAmPm(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontStyle: FontStyle.italic,
+                                              color: Colors.grey.shade700),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );

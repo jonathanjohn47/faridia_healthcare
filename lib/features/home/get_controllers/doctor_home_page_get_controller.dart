@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faridia_healthcare/models/appointment_model.dart';
 import 'package:faridia_healthcare/models/doctor_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
 
@@ -48,5 +50,16 @@ class DoctorHomePageGetController extends GetxController {
         avatarUrl: doctorModel.imageLink,
       );
     });
+  }
+
+  void joinMeeting(AppointmentModel appointment) {}
+
+  void initiateAppointmentMeeting(AppointmentModel appointment) {
+    if (appointment.appointmentOn.isBefore(DateTime.now())) {
+      joinMeeting(appointment);
+    } else {
+      Get.snackbar("Error", "Appointment is not started yet",
+          backgroundColor: Colors.red, colorText: Colors.white);
+    }
   }
 }
