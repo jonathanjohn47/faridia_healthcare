@@ -322,7 +322,7 @@ class DoctorHomePage extends StatelessWidget {
                       Spacer(),
                       GestureDetector(
                         onTap: () {
-                          Get.to(() => NotificationsPage());
+                          Get.to(() => NotificationsPage(isPatient: false,));
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.sp),

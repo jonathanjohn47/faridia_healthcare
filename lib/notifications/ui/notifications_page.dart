@@ -12,7 +12,9 @@ import 'package:sizer/sizer.dart';
 import '../../core/app_constants.dart';
 
 class NotificationsPage extends StatelessWidget {
-  NotificationsPage({super.key});
+  final bool isPatient;
+
+  NotificationsPage({super.key, this.isPatient = true});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,8 @@ class NotificationsPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.0.sp),
         child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
-                .collection(AppConstants.patients)
+                .collection(
+                    isPatient ? AppConstants.patients : AppConstants.doctors)
                 .doc(FirebaseAuth.instance.currentUser!.email)
                 .collection(AppConstants.notifications)
                 .snapshots(),
@@ -78,15 +81,15 @@ class NotificationsPage extends StatelessWidget {
                                           ),
                                           subtitle: Text(
                                             allNotifications[index].description,
-                                            style: TextStyle(
-                                                color: Colors.grey),
+                                            style:
+                                                TextStyle(color: Colors.grey),
                                           ),
                                           trailing: Text(
                                             allNotifications[index]
                                                 .sentAt
                                                 .getHowMuchTimeAgo(),
-                                            style: TextStyle(
-                                                color: Colors.grey),
+                                            style:
+                                                TextStyle(color: Colors.grey),
                                           )),
                                     ),
                                   ],
