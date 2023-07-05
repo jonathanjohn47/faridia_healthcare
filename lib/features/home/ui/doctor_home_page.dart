@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:zego_zimkit/zego_zimkit.dart';
 
 import '../../../notifications/ui/notifications_page.dart';
 import '../../appointments/ui/doctor_appointments_page.dart';
@@ -520,6 +521,8 @@ class DoctorHomePage extends StatelessWidget {
                 leading: const Icon(Icons.logout),
                 title: const Text('Logout'),
                 onTap: () {
+                  ZIM.getInstance()!.logout();
+                  ZIM.getInstance()!.destroy();
                   FirebaseAuth.instance.signOut().then((value) {
                     Get.offAll(() => SelectProfilePage());
                   });
