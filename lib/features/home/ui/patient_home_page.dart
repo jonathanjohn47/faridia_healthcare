@@ -266,33 +266,30 @@ class PatientHomePage extends StatelessWidget {
                           child: Stack(
                             children: [
                               Icon(Icons.chat, size: 24.sp),
-                              StreamBuilder<QuerySnapshot>(
-                                  stream: FirebaseFirestore.instance
-                                      .collection(AppConstants.chatChannels)
-                                      .where('patient_email',
-                                          isEqualTo: FirebaseAuth
-                                              .instance.currentUser!.email)
-                                      .snapshots(),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasData) {
-                                      return Positioned(
-                                        top: 0,
-                                        right: 0,
-                                        child: CircleAvatar(
-                                          radius: 8.sp,
-                                          backgroundColor: Colors.red,
-                                          child: Text(
-                                            '1',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 10.sp,
-                                            ),
-                                          ),
+                              Obx(() {
+                                return Positioned(
+                                  top: 0,
+                                  right: 0,
+                                  child: Visibility(
+                                    visible: patientHomePageGetController
+                                            .unreadMessages.value >
+                                        0,
+                                    child: CircleAvatar(
+                                      radius: 8.sp,
+                                      backgroundColor: Colors.red,
+                                      child: Text(
+                                        patientHomePageGetController
+                                            .unreadMessages.value
+                                            .toString(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10.sp,
                                         ),
-                                      );
-                                    }
-                                    return Container();
-                                  }),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }),
                             ],
                           ),
                         ),
@@ -480,38 +477,25 @@ class PatientHomePage extends StatelessWidget {
                   ),
                   ListTile(
                     title: Text("Messages"),
-                    trailing: StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance
-                            .collection(AppConstants.chatChannels)
-                            .where('patient_email',
-                                isEqualTo:
-                                    FirebaseAuth.instance.currentUser!.email!)
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            List<ChatChannelModel> chatChannels = snapshot
-                                .data!.docs
-                                .map((e) => ChatChannelModel.fromJson(
-                                    jsonDecode(jsonEncode(e.data()))))
-                                .toList();
-                            chatChannels.removeWhere(
-                                (element) => element.lastMessage.readByPatient);
-                            return Visibility(
-                              visible: chatChannels.isNotEmpty,
-                              child: CircleAvatar(
-                                radius: 10.sp,
-                                backgroundColor: Colors.red,
-                                child: Text(
-                                  chatChannels.length <= 9
-                                      ? chatChannels.length.toString()
-                                      : "9+",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            );
-                          }
-                          return Container();
-                        }),
+                    trailing: Obx(
+                      (){
+                        return Visibility(
+                          visible: patientHomePageGetController
+                              .unreadMessages.value >
+                              0,
+                          child: CircleAvatar(
+                            radius: 10.sp,
+                            backgroundColor: Colors.red,
+                            child: Text(
+                              patientHomePageGetController
+                                  .unreadMessages.value
+                                  .toString(),
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        );
+                      }
+                    ),
                     onTap: () {
                       Get.to(() => MessagesPagePatient());
                     },
