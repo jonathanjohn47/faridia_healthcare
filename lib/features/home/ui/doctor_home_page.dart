@@ -80,8 +80,9 @@ class DoctorHomePage extends StatelessWidget {
                                   appointments[index];
                               return Card(
                                 child: InkWell(
-                                  onTap: (){
-                                    getController.initiateAppointmentMeeting(appointment);
+                                  onTap: () {
+                                    getController.initiateAppointmentMeeting(
+                                        appointment);
                                   },
                                   child: Padding(
                                     padding: EdgeInsets.all(8.0.sp),
@@ -322,7 +323,9 @@ class DoctorHomePage extends StatelessWidget {
                       Spacer(),
                       GestureDetector(
                         onTap: () {
-                          Get.to(() => NotificationsPage(isPatient: false,));
+                          Get.to(() => NotificationsPage(
+                                isPatient: false,
+                              ));
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.sp),
@@ -400,21 +403,28 @@ class DoctorHomePage extends StatelessWidget {
                           child: Stack(
                             children: [
                               Icon(Icons.chat, size: 24.sp),
-                              Positioned(
-                                top: 0,
-                                right: 0,
-                                child: CircleAvatar(
-                                  radius: 8.sp,
-                                  backgroundColor: Colors.red,
-                                  child: Text(
-                                    '1',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 10.sp,
+                              Obx(() {
+                                return Visibility(
+                                  visible:
+                                      getController.unreadMessages.value > 0,
+                                  child: Positioned(
+                                    top: 0,
+                                    right: 0,
+                                    child: CircleAvatar(
+                                      radius: 8.sp,
+                                      backgroundColor: Colors.red,
+                                      child: Text(
+                                        getController.unreadMessages.value
+                                            .toString(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10.sp,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
+                                );
+                              }),
                             ],
                           ),
                         ),
@@ -475,14 +485,19 @@ class DoctorHomePage extends StatelessWidget {
                   ),
                   ListTile(
                     title: Text("Messages"),
-                    trailing: CircleAvatar(
-                      radius: 10.sp,
-                      backgroundColor: Colors.red,
-                      child: Text(
-                        '9+',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
+                    trailing: Obx(() {
+                      return Visibility(
+                        visible: getController.unreadMessages.value > 0,
+                        child: CircleAvatar(
+                          radius: 10.sp,
+                          backgroundColor: Colors.red,
+                          child: Text(
+                            getController.unreadMessages.value.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      );
+                    }),
                     onTap: () {
                       Get.to(() => MessagesPageDoctor());
                     },

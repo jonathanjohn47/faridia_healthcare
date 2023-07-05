@@ -15,6 +15,8 @@ class DoctorHomePageGetController extends GetxController {
   RxList<AppointmentRequestModel> appointmentRequests =
       RxList<AppointmentRequestModel>([]);
 
+  RxInt unreadMessages = 0.obs;
+
   Future<void> fetchAppointmentRequests() async {
     await FirebaseFirestore.instance
         .collection(AppConstants.doctors)
@@ -31,20 +33,22 @@ class DoctorHomePageGetController extends GetxController {
 
   @override
   void onInit() {
-    zegoLogin();
+    zegoLogin().then((value) {
+      getUnreadMessages();
+    });
     fetchAppointmentRequests();
     super.onInit();
   }
 
-  void zegoLogin() {
-    FirebaseFirestore.instance
+  Future<void> zegoLogin() async {
+    await FirebaseFirestore.instance
         .collection(AppConstants.doctors)
         .doc(FirebaseAuth.instance.currentUser!.email)
         .get()
-        .then((value) {
+        .then((value) async {
       DoctorModel doctorModel =
           DoctorModel.fromJson(jsonDecode(jsonEncode(value.data())));
-      ZIMKit().connectUser(
+      await ZIMKit().connectUser(
         id: FirebaseAuth.instance.currentUser!.email!,
         name: doctorModel.name,
         avatarUrl: doctorModel.imageLink,
@@ -61,5 +65,24 @@ class DoctorHomePageGetController extends GetxController {
       Get.snackbar("Error", "Appointment is not started yet",
           backgroundColor: Colors.red, colorText: Colors.white);
     }
+  }
+
+  void getUnreadMessages() {
+    ZIMConversationQueryConfig conversationQueryConfig =
+        ZIMConversationQueryConfig();
+    conversationQueryConfig.nextConversation = null;
+// The number of queries per page.
+    conversationQueryConfig.count = 20;
+
+//Get the session list.
+    ZIM
+        .getInstance()!
+        .queryConversationList(conversationQueryConfig)
+        .then((value) => {
+              value.conversationList.forEach((element) {
+                unreadMessages.value += element.unreadMessageCount;
+              })
+            })
+        .catchError((onError) {});
   }
 }
