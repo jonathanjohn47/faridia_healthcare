@@ -149,7 +149,11 @@ class PatientHomePage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              patientHomePageGetController
+                                  .initiateAppointmentMeeting(
+                                      appointments[index]);
+                            },
                           ),
                         );
                       },

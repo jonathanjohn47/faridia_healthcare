@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
-
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import '../../../core/app_constants.dart';
 import '../../../models/appointment_request_model.dart';
 
@@ -56,7 +56,29 @@ class DoctorHomePageGetController extends GetxController {
     });
   }
 
-  void joinMeeting(AppointmentModel appointment) {}
+  void joinMeeting(AppointmentModel appointment) {
+    FirebaseFirestore.instance
+        .collection(AppConstants.doctors)
+        .doc(FirebaseAuth.instance.currentUser!.email)
+        .get()
+        .then((value) {
+      DoctorModel currentDoctor =
+          DoctorModel.fromJson(jsonDecode(jsonEncode(value.data())));
+      Get.to(() {
+        return ZegoUIKitPrebuiltCall(
+            appID: 2147056725,
+            // Fill in the appID that you get from ZEGOCLOUD Admin Console.
+            appSign:
+                '78663d2c80c989938747754831f44b8b119e04e769e52f7440786ac6725ba2e2',
+            // Fill in the appSign that you get from ZEGOCLOUD Admin Console.
+            userID: FirebaseAuth.instance.currentUser!.email!,
+            userName: currentDoctor.name,
+            callID: appointment.id,
+            // You can also use groupVideo/groupVoice/oneOnOneVoice to make more types of calls.
+            config: ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall());
+      });
+    });
+  }
 
   void initiateAppointmentMeeting(AppointmentModel appointment) {
     if (appointment.appointmentOn.isBefore(DateTime.now())) {
