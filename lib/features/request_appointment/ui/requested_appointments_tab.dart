@@ -39,7 +39,7 @@ class RequestedAppointmentsTab extends StatelessWidget {
                           ),
                           subtitle: Text(
                             "${appointmentRequestModel.appointmentFor.getDateString()} on ${appointmentRequestModel.appointmentFor.getTimeStringInAmPm()}",
-                            style: TextStyle(fontWeight: FontWeight.w500),
+                            style: const TextStyle(fontWeight: FontWeight.w500),
                           ),
                         ),
                         Divider(
@@ -62,7 +62,7 @@ class RequestedAppointmentsTab extends StatelessWidget {
                 itemCount: snapshot.data!.docs.length,
               );
             }
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }),

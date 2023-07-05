@@ -5,13 +5,13 @@ import 'package:zego_zimkit/zego_zimkit.dart';
 import '../../../core/app_colors.dart';
 
 class MessagesPagePatient extends StatelessWidget {
-  MessagesPagePatient({super.key});
+  const MessagesPagePatient({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(0),
+          preferredSize: const Size.fromHeight(0),
           child: Container(
             color: AppColors.primary,
           ),

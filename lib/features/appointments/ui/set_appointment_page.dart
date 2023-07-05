@@ -19,7 +19,7 @@ class SetAppointmentPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(0),
+          preferredSize: const Size.fromHeight(0),
           child: Container(
             color: AppColors.primary,
           ),
@@ -74,7 +74,7 @@ class SetAppointmentPage extends StatelessWidget {
                             Text(
                               appointmentRequestModel.patientModel.address,
                               style:
-                                  TextStyle(fontWeight: FontWeight.w500),
+                                  const TextStyle(fontWeight: FontWeight.w500),
                             ),
                           ],
                         ),
@@ -93,7 +93,7 @@ class SetAppointmentPage extends StatelessWidget {
               SizedBox(
                 height: 8.0.sp,
               ),
-              Text('Patient\'s Message:',
+              const Text('Patient\'s Message:',
                   style: TextStyle(fontWeight: FontWeight.w500)),
               Container(
                 height: 100.sp,
@@ -102,10 +102,10 @@ class SetAppointmentPage extends StatelessWidget {
                   color: AppColors.secondary.withOpacity(0.1),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Text(
                     appointmentRequestModel.briefMessage,
-                    style: TextStyle(fontStyle: FontStyle.italic),
+                    style: const TextStyle(fontStyle: FontStyle.italic),
                   ),
                 ),
               ),
@@ -125,11 +125,11 @@ class SetAppointmentPage extends StatelessWidget {
                     padding: EdgeInsets.all(8.0.sp),
                     child: Row(
                       children: [
-                        Text(
+                        const Text(
                           'Choose Date',
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Obx(() {
                           return Text(
                             getController.chosenDate.value.getDateString(),
@@ -158,11 +158,11 @@ class SetAppointmentPage extends StatelessWidget {
                     padding: EdgeInsets.all(8.0.sp),
                     child: Row(
                       children: [
-                        Text(
+                        const Text(
                           'Choose Time',
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Obx(() {
                           return Text(
                             DateTime(
@@ -196,13 +196,13 @@ class SetAppointmentPage extends StatelessWidget {
                 children: [
                   Obx(() {
                     return getController.showLoader.value
-                        ? CircularProgressIndicator()
+                        ? const CircularProgressIndicator()
                         : FloatingActionButton.extended(
                             onPressed: () {
                               getController
                                   .setAppointment(appointmentRequestModel);
                             },
-                            icon: Icon(Icons.check, color: Colors.white),
+                            icon: const Icon(Icons.check, color: Colors.white),
                             label: Text('Set Appointment',
                                 style: TextStyle(
                                     fontSize: 12.sp,

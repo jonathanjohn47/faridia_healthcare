@@ -4,7 +4,7 @@ import 'package:faridia_healthcare/features/request_appointment/ui/search_doctor
 import 'package:flutter/material.dart';
 
 class RequestAppointmentPage extends StatelessWidget {
-  RequestAppointmentPage({super.key});
+  const RequestAppointmentPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +12,14 @@ class RequestAppointmentPage extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(0),
+          preferredSize: const Size.fromHeight(0),
           child: Container(
             color: AppColors.primary,
           ),
         ),
         body: Column(
           children: [
-            TabBar(tabs: [
+            const TabBar(tabs: [
               Tab(
                 text: 'Search Doctor',
               ),
@@ -31,7 +31,7 @@ class RequestAppointmentPage extends StatelessWidget {
               child: TabBarView(
                 children: [
                   SearchDoctorForAppointmentTab(),
-                  RequestedAppointmentsTab(),
+                  const RequestedAppointmentsTab(),
                 ],
               ),
             ),

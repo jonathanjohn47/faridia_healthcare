@@ -17,7 +17,7 @@ class PatientSelfProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(0),
+          preferredSize: const Size.fromHeight(0),
           child: Container(
             color: AppColors.primary,
           ),
@@ -43,7 +43,7 @@ class PatientSelfProfilePage extends StatelessWidget {
                                 )
                               : CircleAvatar(
                                   radius: 50.sp,
-                                  backgroundImage: AssetImage(
+                                  backgroundImage: const AssetImage(
                                     'assets/images/3727036.png',
                                   ),
                                 )
@@ -69,7 +69,7 @@ class PatientSelfProfilePage extends StatelessWidget {
                             onPressed: () {
                               getController.getImage();
                             },
-                            child: Icon(
+                            child: const Icon(
                               Icons.edit,
                               color: Colors.white,
                             ),
@@ -154,14 +154,14 @@ class PatientSelfProfilePage extends StatelessWidget {
                   : Padding(
                       padding: EdgeInsets.symmetric(horizontal: 32.sp),
                       child: Table(
-                        columnWidths: {
+                        columnWidths: const {
                           0: FlexColumnWidth(1),
                           1: FlexColumnWidth(2),
                         },
                         children: [
                           //name, phone number, email, address
                           TableRow(children: [
-                            Text('Name'),
+                            const Text('Name'),
                             Text(
                               getController.name.value,
                               textAlign: TextAlign.end,
@@ -170,7 +170,7 @@ class PatientSelfProfilePage extends StatelessWidget {
                             )
                           ]),
                           TableRow(children: [
-                            Text('Phone Number'),
+                            const Text('Phone Number'),
                             Text(
                               getController.phoneNumber.value,
                               textAlign: TextAlign.end,
@@ -179,21 +179,21 @@ class PatientSelfProfilePage extends StatelessWidget {
                             )
                           ]),
                           TableRow(children: [
-                            Text('Email'),
+                            const Text('Email'),
                             AutoSizeText(
                               getController.email.value,
                               textAlign: TextAlign.end,
                               style:
-                                  TextStyle(fontWeight: FontWeight.w600),
+                                  const TextStyle(fontWeight: FontWeight.w600),
                             )
                           ]),
                           TableRow(children: [
-                            Text('Address'),
+                            const Text('Address'),
                             AutoSizeText(
                               getController.address.value,
                               textAlign: TextAlign.end,
                               style:
-                                  TextStyle(fontWeight: FontWeight.w600),
+                                  const TextStyle(fontWeight: FontWeight.w600),
                             )
                           ]),
                         ],

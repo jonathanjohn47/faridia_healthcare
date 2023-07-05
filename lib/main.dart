@@ -11,17 +11,18 @@ import 'firebase_options.dart';
 Future<void> main() async {
   ZIMKit().init(
     appID: 2147056725, // your appid
-    appSign: '78663d2c80c989938747754831f44b8b119e04e769e52f7440786ac6725ba2e2', // your appSign
+    appSign:
+        '78663d2c80c989938747754831f44b8b119e04e769e52f7440786ac6725ba2e2', // your appSign
   );
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override

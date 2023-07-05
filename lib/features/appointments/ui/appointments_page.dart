@@ -22,7 +22,7 @@ class AppointmentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Appointments'),
+        title: const Text('Appointments'),
         backgroundColor: AppColors.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -88,14 +88,14 @@ class AppointmentsPage extends StatelessWidget {
                                 onPressed: () {},
                                 child: Row(
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.close,
                                       color: Colors.white,
                                     ),
                                     SizedBox(
                                       width: 4.sp,
                                     ),
-                                    Text(
+                                    const Text(
                                       'Cancel',
                                       style: TextStyle(color: Colors.white),
                                     ),
@@ -112,7 +112,7 @@ class AppointmentsPage extends StatelessWidget {
                 itemCount: allAppointments.length,
               );
             }
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }),

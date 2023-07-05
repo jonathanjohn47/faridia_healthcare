@@ -15,7 +15,7 @@ class DoctorAppointmentGetController extends GetxController {
         .doc(appointmentModel.id)
         .delete()
         .then((value) async {
-      Uuid uuid = Uuid();
+      Uuid uuid = const Uuid();
       String notificationId = uuid.v4();
       NotificationModel notificationModel = NotificationModel(
           id: notificationId,
