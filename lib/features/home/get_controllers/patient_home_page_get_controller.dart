@@ -37,21 +37,9 @@ class PatientHomePageGetController extends GetxController {
   }
 
   void getUnreadMessages() {
-    ZIMConversationQueryConfig conversationQueryConfig =
-        ZIMConversationQueryConfig();
-    conversationQueryConfig.nextConversation = null;
-// The number of queries per page.
-    conversationQueryConfig.count = 20;
-
-//Get the session list.
-    ZIM
-        .getInstance()!
-        .queryConversationList(conversationQueryConfig)
-        .then((value) => {
-              value.conversationList.forEach((element) {
-                unreadMessages.value += element.unreadMessageCount;
-              })
-            })
-        .catchError((onError) {});
+    ZIMEventHandler.onConversationTotalUnreadMessageCountUpdated =
+        (zim, count) {
+      unreadMessages.value = count;
+    };
   }
 }
