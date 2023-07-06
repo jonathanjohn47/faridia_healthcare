@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faridia_healthcare/FCM/fcm_get_controller.dart';
 import 'package:faridia_healthcare/core/app_constants.dart';
 import 'package:faridia_healthcare/models/appointment_request_model.dart';
 import 'package:faridia_healthcare/models/doctor_model.dart';
@@ -88,6 +89,11 @@ class CreateAppointmentGetController extends GetxController {
             .collection(AppConstants.notifications)
             .doc(notificationId)
             .set(notificationModel.toJson());
+        FCMGetController fcmGetController = Get.put(FCMGetController());
+        fcmGetController.sendNotification(
+            doctorModel.fcmToken,
+            'New Appointment',
+            'You have a new appointment request from ${appointmentRequestModel.patientModel.name}');
       });
     });
     Get.back();

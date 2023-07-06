@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faridia_healthcare/helpers/date_time_helpers.dart';
 import 'package:faridia_healthcare/models/notification_model.dart';
+import 'package:faridia_healthcare/models/patient_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../FCM/fcm_get_controller.dart';
 import '../../../core/app_constants.dart';
 import '../../../models/appointment_model.dart';
 
@@ -30,6 +34,19 @@ class DoctorAppointmentGetController extends GetxController {
           .collection(AppConstants.notifications)
           .doc(notificationId)
           .set(notificationModel.toJson());
+      await FirebaseFirestore.instance
+          .collection(AppConstants.patients)
+          .doc(appointmentModel.patientEmail)
+          .get()
+          .then((value) {
+        PatientModel currentPatient =
+            PatientModel.fromJson(jsonDecode(jsonEncode(value.data())));
+        FCMGetController fcmGetController = Get.put(FCMGetController());
+        fcmGetController.sendNotification(
+            currentPatient.fcmToken,
+            'New Appointment',
+            'Your appointment for ${appointmentModel.appointmentOn.getDateStringWithMonthName()} on ${appointmentModel.appointmentOn.getTimeStringInAmPm()} with doctor ${appointmentModel.doctorModel.name} has been cancelled by the doctor.');
+      });
     });
   }
 
