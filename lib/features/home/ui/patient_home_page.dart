@@ -163,7 +163,7 @@ class PatientHomePage extends StatelessWidget {
                             },
                             itemCount: appointments.length,
                           )
-                        : Center(
+                        : const Center(
                             child: Text('No Appointments'),
                           );
                   }

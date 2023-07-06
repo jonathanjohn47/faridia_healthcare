@@ -214,11 +214,11 @@ class DoctorHomePage extends StatelessWidget {
                                           },
                                         ),
                                         ListTile(
-                                          leading: Icon(
+                                          leading: const Icon(
                                             Icons.cancel,
                                             color: Colors.red,
                                           ),
-                                          title: Text(
+                                          title: const Text(
                                             'Reject',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
