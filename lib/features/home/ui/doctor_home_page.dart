@@ -154,19 +154,24 @@ class DoctorHomePage extends StatelessWidget {
                       TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
                 ),
                 const Spacer(),
-                CircleAvatar(
-                  radius: 10.sp,
-                  backgroundColor: Colors.red,
-                  child: Obx(() {
-                    return Text(
-                      getController.appointmentRequests.length.toString(),
-                      style: TextStyle(
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    );
-                  }),
-                ),
+                Obx(() {
+                  return Visibility(
+                    visible: getController.appointmentRequests.isNotEmpty,
+                    child: CircleAvatar(
+                      radius: 10.sp,
+                      backgroundColor: Colors.red,
+                      child: Obx(() {
+                        return Text(
+                          getController.appointmentRequests.length.toString(),
+                          style: TextStyle(
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        );
+                      }),
+                    ),
+                  );
+                }),
               ],
             ),
           ),
