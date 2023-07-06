@@ -21,7 +21,7 @@ class DoctorAppointmentGetController extends GetxController {
           id: notificationId,
           title: 'Appointment Cancelled',
           description:
-              'Your appointment for ${appointmentModel.appointmentOn.getDateStringWithMonthName} on ${appointmentModel.appointmentOn.getTimeStringInAmPm()} with doctor ${appointmentModel.doctorModel.name} has been cancelled by the doctor.',
+              'Your appointment for ${appointmentModel.appointmentOn.getDateStringWithMonthName()} on ${appointmentModel.appointmentOn.getTimeStringInAmPm()} with doctor ${appointmentModel.doctorModel.name} has been cancelled by the doctor.',
           isRead: false,
           sentAt: DateTime.now());
       await FirebaseFirestore.instance

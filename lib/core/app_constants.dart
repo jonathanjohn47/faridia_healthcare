@@ -15,4 +15,8 @@ class AppConstants {
   static String savedDoctors = 'Saved Doctors';
 
   static String appointmentRequests = 'Appointment Requests';
+
+  static String constants = 'Constants';
+
+  static String? serviceAccount = 'Service Account';
 }

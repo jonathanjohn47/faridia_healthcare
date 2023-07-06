@@ -4,10 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faridia_healthcare/models/appointment_model.dart';
 import 'package:faridia_healthcare/models/doctor_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:zego_zimkit/zego_zimkit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_zimkit/zego_zimkit.dart';
+
 import '../../../core/app_constants.dart';
 import '../../../models/appointment_request_model.dart';
 
@@ -36,6 +38,7 @@ class DoctorHomePageGetController extends GetxController {
     zegoLogin().then((value) {
       getUnreadMessages();
     });
+    saveFcmToken();
     fetchAppointmentRequests();
     super.onInit();
   }
@@ -94,5 +97,13 @@ class DoctorHomePageGetController extends GetxController {
         (zim, count) {
       unreadMessages.value = count;
     };
+  }
+
+  Future<void> saveFcmToken() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    await FirebaseFirestore.instance
+        .collection(AppConstants.doctors)
+        .doc(FirebaseAuth.instance.currentUser!.email)
+        .update({'fcmToken': token});
   }
 }

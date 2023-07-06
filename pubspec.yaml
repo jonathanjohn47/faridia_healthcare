@@ -56,6 +56,8 @@ dependencies:
   flutter_chat_bubble: ^2.0.2
   zego_zimkit: ^1.7.0
   zego_uikit_prebuilt_call: ^3.8.1
+  googleapis_auth: ^1.4.1
+  firebase_messaging: ^14.6.4
 
 dev_dependencies:
   flutter_test:

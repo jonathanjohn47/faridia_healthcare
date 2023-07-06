@@ -521,8 +521,12 @@ class DoctorHomePage extends StatelessWidget {
                 leading: const Icon(Icons.logout),
                 title: const Text('Logout'),
                 onTap: () {
-                  ZIM.getInstance()!.logout();
-                  ZIM.getInstance()!.destroy();
+                  try {
+                    ZIM.getInstance()!.logout();
+                    ZIM.getInstance()!.destroy();
+                  } catch (e) {
+                    // TODO
+                  }
                   FirebaseAuth.instance.signOut().then((value) {
                     Get.offAll(() => SelectProfilePage());
                   });

@@ -14,6 +14,7 @@ class AppointmentPageGetController extends GetxController {
           return AlertDialog(
             title: const Text('Cancel Appointment?'),
             content: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 const Text('Are you sure you want to cancel this appointment?'),
                 SizedBox(
@@ -29,13 +30,11 @@ class AppointmentPageGetController extends GetxController {
                 child: const Text('No'),
               ),
               TextButton(
-                onPressed: () {
-                  AppointmentModel cancelledAppointment =
-                      appointment.copyWith(isCancelled: true);
-                  FirebaseFirestore.instance
+                onPressed: () async {
+                  await FirebaseFirestore.instance
                       .collection(AppConstants.appointments)
-                      .doc(cancelledAppointment.id)
-                      .update(cancelledAppointment.toJson())
+                      .doc(appointment.id)
+                      .delete()
                       .then((value) {
                     Navigator.pop(context);
                     Get.snackbar(

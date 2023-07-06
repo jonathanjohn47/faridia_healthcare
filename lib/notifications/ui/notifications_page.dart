@@ -40,7 +40,7 @@ class NotificationsPage extends StatelessWidget {
                     .map((e) => NotificationModel.fromJson(
                         jsonDecode(jsonEncode(e.data()))))
                     .toList();
-                return ListView(
+                return Column(
                   children: [
                     Text(
                       "Notifications",
@@ -54,52 +54,79 @@ class NotificationsPage extends StatelessWidget {
                       thickness: 1.5.sp,
                       color: AppColors.primary,
                     ),
-                    ...List.generate(
-                        allNotifications.length,
-                        (index) => Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Visibility(
-                                      visible: !allNotifications[index].isRead,
-                                      child: CircleAvatar(
-                                        radius: 4.sp,
-                                        backgroundColor: Colors.blue,
+                    Expanded(
+                      child: ListView(
+                        children: [
+                          ...List.generate(
+                              allNotifications.length,
+                              (index) => Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Visibility(
+                                            visible:
+                                                !allNotifications[index].isRead,
+                                            child: CircleAvatar(
+                                              radius: 4.sp,
+                                              backgroundColor: Colors.blue,
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: ListTile(
+                                              title: Text(
+                                                allNotifications[index].title,
+                                                style: TextStyle(
+                                                    fontWeight: index.isPrime
+                                                        ? FontWeight.w700
+                                                        : FontWeight.w500,
+                                                    fontSize: index.isPrime
+                                                        ? 12.sp
+                                                        : 10.sp),
+                                              ),
+                                              subtitle: Text(
+                                                allNotifications[index]
+                                                    .description,
+                                                style: const TextStyle(
+                                                    color: Colors.grey),
+                                              ),
+                                              trailing: Text(
+                                                allNotifications[index]
+                                                    .sentAt
+                                                    .getHowMuchTimeAgo(),
+                                                style: const TextStyle(
+                                                    color: Colors.grey),
+                                              ),
+                                              onTap: () {
+                                                NotificationModel
+                                                    newNotification =
+                                                    allNotifications[index]
+                                                        .copyWith(isRead: true);
+                                                FirebaseFirestore.instance
+                                                    .collection(isPatient
+                                                        ? AppConstants.patients
+                                                        : AppConstants.doctors)
+                                                    .doc(FirebaseAuth.instance
+                                                        .currentUser!.email)
+                                                    .collection(AppConstants
+                                                        .notifications)
+                                                    .doc(allNotifications[index]
+                                                        .id)
+                                                    .update(newNotification
+                                                        .toJson());
+                                              },
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    Expanded(
-                                      child: ListTile(
-                                          title: Text(
-                                            allNotifications[index].title,
-                                            style: TextStyle(
-                                                fontWeight: index.isPrime
-                                                    ? FontWeight.w700
-                                                    : FontWeight.w500,
-                                                fontSize: index.isPrime
-                                                    ? 12.sp
-                                                    : 10.sp),
-                                          ),
-                                          subtitle: Text(
-                                            allNotifications[index].description,
-                                            style: const TextStyle(
-                                                color: Colors.grey),
-                                          ),
-                                          trailing: Text(
-                                            allNotifications[index]
-                                                .sentAt
-                                                .getHowMuchTimeAgo(),
-                                            style: const TextStyle(
-                                                color: Colors.grey),
-                                          )),
-                                    ),
-                                  ],
-                                ),
-                                Divider(
-                                  thickness: 0.5.sp,
-                                  color: AppColors.secondary,
-                                )
-                              ],
-                            ))
+                                      Divider(
+                                        thickness: 0.5.sp,
+                                        color: AppColors.secondary,
+                                      )
+                                    ],
+                                  ))
+                        ],
+                      ),
+                    ),
                   ],
                 );
               }

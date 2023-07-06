@@ -83,82 +83,89 @@ class PatientHomePage extends StatelessWidget {
                         .map((e) => AppointmentModel.fromJson(
                             jsonDecode(jsonEncode(e.data()))))
                         .toList();
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: FloatingActionButton.extended(
-                            heroTag: null,
-                            elevation: 2,
-                            label: Padding(
-                              padding: EdgeInsets.all(8.0.sp),
-                              child: ConstrainedBox(
-                                constraints: BoxConstraints(
-                                  minWidth: 30.w,
-                                  maxWidth: 50.w,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Dr. ${appointments[index].doctorModel.name}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 14.sp),
-                                    ),
-                                    SizedBox(
-                                      height: 2.sp,
-                                    ),
-                                    Text(
-                                      "(${appointments[index].doctorModel.bio})",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 8.sp),
-                                    ),
-                                    Divider(
-                                      thickness: 1.5.sp,
-                                      color: AppColors.secondary,
-                                    ),
-                                    Table(
-                                      columnWidths: const {
-                                        0: FlexColumnWidth(1),
-                                        2: FlexColumnWidth(1),
-                                      },
-                                      children: const [
-                                        TableRow(children: [
-                                          AutoSizeText(
-                                            '12/12/2021',
+                    return appointments.isNotEmpty
+                        ? ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: FloatingActionButton.extended(
+                                  heroTag: null,
+                                  elevation: 2,
+                                  label: Padding(
+                                    padding: EdgeInsets.all(8.0.sp),
+                                    child: ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                        minWidth: 30.w,
+                                        maxWidth: 50.w,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Dr. ${appointments[index].doctorModel.name}',
                                             style: TextStyle(
-                                                fontWeight: FontWeight.w600),
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 14.sp),
+                                          ),
+                                          SizedBox(
+                                            height: 2.sp,
                                           ),
                                           Text(
-                                            '12:00 PM',
+                                            "(${appointments[index].doctorModel.bio})",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 8.sp),
+                                          ),
+                                          Divider(
+                                            thickness: 1.5.sp,
+                                            color: AppColors.secondary,
+                                          ),
+                                          Table(
+                                            columnWidths: const {
+                                              0: FlexColumnWidth(1),
+                                              2: FlexColumnWidth(1),
+                                            },
+                                            children: const [
+                                              TableRow(children: [
+                                                AutoSizeText(
+                                                  '12/12/2021',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                                Text(
+                                                  '12:00 PM',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              ]),
+                                            ],
+                                          ),
+                                          const AutoSizeText(
+                                            '10 Downing Street, London',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600),
                                           ),
-                                        ]),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                    const AutoSizeText(
-                                      '10 Downing Street, London',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ],
+                                  ),
+                                  onPressed: () {
+                                    patientHomePageGetController
+                                        .initiateAppointmentMeeting(
+                                            appointments[index]);
+                                  },
                                 ),
-                              ),
-                            ),
-                            onPressed: () {
-                              patientHomePageGetController
-                                  .initiateAppointmentMeeting(
-                                      appointments[index]);
+                              );
                             },
-                          ),
-                        );
-                      },
-                      itemCount: appointments.length,
-                    );
+                            itemCount: appointments.length,
+                          )
+                        : Center(
+                            child: Text('No Appointments'),
+                          );
                   }
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -559,8 +566,12 @@ class PatientHomePage extends StatelessWidget {
                 leading: const Icon(Icons.logout),
                 title: const Text('Logout'),
                 onTap: () {
-                  ZIM.getInstance()!.logout();
-                  ZIM.getInstance()!.destroy();
+                  try {
+                    ZIM.getInstance()!.logout();
+                    ZIM.getInstance()!.destroy();
+                  } catch (e) {
+                    // TODO
+                  }
                   FirebaseAuth.instance.signOut().then((value) {
                     Get.offAll(() => SelectProfilePage());
                   });

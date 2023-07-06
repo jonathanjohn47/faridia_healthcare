@@ -85,7 +85,11 @@ class AppointmentsPage extends StatelessWidget {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.secondary,
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  appointmentPageGetController
+                                      .cancelAppointment(appointment,
+                                          context: context);
+                                },
                                 child: Row(
                                   children: [
                                     const Icon(

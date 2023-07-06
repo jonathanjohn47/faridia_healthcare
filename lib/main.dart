@@ -1,5 +1,6 @@
 import 'package:faridia_healthcare/features/auth/select_profile/ui/select_profile_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -7,6 +8,13 @@ import 'package:zego_zimkit/services/services.dart';
 
 import 'core/app_colors.dart';
 import 'firebase_options.dart';
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // Handle background message here
+  print('Handling a background message: ${message.messageId}');
+
+  // You can perform any tasks, like showing notifications, etc.
+}
 
 Future<void> main() async {
   ZIMKit().init(
@@ -18,6 +26,8 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(const MyApp());
 }
 
