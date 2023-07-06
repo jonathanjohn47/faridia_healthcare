@@ -106,4 +106,21 @@ class DoctorHomePageGetController extends GetxController {
         .doc(FirebaseAuth.instance.currentUser!.email)
         .update({'fcmToken': token});
   }
+
+  void rejectAppointmentRequest(AppointmentRequestModel appointmentRequest) {
+    FirebaseFirestore.instance
+        .collection(AppConstants.doctors)
+        .doc(FirebaseAuth.instance.currentUser!.email)
+        .collection(AppConstants.appointmentRequests)
+        .doc(appointmentRequest.id)
+        .delete();
+    FirebaseFirestore.instance
+        .collection(AppConstants.patients)
+        .doc(appointmentRequest.patientModel.email)
+        .collection(AppConstants.appointmentRequests)
+        .doc(appointmentRequest.id)
+        .delete();
+
+    fetchAppointmentRequests();
+  }
 }

@@ -213,7 +213,7 @@ class DoctorHomePage extends StatelessWidget {
                                                 ));
                                           },
                                         ),
-                                        const ListTile(
+                                        ListTile(
                                           leading: Icon(
                                             Icons.cancel,
                                             color: Colors.red,
@@ -224,6 +224,13 @@ class DoctorHomePage extends StatelessWidget {
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.red),
                                           ),
+                                          onTap: () {
+                                            getController
+                                                .rejectAppointmentRequest(
+                                                    getController
+                                                            .appointmentRequests[
+                                                        index]);
+                                          },
                                         ),
                                       ],
                                     );
