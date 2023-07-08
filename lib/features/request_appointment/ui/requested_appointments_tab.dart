@@ -64,7 +64,7 @@ class RequestedAppointmentsTab extends StatelessWidget {
                       },
                       itemCount: snapshot.data!.docs.length,
                     )
-                  : Center(
+                  : const Center(
                       child: Text("No appointment requests"),
                     );
             }

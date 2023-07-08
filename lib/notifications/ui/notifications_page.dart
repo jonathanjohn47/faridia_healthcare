@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faridia_healthcare/core/app_colors.dart';
 import 'package:faridia_healthcare/helpers/date_time_helpers.dart';
-import 'package:faridia_healthcare/helpers/index_helpers.dart';
 import 'package:faridia_healthcare/models/notification_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -76,12 +75,16 @@ class NotificationsPage extends StatelessWidget {
                                               title: Text(
                                                 allNotifications[index].title,
                                                 style: TextStyle(
-                                                    fontWeight: !allNotifications[index].isRead
-                                                        ? FontWeight.w700
-                                                        : FontWeight.w500,
-                                                    fontSize: !allNotifications[index].isRead
-                                                        ? 12.sp
-                                                        : 10.sp),
+                                                    fontWeight:
+                                                        !allNotifications[index]
+                                                                .isRead
+                                                            ? FontWeight.w700
+                                                            : FontWeight.w500,
+                                                    fontSize:
+                                                        !allNotifications[index]
+                                                                .isRead
+                                                            ? 12.sp
+                                                            : 10.sp),
                                               ),
                                               subtitle: Text(
                                                 allNotifications[index]
