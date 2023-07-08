@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
 
 import '../../../core/app_colors.dart';
@@ -21,6 +22,18 @@ class MessagesPageDoctor extends StatelessWidget {
           Get.to(() => ZIMKitMessageListPage(
                 conversationID: conversation.id,
                 conversationType: conversation.type,
+                appBarBuilder: (context, title) {
+                  return AppBar(
+                    leading: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 6.0.sp),
+                      child: CircleAvatar(
+                        radius: 10.sp,
+                        backgroundImage: NetworkImage(conversation.avatarUrl),
+                      ),
+                    ),
+                    title: Text(conversation.name),
+                  );
+                },
               ));
         },
       ), /*Padding(

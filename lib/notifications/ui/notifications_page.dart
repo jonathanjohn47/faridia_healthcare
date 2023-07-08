@@ -76,10 +76,10 @@ class NotificationsPage extends StatelessWidget {
                                               title: Text(
                                                 allNotifications[index].title,
                                                 style: TextStyle(
-                                                    fontWeight: index.isPrime
+                                                    fontWeight: !allNotifications[index].isRead
                                                         ? FontWeight.w700
                                                         : FontWeight.w500,
-                                                    fontSize: index.isPrime
+                                                    fontSize: !allNotifications[index].isRead
                                                         ? 12.sp
                                                         : 10.sp),
                                               ),
