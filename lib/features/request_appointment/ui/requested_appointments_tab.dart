@@ -23,44 +23,50 @@ class RequestedAppointmentsTab extends StatelessWidget {
               .get(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  AppointmentRequestModel appointmentRequestModel =
-                      AppointmentRequestModel.fromJson(jsonDecode(
-                          jsonEncode(snapshot.data!.docs[index].data())));
-                  return Card(
-                    child: Column(
-                      children: [
-                        ListTile(
-                          title: Text(
-                            appointmentRequestModel.doctorModel.name,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14.sp),
+              return snapshot.data!.docs.isNotEmpty
+                  ? ListView.builder(
+                      itemBuilder: (context, index) {
+                        AppointmentRequestModel appointmentRequestModel =
+                            AppointmentRequestModel.fromJson(jsonDecode(
+                                jsonEncode(snapshot.data!.docs[index].data())));
+                        return Card(
+                          child: Column(
+                            children: [
+                              ListTile(
+                                title: Text(
+                                  appointmentRequestModel.doctorModel.name,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14.sp),
+                                ),
+                                subtitle: Text(
+                                  "${appointmentRequestModel.appointmentFor.getDateString()} on ${appointmentRequestModel.appointmentFor.getTimeStringInAmPm()}",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              Divider(
+                                thickness: 1.5.sp,
+                                color: Colors.grey,
+                                indent: 16.sp,
+                                endIndent: 16.sp,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0.sp),
+                                child: Text(
+                                  appointmentRequestModel.briefMessage,
+                                  style: TextStyle(color: Colors.grey.shade700),
+                                ),
+                              )
+                            ],
                           ),
-                          subtitle: Text(
-                            "${appointmentRequestModel.appointmentFor.getDateString()} on ${appointmentRequestModel.appointmentFor.getTimeStringInAmPm()}",
-                            style: const TextStyle(fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Divider(
-                          thickness: 1.5.sp,
-                          color: Colors.grey,
-                          indent: 16.sp,
-                          endIndent: 16.sp,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(8.0.sp),
-                          child: Text(
-                            appointmentRequestModel.briefMessage,
-                            style: TextStyle(color: Colors.grey.shade700),
-                          ),
-                        )
-                      ],
-                    ),
-                  );
-                },
-                itemCount: snapshot.data!.docs.length,
-              );
+                        );
+                      },
+                      itemCount: snapshot.data!.docs.length,
+                    )
+                  : Center(
+                      child: Text("No appointment requests"),
+                    );
             }
             return const Center(
               child: CircularProgressIndicator(),

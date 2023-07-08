@@ -43,78 +43,86 @@ class AppointmentsPage extends StatelessWidget {
                   .map((e) => AppointmentModel.fromJson(
                       jsonDecode(jsonEncode(e.data()))))
                   .toList();
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  AppointmentModel appointment = allAppointments[index];
-                  return Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(4.sp),
-                      child: Column(
-                        children: [
-                          ListTile(
-                            title: Text(
-                              'Dr. ${appointment.doctorModel.name}',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700, fontSize: 14.sp),
-                            ),
-                            subtitle: Text(
-                              appointment.doctorModel.bio,
-                              style: TextStyle(fontSize: 12.sp),
-                            ),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
+              return allAppointments.isNotEmpty
+                  ? ListView.builder(
+                      itemBuilder: (context, index) {
+                        AppointmentModel appointment = allAppointments[index];
+                        return Card(
+                          child: Padding(
+                            padding: EdgeInsets.all(4.sp),
+                            child: Column(
                               children: [
-                                Text(
-                                  appointment.appointmentOn.getDateString(),
-                                  style: TextStyle(fontSize: 10.sp),
+                                ListTile(
+                                  title: Text(
+                                    'Dr. ${appointment.doctorModel.name}',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14.sp),
+                                  ),
+                                  subtitle: Text(
+                                    appointment.doctorModel.bio,
+                                    style: TextStyle(fontSize: 12.sp),
+                                  ),
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        appointment.appointmentOn
+                                            .getDateString(),
+                                        style: TextStyle(fontSize: 10.sp),
+                                      ),
+                                      SizedBox(
+                                        width: 4.sp,
+                                      ),
+                                      Text(
+                                        appointment.appointmentOn
+                                            .getTimeString(),
+                                        style: TextStyle(fontSize: 10.sp),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                SizedBox(
-                                  width: 4.sp,
-                                ),
-                                Text(
-                                  appointment.appointmentOn.getTimeString(),
-                                  style: TextStyle(fontSize: 10.sp),
-                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppColors.secondary,
+                                      ),
+                                      onPressed: () {
+                                        appointmentPageGetController
+                                            .cancelAppointment(appointment,
+                                                context: context);
+                                      },
+                                      child: Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.close,
+                                            color: Colors.white,
+                                          ),
+                                          SizedBox(
+                                            width: 4.sp,
+                                          ),
+                                          const Text(
+                                            'Cancel',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )
                               ],
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.secondary,
-                                ),
-                                onPressed: () {
-                                  appointmentPageGetController
-                                      .cancelAppointment(appointment,
-                                          context: context);
-                                },
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.close,
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(
-                                      width: 4.sp,
-                                    ),
-                                    const Text(
-                                      'Cancel',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                },
-                itemCount: allAppointments.length,
-              );
+                        );
+                      },
+                      itemCount: allAppointments.length,
+                    )
+                  : const Center(
+                      child: Text('No appointments'),
+                    );
             }
             return const Center(
               child: CircularProgressIndicator(),
