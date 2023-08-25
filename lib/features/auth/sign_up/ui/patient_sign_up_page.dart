@@ -48,7 +48,7 @@ class PatientSignUpPage extends StatelessWidget {
                   Stack(
                     children: [
                       Obx(() {
-                        return getController.imagePath.value.isEmpty
+                        return getController.imagePath.value!.isEmpty
                             ? CircleAvatar(
                                 radius: 50.sp,
                                 backgroundImage: const AssetImage(
@@ -182,13 +182,14 @@ class PatientSignUpPage extends StatelessWidget {
                     if (value!.isEmpty) {
                       return 'Please enter your password';
                     }
+                    if (value != getController.confirmPasswordController.text) {
+                      return 'Passwords do not match';
+                    }
                     return null;
                   },
                 );
               }),
-              SizedBox(
-                height: 8.sp,
-              ),
+              SizedBox(height: 8.sp),
               Obx(() {
                 return TextFormField(
                   controller: getController.confirmPasswordController,
@@ -210,6 +211,9 @@ class PatientSignUpPage extends StatelessWidget {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter your password';
+                    }
+                    if (value != getController.passwordController.text) {
+                      return 'Passwords do not match';
                     }
                     return null;
                   },

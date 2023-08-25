@@ -36,12 +36,26 @@ class PatientSignUpGetController extends GetxController {
   }
 
   Future<void> signUpAsPatient() async {
-    if (imagePath.value.isEmpty &&
-        !formKey.currentState!.validate() &&
-        passwordController.text != confirmPasswordController.text) {
+    if (imagePath.value.isEmpty) {
+      Get.snackbar('Error', 'Please upload an image',
+          backgroundColor: Colors.red, colorText: Colors.white);
       return;
     }
+
+    if (passwordController.text != confirmPasswordController.text) {
+      Get.snackbar('Error', 'Passwords do not match',
+          backgroundColor: Colors.red, colorText: Colors.white);
+      return;
+    }
+
+    if (!formKey.currentState!.validate()) {
+      Get.snackbar('Error', 'Please fill in all the fields',
+          backgroundColor: Colors.red, colorText: Colors.white);
+      return;
+    }
+
     showLoader.value = true;
+
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(
             email: AppConstants.emailForTemporaryLogin,
@@ -52,7 +66,7 @@ class PatientSignUpGetController extends GetxController {
           .doc(emailController.text.trim())
           .get();
 
-      FirebaseAuth.instance.signOut();
+      await FirebaseAuth.instance.signOut();
 
       if (snapshot.exists) {
         Get.snackbar('Error', 'Email already exists',
@@ -88,6 +102,7 @@ class PatientSignUpGetController extends GetxController {
         });
       }
     });
+
     showLoader.value = false;
   }
 }
