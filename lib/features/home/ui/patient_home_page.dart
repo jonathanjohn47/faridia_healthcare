@@ -565,9 +565,6 @@ class PatientHomePage extends StatelessWidget {
                 leading: const Icon(Icons.logout),
                 title: const Text('Logout'),
                 onTap: () {
-                  try {} catch (e) {
-                    // TODO
-                  }
                   FirebaseAuth.instance.signOut().then((value) {
                     Get.offAll(() => SelectProfilePage());
                   });

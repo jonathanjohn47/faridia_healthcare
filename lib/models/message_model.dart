@@ -73,4 +73,17 @@ class MessageModel {
         "sent_by_doctor": sentByDoctor,
         "sent_by_patient": sentByPatient,
       };
+
+  factory MessageModel.empty() => MessageModel(
+        id: '',
+        text: '',
+        doctorEmail: '',
+        patientEmail: '',
+        sentAt: DateTime.now(),
+        readByDoctor: false,
+        readByPatient: false,
+        imageLink: '',
+        sentByDoctor: false,
+        sentByPatient: false,
+      );
 }

@@ -1,14 +1,12 @@
-import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faridia_healthcare/features/chat/ui/chat_page.dart';
 import 'package:faridia_healthcare/helpers/date_time_helpers.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../core/app_colors.dart';
-import '../../../core/app_constants.dart';
 import '../../../models/chat_channel_model.dart';
+import '../get_controllers/messages_page_patient_get_controller.dart';
 
 class MessagesPagePatient extends StatelessWidget {
   const MessagesPagePatient({super.key});
@@ -39,81 +37,70 @@ class MessagesPagePatient extends StatelessWidget {
                 color: AppColors.primary,
               ),
               Expanded(
-                child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection(AppConstants.chatChannels)
-                        .where('patient_email',
-                            isEqualTo:
-                                FirebaseAuth.instance.currentUser!.email!)
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        List<ChatChannelModel> chatChannels = snapshot
-                            .data!.docs
-                            .map((e) => ChatChannelModel.fromJson(
-                                jsonDecode(jsonEncode(e.data()))))
-                            .toList();
-                        return chatChannels.isNotEmpty
-                            ? ListView.builder(
-                                itemBuilder: (context, index) {
-                                  ChatChannelModel chatChannel =
-                                      chatChannels[index];
-                                  return Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Visibility(
-                                            visible: !chatChannel
-                                                .lastMessage.readByPatient,
-                                            child: CircleAvatar(
-                                              radius: 4.sp,
-                                              backgroundColor: Colors.blue,
+                child: GetX<MessagesPagePatientGetController>(
+                    init: MessagesPagePatientGetController(),
+                    builder: (controller) {
+                      return controller.chatChannels.isNotEmpty
+                          ? ListView.builder(
+                              itemBuilder: (context, index) {
+                                ChatChannelModel chatChannel =
+                                    controller.chatChannels[index];
+                                return Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Visibility(
+                                          visible: !chatChannel
+                                              .lastMessage.readByPatient,
+                                          child: CircleAvatar(
+                                            radius: 4.sp,
+                                            backgroundColor: Colors.blue,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: ListTile(
+                                            leading: CircleAvatar(
+                                              backgroundImage: NetworkImage(
+                                                  chatChannel
+                                                      .doctorModel.imageLink),
                                             ),
+                                            title: Text(
+                                              chatChannel.doctorModel.name,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w700),
+                                            ),
+                                            subtitle: Text(
+                                                chatChannel.lastMessage.text),
+                                            trailing: Text(
+                                              chatChannel.lastMessage.sentAt
+                                                  .getHowMuchTimeAgo(),
+                                              style: TextStyle(
+                                                  fontSize: !chatChannel
+                                                          .lastMessage
+                                                          .readByPatient
+                                                      ? 10.sp
+                                                      : 9.sp),
+                                            ),
+                                            onTap: () {
+                                              Get.to(() => ChatPage(
+                                                  chatChannel: chatChannel));
+                                            },
                                           ),
-                                          Expanded(
-                                            child: ListTile(
-                                                leading: CircleAvatar(
-                                                  backgroundImage: NetworkImage(
-                                                      chatChannel.doctorModel
-                                                          .imageLink),
-                                                ),
-                                                title: Text(
-                                                  chatChannel.doctorModel.name,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w700),
-                                                ),
-                                                subtitle: Text(chatChannel
-                                                    .lastMessage.text),
-                                                trailing: Text(
-                                                  chatChannel.lastMessage.sentAt
-                                                      .getHowMuchTimeAgo(),
-                                                  style: TextStyle(
-                                                      fontSize: !chatChannel
-                                                              .lastMessage
-                                                              .readByPatient
-                                                          ? 10.sp
-                                                          : 9.sp),
-                                                )),
-                                          ),
-                                        ],
-                                      ),
-                                      Divider(
-                                        thickness: 0.5.sp,
-                                        color: AppColors.secondary,
-                                      )
-                                    ],
-                                  );
-                                },
-                                itemCount: 10,
-                              )
-                            : Center(
-                                child: Text('No messages yet'),
-                              );
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
+                                        ),
+                                      ],
+                                    ),
+                                    Divider(
+                                      thickness: 0.5.sp,
+                                      color: AppColors.secondary,
+                                    )
+                                  ],
+                                );
+                              },
+                              itemCount: 10,
+                            )
+                          : Center(
+                              child: Text('No messages yet'),
+                            );
                     }),
               ),
             ],

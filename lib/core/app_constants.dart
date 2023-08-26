@@ -19,4 +19,6 @@ class AppConstants {
   static String constants = 'Constants';
 
   static String? serviceAccount = 'Service Account';
+
+  static String messages = 'Messages';
 }
