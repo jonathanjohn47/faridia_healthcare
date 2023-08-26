@@ -4,7 +4,7 @@ class PatientModel {
   String phone;
   String address;
   String fcmToken;
-  String imageLink;
+  String? imageLink;
 
   PatientModel({
     required this.name,
@@ -12,7 +12,7 @@ class PatientModel {
     required this.phone,
     required this.address,
     required this.fcmToken,
-    required this.imageLink,
+    this.imageLink,
   });
 
   PatientModel copyWith({
@@ -33,20 +33,20 @@ class PatientModel {
       );
 
   factory PatientModel.fromJson(Map<String, dynamic> json) => PatientModel(
-        name: json["name"],
-        email: json["email"],
-        phone: json["phone"],
-        address: json["address"],
-        fcmToken: json["fcmToken"],
-        imageLink: json["imageLink"],
-      );
+    name: json["name"],
+    email: json["email"],
+    phone: json["phone"],
+    address: json["address"],
+    fcmToken: json["fcmToken"],
+    imageLink: json["imageLink"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "email": email,
-        "phone": phone,
-        "address": address,
-        "fcmToken": fcmToken,
-        "imageLink": imageLink,
-      };
+    "name": name,
+    "email": email,
+    "phone": phone,
+    "address": address,
+    "fcmToken": fcmToken,
+    "imageLink": imageLink,
+  };
 }

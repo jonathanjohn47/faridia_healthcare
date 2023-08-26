@@ -53,7 +53,7 @@ class SetAppointmentPage extends StatelessWidget {
                       CircleAvatar(
                         radius: 30.sp,
                         backgroundImage: NetworkImage(
-                          appointmentRequestModel.patientModel.imageLink,
+                          appointmentRequestModel.patientModel.imageLink ?? '',
                         ),
                       ),
                       SizedBox(

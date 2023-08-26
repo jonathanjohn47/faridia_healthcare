@@ -47,7 +47,7 @@ class PatientSelfProfileGetController extends GetxController {
       phoneNumberController.text = currentPatient.phone;
       emailController.text = currentPatient.email;
       addressController.text = currentPatient.address;
-      imageLink.value = currentPatient.imageLink;
+      imageLink.value = currentPatient.imageLink ?? '';
 
       name.value = currentPatient.name;
       phoneNumber.value = currentPatient.phone;

@@ -36,12 +36,6 @@ class PatientSignUpGetController extends GetxController {
   }
 
   Future<void> signUpAsPatient() async {
-    if (imagePath.value.isEmpty) {
-      Get.snackbar('Error', 'Please upload an image',
-          backgroundColor: Colors.red, colorText: Colors.white);
-      return;
-    }
-
     if (passwordController.text != confirmPasswordController.text) {
       Get.snackbar('Error', 'Passwords do not match',
           backgroundColor: Colors.red, colorText: Colors.white);
@@ -58,9 +52,10 @@ class PatientSignUpGetController extends GetxController {
 
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(
-            email: AppConstants.emailForTemporaryLogin,
-            password: AppConstants.passwordForTemporaryLogin)
+        email: AppConstants.emailForTemporaryLogin,
+        password: AppConstants.passwordForTemporaryLogin)
         .then((value) async {
+
       final snapshot = await FirebaseFirestore.instance
           .collection(AppConstants.patients)
           .doc(emailController.text.trim())
@@ -74,30 +69,34 @@ class PatientSignUpGetController extends GetxController {
       } else {
         await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
-                email: emailController.text, password: passwordController.text)
+            email: emailController.text, password: passwordController.text)
             .then((value) async {
-          await FirebaseStorage.instance
-              .ref()
-              .child(AppConstants.patients)
-              .child(emailController.text)
-              .putFile(File(imagePath.value))
-              .then((p0) async {
-            final downloadURL = await p0.ref.getDownloadURL();
-            PatientModel patientModel = PatientModel(
-              name: nameController.text,
-              email: emailController.text,
-              phone: phoneNumberController.text,
-              address: addressController.text,
-              fcmToken: "",
-              imageLink: downloadURL,
-            );
-            await FirebaseFirestore.instance
-                .collection(AppConstants.patients)
-                .doc(emailController.text)
-                .set(patientModel.toJson())
-                .then((value) {
-              Get.offAll(() => PatientHomePage());
+          String? downloadURL;
+          if (imagePath.value.isNotEmpty) {
+            await FirebaseStorage.instance
+                .ref()
+                .child(AppConstants.patients)
+                .child(emailController.text)
+                .putFile(File(imagePath.value))
+                .then((p0) async {
+              downloadURL = await p0.ref.getDownloadURL();
             });
+          }
+
+          PatientModel patientModel = PatientModel(
+            name: nameController.text,
+            email: emailController.text,
+            phone: phoneNumberController.text,
+            address: addressController.text,
+            fcmToken: "",
+            imageLink: downloadURL,
+          );
+          await FirebaseFirestore.instance
+              .collection(AppConstants.patients)
+              .doc(emailController.text)
+              .set(patientModel.toJson())
+              .then((value) {
+            Get.offAll(() => PatientHomePage());
           });
         });
       }
