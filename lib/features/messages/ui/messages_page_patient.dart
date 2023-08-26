@@ -1,9 +1,14 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faridia_healthcare/helpers/date_time_helpers.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:zego_zimkit/zego_zimkit.dart';
 
 import '../../../core/app_colors.dart';
+import '../../../core/app_constants.dart';
+import '../../../models/chat_channel_model.dart';
 
 class MessagesPagePatient extends StatelessWidget {
   const MessagesPagePatient({super.key});
@@ -17,26 +22,7 @@ class MessagesPagePatient extends StatelessWidget {
             color: AppColors.primary,
           ),
         ),
-        body: ZIMKitConversationListView(
-          onPressed: (context, conversation, defaultAction) {
-            Get.to(() => ZIMKitMessageListPage(
-                  conversationID: conversation.id,
-                  conversationType: conversation.type,
-                  appBarBuilder: (context, title) {
-                    return AppBar(
-                      leading: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0.sp),
-                        child: CircleAvatar(
-                          radius: 10.sp,
-                          backgroundImage: NetworkImage(conversation.avatarUrl),
-                        ),
-                      ),
-                      title: Text(conversation.name),
-                    );
-                  },
-                ));
-          },
-        ) /*Padding(
+        body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.0.sp),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +63,8 @@ class MessagesPagePatient extends StatelessWidget {
                                       Row(
                                         children: [
                                           Visibility(
-                                            visible: !chatChannel.lastMessage.readByPatient,
+                                            visible: !chatChannel
+                                                .lastMessage.readByPatient,
                                             child: CircleAvatar(
                                               radius: 4.sp,
                                               backgroundColor: Colors.blue,
@@ -102,7 +89,9 @@ class MessagesPagePatient extends StatelessWidget {
                                                   chatChannel.lastMessage.sentAt
                                                       .getHowMuchTimeAgo(),
                                                   style: TextStyle(
-                                                      fontSize: !chatChannel.lastMessage.readByPatient
+                                                      fontSize: !chatChannel
+                                                              .lastMessage
+                                                              .readByPatient
                                                           ? 10.sp
                                                           : 9.sp),
                                                 )),
@@ -129,7 +118,6 @@ class MessagesPagePatient extends StatelessWidget {
               ),
             ],
           ),
-        )*/
-        );
+        ));
   }
 }

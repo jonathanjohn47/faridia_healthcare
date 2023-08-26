@@ -53,9 +53,6 @@ dependencies:
   firebase_storage: ^11.2.3
   auto_size_text: ^3.0.0
   uuid: ^3.0.7
-  flutter_chat_bubble: ^2.0.2
-  zego_zimkit: ^1.7.0
-  zego_uikit_prebuilt_call: ^3.8.1
   googleapis_auth: ^1.4.1
   firebase_messaging: ^14.6.4
 

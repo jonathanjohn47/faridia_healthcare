@@ -6,8 +6,6 @@ import 'package:faridia_healthcare/models/patient_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sizer/sizer.dart';
-import 'package:zego_zimkit/zego_zimkit.dart';
 
 import '../../../core/app_constants.dart';
 
@@ -37,26 +35,6 @@ class DoctorProfileGetController extends GetxController {
         .then((value) {
       PatientModel patientModel =
           PatientModel.fromJson(jsonDecode(jsonEncode(value.data())));
-      ZIMKit()
-          .connectUser(
-              id: FirebaseAuth.instance.currentUser!.email!,
-              name: patientModel.name,
-              avatarUrl: patientModel.imageLink)
-          .then((value) {
-        Get.to(() => ZIMKitMessageListPage(
-              conversationID: doctorModel.email,
-              conversationType: ZIMConversationType.peer,
-              appBarBuilder: (context, title) {
-                return AppBar(
-                  leading: CircleAvatar(
-                    radius: 10.sp,
-                    backgroundImage: NetworkImage(doctorModel.imageLink),
-                  ),
-                  title: Text(doctorModel.name),
-                );
-              },
-            ));
-      });
     });
   }
 }

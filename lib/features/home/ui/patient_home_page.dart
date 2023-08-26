@@ -14,7 +14,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:zego_zimkit/zego_zimkit.dart';
 
 import '../../../core/app_colors.dart';
 import '../../../models/notification_model.dart';
@@ -566,10 +565,7 @@ class PatientHomePage extends StatelessWidget {
                 leading: const Icon(Icons.logout),
                 title: const Text('Logout'),
                 onTap: () {
-                  try {
-                    ZIM.getInstance()!.logout();
-                    ZIM.getInstance()!.destroy();
-                  } catch (e) {
+                  try {} catch (e) {
                     // TODO
                   }
                   FirebaseAuth.instance.signOut().then((value) {
