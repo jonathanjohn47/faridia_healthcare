@@ -55,6 +55,7 @@ dependencies:
   uuid: ^3.0.7
   googleapis_auth: ^1.4.1
   firebase_messaging: ^14.6.4
+  zego_uikit_prebuilt_call: ^3.13.0
 
 dev_dependencies:
   flutter_test:
