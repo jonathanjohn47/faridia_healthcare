@@ -21,18 +21,20 @@ class MessagesPageDoctorGetController extends GetxController {
         .listen((event) {
       chatChannels.value =
           event.docs.map((e) => ChatChannelModel.fromJson(e.data())).toList();
+      chatChannels
+          .sort((a, b) => a.lastMessage.sentAt.compareTo(b.lastMessage.sentAt));
     });
-  }
-
-  @override
-  void onClose() {
-    listen.cancel();
-    super.onClose();
   }
 
   @override
   void onInit() {
     loadChatChannels();
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    listen.cancel();
+    super.onClose();
   }
 }

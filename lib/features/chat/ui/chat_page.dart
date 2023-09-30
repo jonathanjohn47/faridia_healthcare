@@ -15,11 +15,36 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(0),
-        child: Container(
-          color: AppColors.primary,
+      appBar: AppBar(
+        leading: Padding(
+          padding: EdgeInsets.all(2.0),
+          child: GetX<ChatPageGetController>(
+              init: ChatPageGetController(chatChannel),
+              builder: (controller) {
+                print("Is Patient: ${controller.isPatient.value}");
+                return controller.isPatient.value
+                    ? CircleAvatar(
+                        backgroundImage:
+                            NetworkImage(chatChannel.doctorModel.imageLink),
+                      )
+                    : chatChannel.patientModel.imageLink != null
+                        ? CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                chatChannel.patientModel.imageLink!),
+                          )
+                        : CircleAvatar(
+                            child: Text(chatChannel.patientModel.name[0]),
+                          );
+              }),
         ),
+        title: GetX<ChatPageGetController>(
+            init: ChatPageGetController(chatChannel),
+            builder: (controller) {
+              return Text(controller.isPatient.value
+                  ? chatChannel.doctorModel.name
+                  : chatChannel.patientModel.name);
+            }),
+        backgroundColor: AppColors.primary,
       ),
       body: Column(
         children: [
@@ -33,7 +58,7 @@ class ChatPage extends StatelessWidget {
                             MessageModel messageModel =
                                 controller.allMessages[index];
                             return ChatBubble(
-                                isPatient: controller.isPatient,
+                                isPatient: controller.isPatient.value,
                                 messageModel: messageModel);
                           },
                           itemCount: controller.allMessages.length,

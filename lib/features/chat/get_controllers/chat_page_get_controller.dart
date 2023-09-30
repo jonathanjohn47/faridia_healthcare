@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faridia_healthcare/core/app_constants.dart';
 import 'package:faridia_healthcare/models/chat_channel_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,7 +23,7 @@ class ChatPageGetController extends GetxController {
 
   RxList<MessageModel> allMessages = RxList<MessageModel>([]);
 
-  bool isPatient = false;
+  RxBool isPatient = false.obs;
 
   late StreamSubscription<QuerySnapshot> listen;
 
@@ -36,16 +37,17 @@ class ChatPageGetController extends GetxController {
       allMessages.value =
           event.docs.map((e) => MessageModel.fromJson(e.data())).toList();
       allMessages.sort((a, b) => a.sentAt.compareTo(b.sentAt));
+      markAllMessagesAsRead();
     });
   }
 
   void loadIfCurrentUserIsPatientOrDoctor() {
     FirebaseFirestore.instance
         .collection(AppConstants.patients)
-        .doc(chatChannelModel.patientEmail)
+        .doc(FirebaseAuth.instance.currentUser!.email!)
         .get()
         .then((value) {
-      isPatient = value.exists;
+      isPatient.value = value.exists;
     });
   }
 
@@ -102,11 +104,11 @@ class ChatPageGetController extends GetxController {
       doctorEmail: chatChannelModel.doctorEmail,
       patientEmail: chatChannelModel.patientEmail,
       sentAt: DateTime.now(),
-      readByDoctor: !isPatient,
-      readByPatient: isPatient,
+      readByDoctor: !isPatient.value,
+      readByPatient: isPatient.value,
       imageLink: imageLink.value,
-      sentByDoctor: !isPatient,
-      sentByPatient: isPatient,
+      sentByDoctor: !isPatient.value,
+      sentByPatient: isPatient.value,
     );
 
     ChatChannelModel chatChannel = chatChannelModel.copyWith(lastMessage: msg);
@@ -131,5 +133,49 @@ class ChatPageGetController extends GetxController {
 
     messageController.clear();
     imageLink.value = '';
+  }
+
+  void markAllMessagesAsRead() {
+    for (var message in allMessages) {
+      if (isPatient.value) {
+        if (!message.readByPatient) {
+          message = message.copyWith(readByPatient: true);
+
+          FirebaseFirestore.instance
+              .collection(AppConstants.chatChannels)
+              .doc(chatChannelModel.id)
+              .collection(AppConstants.messages)
+              .doc(message.id)
+              .set(message.toJson());
+        }
+      } else {
+        if (!message.readByDoctor) {
+          message = message.copyWith(readByDoctor: true);
+          FirebaseFirestore.instance
+              .collection(AppConstants.chatChannels)
+              .doc(chatChannelModel.id)
+              .collection(AppConstants.messages)
+              .doc(message.id)
+              .set(message.toJson());
+        }
+      }
+    }
+    if (allMessages.isNotEmpty) {
+      if (isPatient.value) {
+        ChatChannelModel chatChannel =
+            chatChannelModel.copyWith(lastMessage: allMessages.last);
+        FirebaseFirestore.instance
+            .collection(AppConstants.chatChannels)
+            .doc(chatChannelModel.id)
+            .set(chatChannel.toJson());
+      } else {
+        ChatChannelModel chatChannel =
+            chatChannelModel.copyWith(lastMessage: allMessages.last);
+        FirebaseFirestore.instance
+            .collection(AppConstants.chatChannels)
+            .doc(chatChannelModel.id)
+            .set(chatChannel.toJson());
+      }
+    }
   }
 }

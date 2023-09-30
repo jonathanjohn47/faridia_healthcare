@@ -15,7 +15,7 @@ class MessagesPageDoctor extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(0),
+          preferredSize: Size.fromHeight(0),
           child: Container(
             color: AppColors.primary,
           ),
@@ -51,7 +51,7 @@ class MessagesPageDoctor extends StatelessWidget {
                                       children: [
                                         Visibility(
                                           visible: !chatChannel
-                                              .lastMessage.readByPatient,
+                                              .lastMessage.readByDoctor,
                                           child: CircleAvatar(
                                             radius: 4.sp,
                                             backgroundColor: Colors.blue,
@@ -92,7 +92,7 @@ class MessagesPageDoctor extends StatelessWidget {
                                               style: TextStyle(
                                                   fontSize: !chatChannel
                                                           .lastMessage
-                                                          .readByPatient
+                                                          .readByDoctor
                                                       ? 10.sp
                                                       : 9.sp),
                                             ),
