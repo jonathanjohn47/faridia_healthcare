@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faridia_healthcare/models/appointment_model.dart';
 import 'package:faridia_healthcare/models/doctor_model.dart';
+import 'package:faridia_healthcare/models/message_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -18,13 +20,15 @@ class DoctorHomePageGetController extends GetxController {
 
   RxInt unreadMessages = 0.obs;
 
+  late StreamSubscription<QuerySnapshot> appointmentsListen;
+
   Future<void> fetchAppointmentRequests() async {
-    await FirebaseFirestore.instance
+    appointmentsListen = FirebaseFirestore.instance
         .collection(AppConstants.doctors)
         .doc(FirebaseAuth.instance.currentUser!.email)
         .collection(AppConstants.appointmentRequests)
-        .get()
-        .then((value) {
+        .snapshots()
+        .listen((value) {
       appointmentRequests.value = value.docs
           .map((e) => AppointmentRequestModel.fromJson(
               jsonDecode(jsonEncode(e.data()))))
@@ -36,7 +40,15 @@ class DoctorHomePageGetController extends GetxController {
   void onInit() {
     saveFcmToken();
     fetchAppointmentRequests();
+    getUnreadMessages();
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    appointmentsListen.cancel();
+    unreadMessagesListen.cancel();
+    super.onClose();
   }
 
   void initiateAppointmentMeeting(AppointmentModel appointment) {
@@ -64,7 +76,23 @@ class DoctorHomePageGetController extends GetxController {
     }
   }
 
-  void getUnreadMessages() {}
+  late StreamSubscription<QuerySnapshot> unreadMessagesListen;
+
+  void getUnreadMessages() {
+    unreadMessagesListen = FirebaseFirestore.instance
+        .collection(AppConstants.chatChannels)
+        .where('doctor_email',
+            isEqualTo: FirebaseAuth.instance.currentUser!.email)
+        .snapshots()
+        .listen((event) {
+      unreadMessages.value = 0;
+      for (var element in event.docs) {
+        MessageModel lastMessage = MessageModel.fromJson(
+            jsonDecode(jsonEncode(element.get('last_message'))));
+        unreadMessages.value += lastMessage.readByDoctor ? 0 : 1;
+      }
+    });
+  }
 
   Future<void> saveFcmToken() async {
     String? token = await FirebaseMessaging.instance.getToken();

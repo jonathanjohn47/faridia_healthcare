@@ -59,13 +59,28 @@ class MessagesPageDoctor extends StatelessWidget {
                                         ),
                                         Expanded(
                                           child: ListTile(
-                                            leading: CircleAvatar(
-                                              backgroundImage: NetworkImage(
-                                                  chatChannel
-                                                      .doctorModel.imageLink),
-                                            ),
+                                            leading: chatChannel.patientModel
+                                                        .imageLink !=
+                                                    null
+                                                ? CircleAvatar(
+                                                    backgroundImage:
+                                                        NetworkImage(chatChannel
+                                                            .patientModel
+                                                            .imageLink!),
+                                                  )
+                                                : CircleAvatar(
+                                                    child: Text(
+                                                      chatChannel
+                                                          .patientModel.name
+                                                          .substring(0, 1),
+                                                      style: TextStyle(
+                                                          fontSize: 12.sp,
+                                                          fontWeight:
+                                                              FontWeight.w700),
+                                                    ),
+                                                  ),
                                             title: Text(
-                                              chatChannel.doctorModel.name,
+                                              chatChannel.patientModel.name,
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w700),
                                             ),
@@ -96,7 +111,7 @@ class MessagesPageDoctor extends StatelessWidget {
                                   ],
                                 );
                               },
-                              itemCount: 10,
+                              itemCount: controller.chatChannels.length,
                             )
                           : Center(
                               child: Text('No messages yet'),

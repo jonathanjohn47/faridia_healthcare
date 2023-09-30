@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import '../../../core/app_constants.dart';
 import '../../../models/chat_channel_model.dart';
 
-class MessagesPageDoctorGetController extends GetxController{
+class MessagesPageDoctorGetController extends GetxController {
   RxList<ChatChannelModel> chatChannels = RxList<ChatChannelModel>([]);
 
   late StreamSubscription<QuerySnapshot> listen;
@@ -16,14 +16,23 @@ class MessagesPageDoctorGetController extends GetxController{
     listen = FirebaseFirestore.instance
         .collection(AppConstants.chatChannels)
         .where('doctor_email',
-        isEqualTo: FirebaseAuth.instance.currentUser!.email!)
+            isEqualTo: FirebaseAuth.instance.currentUser!.email!)
         .snapshots()
-        .listen((event) {});
+        .listen((event) {
+      chatChannels.value =
+          event.docs.map((e) => ChatChannelModel.fromJson(e.data())).toList();
+    });
   }
 
   @override
   void onClose() {
     listen.cancel();
     super.onClose();
+  }
+
+  @override
+  void onInit() {
+    loadChatChannels();
+    super.onInit();
   }
 }

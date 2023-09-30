@@ -96,7 +96,7 @@ class MessagesPagePatient extends StatelessWidget {
                                   ],
                                 );
                               },
-                              itemCount: 10,
+                              itemCount: controller.chatChannels.length,
                             )
                           : Center(
                               child: Text('No messages yet'),

@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faridia_healthcare/core/app_constants.dart';
 import 'package:faridia_healthcare/models/chat_channel_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,7 +27,7 @@ class ChatPageGetController extends GetxController {
   late StreamSubscription<QuerySnapshot> listen;
 
   void loadMessages() {
-    FirebaseFirestore.instance
+    listen = FirebaseFirestore.instance
         .collection(AppConstants.chatChannels)
         .doc(chatChannelModel.id)
         .collection(AppConstants.messages)
@@ -110,6 +109,13 @@ class ChatPageGetController extends GetxController {
       sentByPatient: isPatient,
     );
 
+    ChatChannelModel chatChannel = chatChannelModel.copyWith(lastMessage: msg);
+
+    await FirebaseFirestore.instance
+        .collection(AppConstants.chatChannels)
+        .doc(chatChannel.id)
+        .set(chatChannel.toJson());
+
     await FirebaseFirestore.instance
         .collection(AppConstants.chatChannels)
         .doc(chatChannelModel.id)
@@ -123,16 +129,7 @@ class ChatPageGetController extends GetxController {
       Get.snackbar('Error', 'Failed to send message: $e');
     });
 
-    await FirebaseFirestore.instance
-        .collection(AppConstants.chatChannels)
-        .doc(chatChannelModel.id)
-        .update({
-      'last_message': msg.toJson(),
-    }).then((value) {
-      messageController.clear();
-      imageLink.value = '';
-    }).catchError((e) {
-      Get.snackbar('Error', 'Failed to update last message: $e');
-    });
+    messageController.clear();
+    imageLink.value = '';
   }
 }

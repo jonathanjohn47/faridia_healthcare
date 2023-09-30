@@ -18,7 +18,18 @@ class MessagesPagePatientGetController extends GetxController {
         .where('patient_email',
             isEqualTo: FirebaseAuth.instance.currentUser!.email!)
         .snapshots()
-        .listen((event) {});
+        .listen((event) {
+      chatChannels.value =
+          event.docs.map((e) => ChatChannelModel.fromJson(e.data())).toList();
+      chatChannels
+          .sort((a, b) => a.lastMessage.sentAt.compareTo(b.lastMessage.sentAt));
+    });
+  }
+
+  @override
+  void onInit() {
+    loadChatChannels();
+    super.onInit();
   }
 
   @override
