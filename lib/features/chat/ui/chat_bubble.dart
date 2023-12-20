@@ -2,14 +2,14 @@ import 'package:faridia_healthcare/models/message_model.dart';
 import 'package:flutter/material.dart';
 
 class ChatBubble extends StatelessWidget {
-  final bool isPatient;
+  final bool sentByMe;
   final MessageModel messageModel;
 
-  const ChatBubble({required this.isPatient, required this.messageModel});
+  const ChatBubble({required this.sentByMe, required this.messageModel});
 
   @override
   Widget build(BuildContext context) {
-    if ((this.isPatient && this.messageModel.sentByPatient) || (!this.isPatient && this.messageModel.sentByDoctor)) {
+    if (sentByMe) {
       // Sender's Bubble
       return Row(
         mainAxisAlignment: MainAxisAlignment.end,

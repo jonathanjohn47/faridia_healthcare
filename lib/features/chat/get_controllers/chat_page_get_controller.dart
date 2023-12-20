@@ -16,7 +16,7 @@ import '../../../models/message_model.dart';
 class ChatPageGetController extends GetxController {
   final ChatChannelModel chatChannelModel;
 
-  ChatPageGetController(this.chatChannelModel);
+  ChatPageGetController({required this.chatChannelModel});
 
   TextEditingController messageController = TextEditingController();
   RxString imageLink = RxString('');
@@ -41,12 +41,14 @@ class ChatPageGetController extends GetxController {
     });
   }
 
-  void loadIfCurrentUserIsPatientOrDoctor() {
-    FirebaseFirestore.instance
+
+  late StreamSubscription<DocumentSnapshot> patientListen;
+  Future<void> loadIfCurrentUserIsPatientOrDoctor() async {
+    patientListen = FirebaseFirestore.instance
         .collection(AppConstants.patients)
         .doc(FirebaseAuth.instance.currentUser!.email!)
-        .get()
-        .then((value) {
+        .snapshots()
+        .listen((value) {
       isPatient.value = value.exists;
     });
   }
@@ -70,6 +72,7 @@ class ChatPageGetController extends GetxController {
   @override
   void onClose() {
     listen.cancel();
+    patientListen.cancel();
     super.onClose();
   }
 
