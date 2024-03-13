@@ -30,7 +30,7 @@ class NotificationsPage extends StatelessWidget {
             stream: FirebaseFirestore.instance
                 .collection(
                     isPatient ? AppConstants.patients : AppConstants.doctors)
-                .doc(FirebaseAuth.instance.currentUser!.email)
+                .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection(AppConstants.notifications)
                 .snapshots(),
             builder: (context, snapshot) {
@@ -109,7 +109,7 @@ class NotificationsPage extends StatelessWidget {
                                                         ? AppConstants.patients
                                                         : AppConstants.doctors)
                                                     .doc(FirebaseAuth.instance
-                                                        .currentUser!.email)
+                                                        .currentUser!.uid)
                                                     .collection(AppConstants
                                                         .notifications)
                                                     .doc(allNotifications[index]

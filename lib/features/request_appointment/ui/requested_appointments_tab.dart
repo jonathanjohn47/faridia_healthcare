@@ -18,7 +18,7 @@ class RequestedAppointmentsTab extends StatelessWidget {
       body: FutureBuilder<QuerySnapshot>(
           future: FirebaseFirestore.instance
               .collection(AppConstants.patients)
-              .doc(FirebaseAuth.instance.currentUser!.email)
+              .doc(FirebaseAuth.instance.currentUser!.uid)
               .collection(AppConstants.appointmentRequests)
               .get(),
           builder: (context, snapshot) {

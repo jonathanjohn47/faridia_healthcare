@@ -16,7 +16,7 @@ class MessagesPageDoctorGetController extends GetxController {
     listen = FirebaseFirestore.instance
         .collection(AppConstants.chatChannels)
         .where('doctor_email',
-            isEqualTo: FirebaseAuth.instance.currentUser!.email!)
+            isEqualTo: FirebaseAuth.instance.currentUser!.uid!)
         .snapshots()
         .listen((event) {
       chatChannels.value =

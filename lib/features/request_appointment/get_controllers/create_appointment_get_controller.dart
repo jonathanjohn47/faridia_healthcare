@@ -45,7 +45,7 @@ class CreateAppointmentGetController extends GetxController {
     String appointmentRequestId = uuid.v4();
     await FirebaseFirestore.instance
         .collection(AppConstants.patients)
-        .doc(FirebaseAuth.instance.currentUser!.email)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((value) async {
       PatientModel patientModel =
@@ -64,13 +64,13 @@ class CreateAppointmentGetController extends GetxController {
               chosenTime.value.minute));
       await FirebaseFirestore.instance
           .collection(AppConstants.doctors)
-          .doc(doctorModel.email)
+          .doc(doctorModel.id)
           .collection(AppConstants.appointmentRequests)
           .doc(appointmentRequestId)
           .set(appointmentRequestModel.toJson());
       await FirebaseFirestore.instance
           .collection(AppConstants.patients)
-          .doc(FirebaseAuth.instance.currentUser!.email)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection(AppConstants.appointmentRequests)
           .doc(appointmentRequestId)
           .set(appointmentRequestModel.toJson())
@@ -85,7 +85,7 @@ class CreateAppointmentGetController extends GetxController {
             sentAt: DateTime.now());
         await FirebaseFirestore.instance
             .collection(AppConstants.doctors)
-            .doc(doctorModel.email)
+            .doc(doctorModel.id)
             .collection(AppConstants.notifications)
             .doc(notificationId)
             .set(notificationModel.toJson());

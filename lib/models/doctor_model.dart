@@ -1,6 +1,18 @@
+// To parse this JSON data, do
+//
+//     final doctorModel = doctorModelFromJson(jsonString);
+
+import 'dart:convert';
+
+List<DoctorModel> doctorModelFromJson(String str) => List<DoctorModel>.from(
+    json.decode(str).map((x) => DoctorModel.fromJson(x)));
+
+String doctorModelToJson(List<DoctorModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class DoctorModel {
+  String id;
   String name;
-  String email;
   String phone;
   String bio;
   String fcmToken;
@@ -13,8 +25,8 @@ class DoctorModel {
   String clinicAddress;
 
   DoctorModel({
+    required this.id,
     required this.name,
-    required this.email,
     required this.phone,
     required this.bio,
     required this.fcmToken,
@@ -28,8 +40,8 @@ class DoctorModel {
   });
 
   DoctorModel copyWith({
+    String? id,
     String? name,
-    String? email,
     String? phone,
     String? bio,
     String? fcmToken,
@@ -42,8 +54,8 @@ class DoctorModel {
     String? clinicAddress,
   }) =>
       DoctorModel(
+        id: id ?? this.id,
         name: name ?? this.name,
-        email: email ?? this.email,
         phone: phone ?? this.phone,
         bio: bio ?? this.bio,
         fcmToken: fcmToken ?? this.fcmToken,
@@ -58,8 +70,8 @@ class DoctorModel {
       );
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) => DoctorModel(
+        id: json["id"],
         name: json["name"],
-        email: json["email"],
         phone: json["phone"],
         bio: json["bio"],
         fcmToken: json["fcmToken"],
@@ -68,13 +80,13 @@ class DoctorModel {
         services: json["services"],
         education: json["education"],
         experience: json["experience"],
-        awardsAndRecognitions: json["awards_and_recognitions"],
-        clinicAddress: json["clinic_address"],
+        awardsAndRecognitions: json["awardsAndRecognitions"],
+        clinicAddress: json["clinicAddress"],
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "name": name,
-        "email": email,
         "phone": phone,
         "bio": bio,
         "fcmToken": fcmToken,
@@ -83,7 +95,24 @@ class DoctorModel {
         "services": services,
         "education": education,
         "experience": experience,
-        "awards_and_recognitions": awardsAndRecognitions,
-        "clinic_address": clinicAddress,
+        "awardsAndRecognitions": awardsAndRecognitions,
+        "clinicAddress": clinicAddress,
       };
+
+  static DoctorModel empty() {
+    return DoctorModel(
+      id: '',
+      name: '',
+      phone: '',
+      bio: '',
+      fcmToken: '',
+      imageLink: '',
+      about: '',
+      services: '',
+      education: '',
+      experience: '',
+      awardsAndRecognitions: '',
+      clinicAddress: '',
+    );
+  }
 }

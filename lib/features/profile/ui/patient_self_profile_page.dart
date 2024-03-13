@@ -125,19 +125,6 @@ class PatientSelfProfilePage extends StatelessWidget {
                             height: 8.sp,
                           ),
                           TextFormField(
-                            controller: getController.phoneController,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              labelText: 'Email',
-                              // other properties...
-                            ),
-                          ),
-                          SizedBox(
-                            height: 8.sp,
-                          ),
-                          TextFormField(
                             controller: getController.addressController,
                             maxLines: 3,
                             decoration: InputDecoration(

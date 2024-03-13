@@ -1,22 +1,16 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:faridia_healthcare/core/app_constants.dart';
-import 'package:faridia_healthcare/features/home/ui/patient_home_page.dart';
-import 'package:faridia_healthcare/models/patient_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PatientSignUpGetController extends GetxController {
   TextEditingController nameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
+
+  //TextEditingController phoneController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -25,6 +19,8 @@ class PatientSignUpGetController extends GetxController {
   RxString imagePath = ''.obs;
 
   RxBool showLoader = false.obs;
+
+  CountryCode countryCode = CountryCode.fromCountryCode('91');
 
   void chooseImage() {
     ImagePicker picker = ImagePicker();
@@ -36,12 +32,6 @@ class PatientSignUpGetController extends GetxController {
   }
 
   Future<void> signUpAsPatient() async {
-    if (passwordController.text != confirmPasswordController.text) {
-      Get.snackbar('Error', 'Passwords do not match',
-          backgroundColor: Colors.red, colorText: Colors.white);
-      return;
-    }
-
     if (!formKey.currentState!.validate()) {
       Get.snackbar('Error', 'Please fill in all the fields',
           backgroundColor: Colors.red, colorText: Colors.white);
@@ -49,59 +39,21 @@ class PatientSignUpGetController extends GetxController {
     }
 
     showLoader.value = true;
-
-    await FirebaseAuth.instance
-        .signInWithEmailAndPassword(
-        email: AppConstants.emailForTemporaryLogin,
-        password: AppConstants.passwordForTemporaryLogin)
-        .then((value) async {
-
-      final snapshot = await FirebaseFirestore.instance
-          .collection(AppConstants.patients)
-          .doc(phoneController.text.trim())
-          .get();
-
-      await FirebaseAuth.instance.signOut();
-
-      if (snapshot.exists) {
-        Get.snackbar('Error', 'Email already exists',
+    FirebaseFirestore.instance
+        .collection(AppConstants.patients)
+        .where("phone",
+            isEqualTo: countryCode.toString() + phoneNumberController.text)
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        Get.snackbar("Error", "User already exists",
             backgroundColor: Colors.red, colorText: Colors.white);
       } else {
-        await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(
-            email: phoneController.text, password: passwordController.text)
-            .then((value) async {
-          String? downloadURL;
-          if (imagePath.value.isNotEmpty) {
-            await FirebaseStorage.instance
-                .ref()
-                .child(AppConstants.patients)
-                .child(phoneController.text)
-                .putFile(File(imagePath.value))
-                .then((p0) async {
-              downloadURL = await p0.ref.getDownloadURL();
-            });
-          }
+        if (imagePath.isEmpty){
 
-          PatientModel patientModel = PatientModel(
-            name: nameController.text,
-            email: phoneController.text,
-            phone: phoneNumberController.text,
-            address: addressController.text,
-            fcmToken: "",
-            imageLink: downloadURL,
-          );
-          await FirebaseFirestore.instance
-              .collection(AppConstants.patients)
-              .doc(phoneController.text)
-              .set(patientModel.toJson())
-              .then((value) {
-            Get.offAll(() => PatientHomePage());
-          });
-        });
+        }
       }
     });
-
     showLoader.value = false;
   }
 }

@@ -14,7 +14,7 @@ import '../../../core/app_constants.dart';
 class PatientSelfProfileGetController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
+  //TextEditingController phoneController = TextEditingController();
   TextEditingController addressController = TextEditingController();
 
   RxString name = ''.obs;
@@ -38,20 +38,18 @@ class PatientSelfProfileGetController extends GetxController {
   void fetchCurrentPatient() {
     FirebaseFirestore.instance
         .collection(AppConstants.patients)
-        .doc(FirebaseAuth.instance.currentUser!.email)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((value) {
       PatientModel currentPatient =
           PatientModel.fromJson(jsonDecode(jsonEncode(value.data())));
       nameController.text = currentPatient.name;
       phoneNumberController.text = currentPatient.phone;
-      phoneController.text = currentPatient.email;
       addressController.text = currentPatient.address;
       imageLink.value = currentPatient.imageLink ?? '';
 
       name.value = currentPatient.name;
       phoneNumber.value = currentPatient.phone;
-      email.value = currentPatient.email;
       address.value = currentPatient.address;
       fcmToken.value = currentPatient.fcmToken;
     });
@@ -72,34 +70,34 @@ class PatientSelfProfileGetController extends GetxController {
       FirebaseStorage.instance
           .ref()
           .child(AppConstants.patients)
-          .child(FirebaseAuth.instance.currentUser!.email!)
+          .child(FirebaseAuth.instance.currentUser!.uid!)
           .putFile(File(imageLink.value))
           .then((value) {
         value.ref.getDownloadURL().then((downloadUrl) {
           PatientModel patientModel = PatientModel(
+              id: FirebaseAuth.instance.currentUser!.uid,
               name: nameController.text.trim(),
-              email: phoneController.text.trim(),
               phone: phoneNumberController.text.trim(),
               address: addressController.text.trim(),
               fcmToken: fcmToken.value,
               imageLink: downloadUrl);
           FirebaseFirestore.instance
               .collection(AppConstants.patients)
-              .doc(FirebaseAuth.instance.currentUser!.email)
+              .doc(FirebaseAuth.instance.currentUser!.uid)
               .update(patientModel.toJson());
         });
       });
     } else {
       PatientModel patientModel = PatientModel(
+          id: FirebaseAuth.instance.currentUser!.uid,
           name: nameController.text.trim(),
-          email: phoneController.text.trim(),
           phone: phoneNumberController.text.trim(),
           address: addressController.text.trim(),
           fcmToken: fcmToken.value,
           imageLink: imageLink.value);
       FirebaseFirestore.instance
           .collection(AppConstants.patients)
-          .doc(FirebaseAuth.instance.currentUser!.email)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .update(patientModel.toJson());
     }
   }

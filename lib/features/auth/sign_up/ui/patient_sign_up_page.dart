@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:faridia_healthcare/features/auth/sign_in/ui/patient_sign_in.dart';
 import 'package:faridia_healthcare/features/auth/sign_up/get_controllers/patient_sign_up_get_controller.dart';
 import 'package:flutter/material.dart';
@@ -104,31 +105,29 @@ class PatientSignUpPage extends StatelessWidget {
                 height: 8.sp,
               ),
               TextFormField(
-                controller: getController.phoneController,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: 8.sp,
-              ),
-              TextFormField(
                 controller: getController.phoneNumberController,
-                keyboardType: TextInputType.phone,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Phone Number',
                   border: OutlineInputBorder(),
+                  prefixIcon: CountryCodePicker(
+                    onChanged: (value) {
+                      getController.countryCode = value;
+                    },
+                    // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+                    initialSelection: 'IN',
+                    favorite: ['+91', 'IN'],
+                    // optional. Shows only country name and flag
+                    showCountryOnly: false,
+                    // optional. Shows only country name and flag when popup is closed.
+                    showOnlyCountryWhenClosed: false,
+                    // optional. aligns the flag and the Text left
+                    alignLeft: false,
+                  ),
                 ),
+                keyboardType: TextInputType.phone,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Please enter your phone number';
+                    return 'Please enter email';
                   }
                   return null;
                 },
@@ -160,68 +159,7 @@ class PatientSignUpPage extends StatelessWidget {
               SizedBox(
                 height: 8.sp,
               ),
-              Obx(() {
-                return TextFormField(
-                  controller: getController.passwordController,
-                  obscureText: !getController.showPassword.value,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    border: const OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        getController.showPassword.value
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        getController.showPassword.toggle();
-                      },
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    if (value != getController.confirmPasswordController.text) {
-                      return 'Passwords do not match';
-                    }
-                    return null;
-                  },
-                );
-              }),
-              SizedBox(height: 8.sp),
-              Obx(() {
-                return TextFormField(
-                  controller: getController.confirmPasswordController,
-                  obscureText: !getController.showPassword.value,
-                  decoration: InputDecoration(
-                    labelText: 'Confirm Password',
-                    border: const OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        getController.showPassword.value
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        getController.showPassword.toggle();
-                      },
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    if (value != getController.passwordController.text) {
-                      return 'Passwords do not match';
-                    }
-                    return null;
-                  },
-                );
-              }),
-              SizedBox(
-                height: 8.sp,
-              ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

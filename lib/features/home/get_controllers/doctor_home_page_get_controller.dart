@@ -25,7 +25,7 @@ class DoctorHomePageGetController extends GetxController {
   Future<void> fetchAppointmentRequests() async {
     appointmentsListen = FirebaseFirestore.instance
         .collection(AppConstants.doctors)
-        .doc(FirebaseAuth.instance.currentUser!.email)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection(AppConstants.appointmentRequests)
         .snapshots()
         .listen((value) {
@@ -55,7 +55,7 @@ class DoctorHomePageGetController extends GetxController {
     if (appointment.appointmentOn.isBefore(DateTime.now())) {
       FirebaseFirestore.instance
           .collection(AppConstants.doctors)
-          .doc(FirebaseAuth.instance.currentUser!.email)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .get()
           .then((doctorData) {
         DoctorModel patientModel =
@@ -63,7 +63,7 @@ class DoctorHomePageGetController extends GetxController {
         Get.to(() => ZegoUIKitPrebuiltCall(
               appID: 2147056725,
               callID: appointment.id,
-              userID: FirebaseAuth.instance.currentUser!.email!,
+              userID: FirebaseAuth.instance.currentUser!.uid!,
               userName: patientModel.name,
               config: ZegoUIKitPrebuiltCallConfig(),
               appSign:
@@ -82,7 +82,7 @@ class DoctorHomePageGetController extends GetxController {
     unreadMessagesListen = FirebaseFirestore.instance
         .collection(AppConstants.chatChannels)
         .where('doctor_email',
-            isEqualTo: FirebaseAuth.instance.currentUser!.email)
+            isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .snapshots()
         .listen((event) {
       unreadMessages.value = 0;
@@ -98,20 +98,20 @@ class DoctorHomePageGetController extends GetxController {
     String? token = await FirebaseMessaging.instance.getToken();
     await FirebaseFirestore.instance
         .collection(AppConstants.doctors)
-        .doc(FirebaseAuth.instance.currentUser!.email)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .update({'fcmToken': token});
   }
 
   void rejectAppointmentRequest(AppointmentRequestModel appointmentRequest) {
     FirebaseFirestore.instance
         .collection(AppConstants.doctors)
-        .doc(FirebaseAuth.instance.currentUser!.email)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection(AppConstants.appointmentRequests)
         .doc(appointmentRequest.id)
         .delete();
     FirebaseFirestore.instance
         .collection(AppConstants.patients)
-        .doc(appointmentRequest.patientModel.email)
+        .doc(appointmentRequest.patientModel.id)
         .collection(AppConstants.appointmentRequests)
         .doc(appointmentRequest.id)
         .delete();

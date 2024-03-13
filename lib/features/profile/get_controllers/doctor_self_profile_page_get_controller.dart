@@ -31,7 +31,7 @@ class DoctorSelfProfilePageGetController extends GetxController {
   void loadDoctor() {
     FirebaseFirestore.instance
         .collection(AppConstants.doctors)
-        .doc(FirebaseAuth.instance.currentUser!.email)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((value) {
       doctorModel = DoctorModel.fromJson(jsonDecode(jsonEncode(value.data()!)));
@@ -69,7 +69,7 @@ class DoctorSelfProfilePageGetController extends GetxController {
         );
         await FirebaseFirestore.instance
             .collection(AppConstants.doctors)
-            .doc(FirebaseAuth.instance.currentUser!.email)
+            .doc(FirebaseAuth.instance.currentUser!.uid)
             .set(doctorModel.toJson());
         editMode.value = false;
       });
@@ -85,7 +85,7 @@ class DoctorSelfProfilePageGetController extends GetxController {
       );
       await FirebaseFirestore.instance
           .collection(AppConstants.doctors)
-          .doc(FirebaseAuth.instance.currentUser!.email)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .set(doctorModel.toJson());
       editMode.value = false;
     }
@@ -103,7 +103,7 @@ class DoctorSelfProfilePageGetController extends GetxController {
     await FirebaseStorage.instance
         .ref()
         .child(AppConstants.doctors)
-        .child(FirebaseAuth.instance.currentUser!.email!)
+        .child(FirebaseAuth.instance.currentUser!.uid!)
         .putFile(File(imageLink.value))
         .then((p0) async {
       await p0.ref.getDownloadURL().then((value) {

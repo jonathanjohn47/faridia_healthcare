@@ -20,9 +20,9 @@ class DoctorProfileGetController extends GetxController {
   void saveDoctor() {
     FirebaseFirestore.instance
         .collection(AppConstants.patients)
-        .doc(FirebaseAuth.instance.currentUser!.email)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection(AppConstants.savedDoctors)
-        .doc(doctorModel.email)
+        .doc(doctorModel.id)
         .set(doctorModel.toJson())
         .then((value) {
       Get.snackbar("Success", "Doctor saved successfully",
@@ -33,20 +33,20 @@ class DoctorProfileGetController extends GetxController {
   void chatWithDoctor() {
     FirebaseFirestore.instance
         .collection(AppConstants.patients)
-        .doc(FirebaseAuth.instance.currentUser!.email)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((value) {
       PatientModel patientModel =
           PatientModel.fromJson(jsonDecode(jsonEncode(value.data())));
       String doctorEmailFormatted =
-          doctorModel.email.replaceAll('@', '').replaceAll('.', '');
+          doctorModel.phone.replaceAll('@', '').replaceAll('.', '');
       String patientEmailFormatted =
-          patientModel.email.replaceAll('@', '').replaceAll('.', '');
-      String uniqueID = doctorEmailFormatted + patientEmailFormatted;
+          patientModel.id.replaceAll('@', '').replaceAll('.', '');
+      String uniqueID = doctorModel.id + patientEmailFormatted;
       ChatChannelModel chatChannelModel = ChatChannelModel(
           id: uniqueID,
-          doctorEmail: doctorModel.email,
-          patientEmail: patientModel.email,
+          doctorEmail: doctorModel.id,
+          patientEmail: patientModel.id,
           doctorModel: doctorModel,
           patientModel: patientModel,
           lastMessage: MessageModel.empty());

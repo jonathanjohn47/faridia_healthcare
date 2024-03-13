@@ -26,7 +26,7 @@ class PatientHomePageGetController extends GetxController {
     if (appointment.appointmentOn.isBefore(DateTime.now())) {
       FirebaseFirestore.instance
           .collection(AppConstants.patients)
-          .doc(FirebaseAuth.instance.currentUser!.email)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .get()
           .then((patientData) {
         PatientModel patientModel =
@@ -34,7 +34,7 @@ class PatientHomePageGetController extends GetxController {
         Get.to(() => ZegoUIKitPrebuiltCall(
               appID: 2147056725,
               callID: appointment.id,
-              userID: FirebaseAuth.instance.currentUser!.email!,
+              userID: FirebaseAuth.instance.currentUser!.uid!,
               userName: patientModel.name,
               config: ZegoUIKitPrebuiltCallConfig(),
               appSign:
@@ -51,7 +51,7 @@ class PatientHomePageGetController extends GetxController {
     String? token = await FirebaseMessaging.instance.getToken();
     await FirebaseFirestore.instance
         .collection(AppConstants.patients)
-        .doc(FirebaseAuth.instance.currentUser!.email)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .update({'fcmToken': token});
   }
 }

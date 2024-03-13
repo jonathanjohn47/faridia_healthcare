@@ -13,16 +13,16 @@ class SavedDoctorsGetController extends GetxController {
   void loadSavedDoctors() {
     FirebaseFirestore.instance
         .collection(AppConstants.patients)
-        .doc(FirebaseAuth.instance.currentUser!.email)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection(AppConstants.savedDoctors)
         .get()
         .then((value) {
-      List<String> doctorEmails = value.docs.map((e) => e.id).toList();
+      List<String> docIds = value.docs.map((e) => e.id).toList();
       savedDoctors.clear();
-      for (String email in doctorEmails) {
+      for (String id in docIds) {
         FirebaseFirestore.instance
             .collection(AppConstants.doctors)
-            .doc(email)
+            .doc(id)
             .get()
             .then((value) {
           DoctorModel doctorModel =
@@ -36,9 +36,9 @@ class SavedDoctorsGetController extends GetxController {
   void deleteFromSavedDoctorsList(DoctorModel doctor) {
     FirebaseFirestore.instance
         .collection(AppConstants.patients)
-        .doc(FirebaseAuth.instance.currentUser!.email)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection(AppConstants.savedDoctors)
-        .doc(doctor.email)
+        .doc(doctor.id)
         .delete()
         .then((value) => loadSavedDoctors());
   }

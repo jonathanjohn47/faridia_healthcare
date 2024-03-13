@@ -46,7 +46,7 @@ class ChatPageGetController extends GetxController {
   Future<void> loadIfCurrentUserIsPatientOrDoctor() async {
     patientListen = FirebaseFirestore.instance
         .collection(AppConstants.patients)
-        .doc(FirebaseAuth.instance.currentUser!.email!)
+        .doc(FirebaseAuth.instance.currentUser!.uid!)
         .snapshots()
         .listen((value) {
       isPatient.value = value.exists;

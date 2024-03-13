@@ -48,7 +48,7 @@ class DoctorAppointmentsPage extends StatelessWidget {
                     future: FirebaseFirestore.instance
                         .collection(AppConstants.appointments)
                         .where('doctor_email',
-                            isEqualTo: FirebaseAuth.instance.currentUser!.email)
+                            isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                         .get(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {

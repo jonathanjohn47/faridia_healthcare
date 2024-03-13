@@ -74,7 +74,7 @@ class PatientHomePage extends StatelessWidget {
                 stream: FirebaseFirestore.instance
                     .collection(AppConstants.appointments)
                     .where('patient_email',
-                        isEqualTo: FirebaseAuth.instance.currentUser!.email)
+                        isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -209,7 +209,7 @@ class PatientHomePage extends StatelessWidget {
                                   stream: FirebaseFirestore.instance
                                       .collection(AppConstants.patients)
                                       .doc(FirebaseAuth
-                                          .instance.currentUser!.email)
+                                          .instance.currentUser!.uid)
                                       .collection(AppConstants.notifications)
                                       .snapshots(),
                                   builder: (context, snapshot) {
@@ -518,7 +518,7 @@ class PatientHomePage extends StatelessWidget {
                     trailing: StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
                             .collection(AppConstants.patients)
-                            .doc(FirebaseAuth.instance.currentUser!.email)
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
                             .collection(AppConstants.savedDoctors)
                             .snapshots(),
                         builder: (context, snapshot) {

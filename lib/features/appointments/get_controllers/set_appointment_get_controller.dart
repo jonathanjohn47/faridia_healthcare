@@ -38,8 +38,8 @@ class SetAppointmentGetController extends GetxController {
     showLoader.value = true;
     AppointmentModel appointmentModel = AppointmentModel(
         id: appointmentRequestModel.id,
-        doctorEmail: appointmentRequestModel.doctorModel.email,
-        patientEmail: appointmentRequestModel.patientModel.email,
+        doctorEmail: appointmentRequestModel.doctorModel.id,
+        patientEmail: appointmentRequestModel.patientModel.id,
         doctorModel: appointmentRequestModel.doctorModel,
         patientModel: appointmentRequestModel.patientModel,
         appointmentOn: DateTime(
@@ -56,13 +56,13 @@ class SetAppointmentGetController extends GetxController {
         .set(appointmentModel.toJson());
     await FirebaseFirestore.instance
         .collection(AppConstants.patients)
-        .doc(appointmentRequestModel.patientModel.email)
+        .doc(appointmentRequestModel.patientModel.id)
         .collection(AppConstants.appointmentRequests)
         .doc(appointmentRequestModel.id)
         .delete();
     await FirebaseFirestore.instance
         .collection(AppConstants.doctors)
-        .doc(appointmentRequestModel.doctorModel.email)
+        .doc(appointmentRequestModel.doctorModel.id)
         .collection(AppConstants.appointmentRequests)
         .doc(appointmentRequestModel.id)
         .delete();

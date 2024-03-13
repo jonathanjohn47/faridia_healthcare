@@ -10,7 +10,7 @@ class SelectProfileGetController extends GetxController {
     if (FirebaseAuth.instance.currentUser != null) {
       FirebaseFirestore.instance
           .collection(AppConstants.doctors)
-          .doc(FirebaseAuth.instance.currentUser!.email)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .get()
           .then((value) {
         if (value.exists) {
@@ -18,7 +18,7 @@ class SelectProfileGetController extends GetxController {
         } else {
           FirebaseFirestore.instance
               .collection(AppConstants.patients)
-              .doc(FirebaseAuth.instance.currentUser!.email)
+              .doc(FirebaseAuth.instance.currentUser!.uid)
               .get()
               .then((value) {
             if (value.exists) {
