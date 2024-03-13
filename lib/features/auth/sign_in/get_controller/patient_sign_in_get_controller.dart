@@ -54,8 +54,10 @@ class PatientSignInGetController extends GetxController {
       },
       codeSent: (String verificationId, int? resendToken) {
         Get.to(() => VerifyOtpPage(
-              signingInAsPatient: true,
               verificationId: verificationId,
+              onVerified: (uid) {
+                Get.offAll(() => PatientHomePage());
+              },
             ));
       },
       codeAutoRetrievalTimeout: (String verificationId) {},

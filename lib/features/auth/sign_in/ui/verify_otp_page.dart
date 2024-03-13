@@ -5,17 +5,15 @@ import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../home/ui/doctor_home_page.dart';
-import '../../../home/ui/patient_home_page.dart';
-
 class VerifyOtpPage extends StatelessWidget {
-  final bool signingInAsPatient;
   final String verificationId;
+  final Function(String uid) onVerified;
 
-  const VerifyOtpPage(
-      {super.key,
-      required this.signingInAsPatient,
-      required this.verificationId});
+  const VerifyOtpPage({
+    super.key,
+    required this.verificationId,
+    required this.onVerified,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +44,10 @@ class VerifyOtpPage extends StatelessWidget {
                         verificationId: verificationId,
                         smsCode: verificationCode))
                     .then((value) {
-                  if (signingInAsPatient) {
-                    Get.offAll(() => PatientHomePage());
-                  } else {
-                    Get.offAll(() => DoctorHomePage());
-                  }
+                  onVerified(value.user!.uid);
+                }).catchError((onError) {
+                  Get.snackbar("Error", onError.toString(),
+                      backgroundColor: Colors.red, colorText: Colors.white);
                 });
               }, // end onSubmit
             ),
