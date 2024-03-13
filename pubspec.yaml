@@ -54,6 +54,7 @@ dependencies:
   googleapis_auth: ^1.4.1
   firebase_messaging: ^14.6.4
   zego_uikit_prebuilt_call: ^4.4.3
+  country_code_picker: ^3.0.0
 
 dev_dependencies:
   flutter_test:

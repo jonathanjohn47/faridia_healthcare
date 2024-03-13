@@ -1,3 +1,4 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:faridia_healthcare/features/auth/sign_in/get_controller/patient_sign_in_get_controller.dart';
 import 'package:faridia_healthcare/features/auth/sign_in/ui/doctor_sign_in.dart';
 import 'package:faridia_healthcare/widgets/standard_button.dart';
@@ -34,7 +35,7 @@ class PatientSignInPage extends StatelessWidget {
                 child: ListView(
                   children: [
                     SizedBox(
-                      height: 8.sp,
+                      height: 3.h,
                     ),
                     SizedBox(
                         height: 30.h,
@@ -45,18 +46,33 @@ class PatientSignInPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         )),
                     SizedBox(
-                      height: 8.sp,
+                      height: 3.h,
                     ),
-                    /*TextEditingController emailController = TextEditingController();
+                    /*TextEditingController phoneController = TextEditingController();
                 TextEditingController passwordController = TextEditingController();
 
                 RxBool showPassword = false.obs;*/
                     TextFormField(
-                      controller: getController.emailController,
-                      decoration: const InputDecoration(
-                        labelText: 'Email',
+                      controller: getController.phoneController,
+                      decoration: InputDecoration(
+                        labelText: 'Phone Number',
                         border: OutlineInputBorder(),
+                        prefixIcon: CountryCodePicker(
+                          onChanged: (value) {
+                            getController.countryCode = value;
+                          },
+                          // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+                          initialSelection: 'IN',
+                          favorite: ['+91', 'IN'],
+                          // optional. Shows only country name and flag
+                          showCountryOnly: false,
+                          // optional. Shows only country name and flag when popup is closed.
+                          showOnlyCountryWhenClosed: false,
+                          // optional. aligns the flag and the Text left
+                          alignLeft: false,
+                        ),
                       ),
+                      keyboardType: TextInputType.phone,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter email';
@@ -65,63 +81,15 @@ class PatientSignInPage extends StatelessWidget {
                       },
                     ),
                     SizedBox(
-                      height: 8.sp,
+                      height: 3.h,
                     ),
-                    Obx(() {
-                      return TextFormField(
-                        controller: getController.passwordController,
-                        obscureText: !getController.showPassword.value,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          border: const OutlineInputBorder(),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              getController.showPassword.value
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                            ),
-                            onPressed: () {
-                              getController.showPassword.toggle();
-                            },
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter password';
-                          }
-                          return null;
-                        },
-                      );
-                    }),
+                    StandardButton(
+                        onPressed: () {}, title: "Send Verification Code"),
                     SizedBox(
-                      height: 8.sp,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Obx(() {
-                          return getController.showLoader.value
-                              ? const CircularProgressIndicator()
-                              : FloatingActionButton.extended(
-                                  heroTag: null,
-                                  onPressed: () {
-                                    getController.signInAsPatient();
-                                  },
-                                  label: Padding(
-                                    padding: EdgeInsets.all(16.0.sp),
-                                    child: Text(
-                                      'Login',
-                                      style: TextStyle(
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                );
-                        }),
-                      ],
+                      height: 3.h,
                     ),
                     SizedBox(
-                      height: 8.sp,
+                      height: 3.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -155,7 +123,7 @@ class PatientSignInPage extends StatelessWidget {
                   onPressed: () {
                     Get.offAll(() => DoctorSignInPage());
                   },
-                  title: "Click for Doctor Sign In",
+                  title: "Doctor Sign In",
                   icon: MdiIcons.doctor,
                 ),
               ],

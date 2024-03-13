@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:faridia_healthcare/core/app_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +8,12 @@ import 'package:get/get.dart';
 import '../../../home/ui/patient_home_page.dart';
 
 class PatientSignInGetController extends GetxController {
-  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   RxBool showPassword = false.obs;
+
+  CountryCode countryCode = CountryCode.fromCountryCode('91');
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -26,7 +29,7 @@ class PatientSignInGetController extends GetxController {
           .then((value) async {
         final snapshot = await FirebaseFirestore.instance
             .collection(AppConstants.patients)
-            .doc(emailController.text.trim())
+            .doc(phoneController.text.trim())
             .get();
 
         await FirebaseAuth.instance.signOut();
@@ -34,7 +37,7 @@ class PatientSignInGetController extends GetxController {
         if (snapshot.exists) {
           await FirebaseAuth.instance
               .signInWithEmailAndPassword(
-                  email: emailController.text.trim(),
+                  email: phoneController.text.trim(),
                   password: passwordController.text.trim())
               .then((value) {
             Get.offAll(() => PatientHomePage());

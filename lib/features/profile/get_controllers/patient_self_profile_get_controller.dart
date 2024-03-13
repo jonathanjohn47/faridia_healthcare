@@ -14,7 +14,7 @@ import '../../../core/app_constants.dart';
 class PatientSelfProfileGetController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController addressController = TextEditingController();
 
   RxString name = ''.obs;
@@ -45,7 +45,7 @@ class PatientSelfProfileGetController extends GetxController {
           PatientModel.fromJson(jsonDecode(jsonEncode(value.data())));
       nameController.text = currentPatient.name;
       phoneNumberController.text = currentPatient.phone;
-      emailController.text = currentPatient.email;
+      phoneController.text = currentPatient.email;
       addressController.text = currentPatient.address;
       imageLink.value = currentPatient.imageLink ?? '';
 
@@ -78,7 +78,7 @@ class PatientSelfProfileGetController extends GetxController {
         value.ref.getDownloadURL().then((downloadUrl) {
           PatientModel patientModel = PatientModel(
               name: nameController.text.trim(),
-              email: emailController.text.trim(),
+              email: phoneController.text.trim(),
               phone: phoneNumberController.text.trim(),
               address: addressController.text.trim(),
               fcmToken: fcmToken.value,
@@ -92,7 +92,7 @@ class PatientSelfProfileGetController extends GetxController {
     } else {
       PatientModel patientModel = PatientModel(
           name: nameController.text.trim(),
-          email: emailController.text.trim(),
+          email: phoneController.text.trim(),
           phone: phoneNumberController.text.trim(),
           address: addressController.text.trim(),
           fcmToken: fcmToken.value,

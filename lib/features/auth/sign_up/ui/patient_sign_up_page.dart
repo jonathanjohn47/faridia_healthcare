@@ -104,7 +104,7 @@ class PatientSignUpPage extends StatelessWidget {
                 height: 8.sp,
               ),
               TextFormField(
-                controller: getController.emailController,
+                controller: getController.phoneController,
                 decoration: const InputDecoration(
                   labelText: 'Email',
                   border: OutlineInputBorder(),

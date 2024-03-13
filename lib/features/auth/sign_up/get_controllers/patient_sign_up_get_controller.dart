@@ -12,7 +12,7 @@ import 'package:image_picker/image_picker.dart';
 
 class PatientSignUpGetController extends GetxController {
   TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -58,7 +58,7 @@ class PatientSignUpGetController extends GetxController {
 
       final snapshot = await FirebaseFirestore.instance
           .collection(AppConstants.patients)
-          .doc(emailController.text.trim())
+          .doc(phoneController.text.trim())
           .get();
 
       await FirebaseAuth.instance.signOut();
@@ -69,14 +69,14 @@ class PatientSignUpGetController extends GetxController {
       } else {
         await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
-            email: emailController.text, password: passwordController.text)
+            email: phoneController.text, password: passwordController.text)
             .then((value) async {
           String? downloadURL;
           if (imagePath.value.isNotEmpty) {
             await FirebaseStorage.instance
                 .ref()
                 .child(AppConstants.patients)
-                .child(emailController.text)
+                .child(phoneController.text)
                 .putFile(File(imagePath.value))
                 .then((p0) async {
               downloadURL = await p0.ref.getDownloadURL();
@@ -85,7 +85,7 @@ class PatientSignUpGetController extends GetxController {
 
           PatientModel patientModel = PatientModel(
             name: nameController.text,
-            email: emailController.text,
+            email: phoneController.text,
             phone: phoneNumberController.text,
             address: addressController.text,
             fcmToken: "",
@@ -93,7 +93,7 @@ class PatientSignUpGetController extends GetxController {
           );
           await FirebaseFirestore.instance
               .collection(AppConstants.patients)
-              .doc(emailController.text)
+              .doc(phoneController.text)
               .set(patientModel.toJson())
               .then((value) {
             Get.offAll(() => PatientHomePage());

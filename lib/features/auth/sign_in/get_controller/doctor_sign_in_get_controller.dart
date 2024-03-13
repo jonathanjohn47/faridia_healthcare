@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DoctorSignInGetController extends GetxController {
-  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   RxBool showPassword = false.obs;
@@ -21,14 +21,14 @@ class DoctorSignInGetController extends GetxController {
 
     await FirebaseFirestore.instance
         .collection(AppConstants.doctors)
-        .doc(emailController.text.trim())
+        .doc(phoneController.text.trim())
         .get()
         .then((value) async {
       await FirebaseAuth.instance.signOut();
       if (value.exists) {
         await FirebaseAuth.instance
             .signInWithEmailAndPassword(
-                email: emailController.text.trim(),
+                email: phoneController.text.trim(),
                 password: passwordController.text.trim())
             .then((value) {
           Get.offAll(() => DoctorHomePage());

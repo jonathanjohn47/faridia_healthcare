@@ -40,7 +40,7 @@ class DoctorSignUpPage extends StatelessWidget {
               height: 8.sp,
             ),
             /*TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
@@ -58,7 +58,7 @@ class DoctorSignUpPage extends StatelessWidget {
               height: 8.sp,
             ),
             TextFormField(
-              controller: getController.emailController,
+              controller: getController.phoneController,
               decoration: const InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),

@@ -125,7 +125,7 @@ class PatientSelfProfilePage extends StatelessWidget {
                             height: 8.sp,
                           ),
                           TextFormField(
-                            controller: getController.emailController,
+                            controller: getController.phoneController,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.0),
