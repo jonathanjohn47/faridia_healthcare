@@ -13,14 +13,26 @@ import '../../../core/app_constants.dart';
 
 class PatientHomePageGetController extends GetxController {
   RxInt unreadMessages = 0.obs;
+  RxInt unreadNotifications = 0.obs;
 
   @override
   void onInit() {
+    getUnreadNotifications();
     saveFcmToken();
     super.onInit();
   }
 
   void getUnreadMessages() {}
+
+  void getUnreadNotifications() {
+    unreadNotifications.bindStream(FirebaseFirestore.instance
+        .collection(AppConstants.patients)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection(AppConstants.notifications)
+        .where('isRead', isEqualTo: false)
+        .snapshots()
+        .map((event) => event.docs.length));
+  }
 
   void initiateAppointmentMeeting(AppointmentModel appointment) {
     if (appointment.appointmentOn.isBefore(DateTime.now())) {

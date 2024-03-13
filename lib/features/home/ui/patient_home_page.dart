@@ -16,7 +16,6 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../core/app_colors.dart';
-import '../../../models/notification_model.dart';
 import '../../appointments/ui/appointments_page.dart';
 import '../../messages/ui/messages_page_patient.dart';
 import '../../profile/ui/doctor_profile_page.dart';
@@ -205,46 +204,29 @@ class PatientHomePage extends StatelessWidget {
                           child: Stack(
                             children: [
                               Icon(Icons.notifications, size: 24.sp),
-                              StreamBuilder<QuerySnapshot>(
-                                  stream: FirebaseFirestore.instance
-                                      .collection(AppConstants.patients)
-                                      .doc(FirebaseAuth
-                                          .instance.currentUser!.uid)
-                                      .collection(AppConstants.notifications)
-                                      .snapshots(),
-                                  builder: (context, snapshot) {
-                                    List<NotificationModel> allNotifications =
-                                        snapshot.data!.docs
-                                            .map((e) =>
-                                                NotificationModel.fromJson(
-                                                    jsonDecode(
-                                                        jsonEncode(e.data()))))
-                                            .toList();
-                                    allNotifications.removeWhere(
-                                        (element) => element.isRead == true);
-                                    if (snapshot.hasData) {
-                                      if (allNotifications.isNotEmpty) {
-                                        return Positioned(
-                                          top: 0,
-                                          right: 0,
-                                          child: CircleAvatar(
-                                            radius: 8.sp,
-                                            backgroundColor: Colors.red,
-                                            child: Text(
-                                              allNotifications.length
-                                                  .toString(),
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 10.sp,
-                                              ),
+                              Obx(() {
+                                return patientHomePageGetController
+                                            .unreadNotifications.value ==
+                                        0
+                                    ? Container()
+                                    : Positioned(
+                                        top: 0,
+                                        right: 0,
+                                        child: CircleAvatar(
+                                          radius: 8.sp,
+                                          backgroundColor: Colors.red,
+                                          child: Text(
+                                            patientHomePageGetController
+                                                .unreadNotifications.value
+                                                .toString(),
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10.sp,
                                             ),
                                           ),
-                                        );
-                                      }
-                                      return Container();
-                                    }
-                                    return Container();
-                                  }),
+                                        ),
+                                      );
+                              }),
                             ],
                           ),
                         ),
