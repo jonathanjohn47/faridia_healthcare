@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faridia_healthcare/core/app_constants.dart';
-import 'package:faridia_healthcare/features/auth/select_profile/ui/select_profile_page.dart';
+import 'package:faridia_healthcare/features/auth/sign_in/ui/patient_sign_in.dart';
 import 'package:faridia_healthcare/features/home/get_controllers/patient_home_page_get_controller.dart';
 import 'package:faridia_healthcare/features/profile/ui/patient_self_profile_page.dart';
 import 'package:faridia_healthcare/features/search_for_doctors/ui/search_for_doctors_page.dart';
@@ -566,7 +566,7 @@ class PatientHomePage extends StatelessWidget {
                 title: const Text('Logout'),
                 onTap: () {
                   FirebaseAuth.instance.signOut().then((value) {
-                    Get.offAll(() => SelectProfilePage());
+                    Get.offAll(() => PatientSignInPage());
                   });
                 },
               ),

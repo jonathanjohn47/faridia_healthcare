@@ -84,7 +84,10 @@ class PatientSignInPage extends StatelessWidget {
                       height: 3.h,
                     ),
                     StandardButton(
-                        onPressed: () {}, title: "Send Verification Code"),
+                        onPressed: () {
+                          getController.signInAsPatient();
+                        },
+                        title: "Send Verification Code"),
                     SizedBox(
                       height: 3.h,
                     ),

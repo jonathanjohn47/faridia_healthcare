@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faridia_healthcare/core/app_colors.dart';
 import 'package:faridia_healthcare/core/app_constants.dart';
 import 'package:faridia_healthcare/features/appointments/ui/set_appointment_page.dart';
+import 'package:faridia_healthcare/features/auth/sign_in/ui/patient_sign_in.dart';
 import 'package:faridia_healthcare/helpers/date_time_helpers.dart';
 import 'package:faridia_healthcare/models/appointment_model.dart';
 import 'package:faridia_healthcare/models/notification_model.dart';
@@ -14,7 +15,6 @@ import 'package:sizer/sizer.dart';
 
 import '../../../notifications/ui/notifications_page.dart';
 import '../../appointments/ui/doctor_appointments_page.dart';
-import '../../auth/select_profile/ui/select_profile_page.dart';
 import '../../messages/ui/messages_page_doctor.dart';
 import '../../profile/ui/doctor_self_profile_page.dart';
 import '../get_controllers/doctor_home_page_get_controller.dart';
@@ -533,7 +533,7 @@ class DoctorHomePage extends StatelessWidget {
                 title: const Text('Logout'),
                 onTap: () {
                   FirebaseAuth.instance.signOut().then((value) {
-                    Get.offAll(() => SelectProfilePage());
+                    Get.offAll(() => PatientSignInPage());
                   });
                 },
               ),
