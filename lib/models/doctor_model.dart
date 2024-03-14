@@ -4,16 +4,16 @@
 
 import 'dart:convert';
 
-List<DoctorModel> doctorModelFromJson(String str) => List<DoctorModel>.from(
-    json.decode(str).map((x) => DoctorModel.fromJson(x)));
+DoctorModel doctorModelFromJson(String str) => DoctorModel.fromJson(json.decode(str));
 
-String doctorModelToJson(List<DoctorModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String doctorModelToJson(DoctorModel data) => json.encode(data.toJson());
 
 class DoctorModel {
   String id;
   String name;
   String phone;
+  String email;
+  String password;
   String bio;
   String fcmToken;
   String imageLink;
@@ -28,6 +28,8 @@ class DoctorModel {
     required this.id,
     required this.name,
     required this.phone,
+    required this.email,
+    required this.password,
     required this.bio,
     required this.fcmToken,
     required this.imageLink,
@@ -43,6 +45,8 @@ class DoctorModel {
     String? id,
     String? name,
     String? phone,
+    String? email,
+    String? password,
     String? bio,
     String? fcmToken,
     String? imageLink,
@@ -57,6 +61,8 @@ class DoctorModel {
         id: id ?? this.id,
         name: name ?? this.name,
         phone: phone ?? this.phone,
+        email: email ?? this.email,
+        password: password ?? this.password,
         bio: bio ?? this.bio,
         fcmToken: fcmToken ?? this.fcmToken,
         imageLink: imageLink ?? this.imageLink,
@@ -64,55 +70,41 @@ class DoctorModel {
         services: services ?? this.services,
         education: education ?? this.education,
         experience: experience ?? this.experience,
-        awardsAndRecognitions:
-            awardsAndRecognitions ?? this.awardsAndRecognitions,
+        awardsAndRecognitions: awardsAndRecognitions ?? this.awardsAndRecognitions,
         clinicAddress: clinicAddress ?? this.clinicAddress,
       );
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) => DoctorModel(
-        id: json["id"],
-        name: json["name"],
-        phone: json["phone"],
-        bio: json["bio"],
-        fcmToken: json["fcmToken"],
-        imageLink: json["imageLink"],
-        about: json["about"],
-        services: json["services"],
-        education: json["education"],
-        experience: json["experience"],
-        awardsAndRecognitions: json["awardsAndRecognitions"],
-        clinicAddress: json["clinicAddress"],
-      );
+    id: json["id"],
+    name: json["name"],
+    phone: json["phone"],
+    email: json["email"],
+    password: json["password"],
+    bio: json["bio"],
+    fcmToken: json["fcmToken"],
+    imageLink: json["imageLink"],
+    about: json["about"],
+    services: json["services"],
+    education: json["education"],
+    experience: json["experience"],
+    awardsAndRecognitions: json["awardsAndRecognitions"],
+    clinicAddress: json["clinicAddress"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "phone": phone,
-        "bio": bio,
-        "fcmToken": fcmToken,
-        "imageLink": imageLink,
-        "about": about,
-        "services": services,
-        "education": education,
-        "experience": experience,
-        "awardsAndRecognitions": awardsAndRecognitions,
-        "clinicAddress": clinicAddress,
-      };
-
-  static DoctorModel empty() {
-    return DoctorModel(
-      id: '',
-      name: '',
-      phone: '',
-      bio: '',
-      fcmToken: '',
-      imageLink: '',
-      about: '',
-      services: '',
-      education: '',
-      experience: '',
-      awardsAndRecognitions: '',
-      clinicAddress: '',
-    );
-  }
+    "id": id,
+    "name": name,
+    "phone": phone,
+    "email": email,
+    "password": password,
+    "bio": bio,
+    "fcmToken": fcmToken,
+    "imageLink": imageLink,
+    "about": about,
+    "services": services,
+    "education": education,
+    "experience": experience,
+    "awardsAndRecognitions": awardsAndRecognitions,
+    "clinicAddress": clinicAddress,
+  };
 }

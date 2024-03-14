@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DoctorSignInGetController extends GetxController {
-  TextEditingController phoneController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   RxBool showPassword = false.obs;
@@ -15,28 +15,13 @@ class DoctorSignInGetController extends GetxController {
 
   Future<void> login() async {
     showLoader.value = true;
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: AppConstants.emailForTemporaryLogin,
-        password: AppConstants.passwordForTemporaryLogin);
 
-    await FirebaseFirestore.instance
-        .collection(AppConstants.doctors)
-        .doc(phoneController.text.trim())
-        .get()
-        .then((value) async {
-      await FirebaseAuth.instance.signOut();
-      if (value.exists) {
-        await FirebaseAuth.instance
-            .signInWithEmailAndPassword(
-                email: phoneController.text.trim(),
-                password: passwordController.text.trim())
-            .then((value) {
-          Get.offAll(() => DoctorHomePage());
-        });
-      } else {
-        Get.snackbar("Error", "No doctor found with this email",
-            backgroundColor: Colors.red, colorText: Colors.white);
-      }
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim())
+        .then((value) {
+      Get.offAll(() => DoctorHomePage());
     });
     showLoader.value = false;
   }
